@@ -275,21 +275,24 @@ def comparaison_donne(global_daily_usage,daily_usage,day):
     voice_vas_amnt_ecart = global_data['voice_vas_amnt'] - daily_data['voice_vas_amnt']
     value = [voice_i_amnt_ecart,voice_o_amnt_ecart,sms_o_amnt_ecart,data_amnt_ecart,voice_vas_amnt_ecart]
     print(value)
-    voice_i_amnt_error = Decimal(100)
-    voice_o_amnt_error = Decimal(100)
-    sms_o_amnt_error = Decimal(100)
-    data_amnt_error = Decimal(100)
-    voice_vas_amnt_error = Decimal(100)
+    voice_i_amnt_error = Decimal(0)
+    voice_o_amnt_error = Decimal(0)
+    sms_o_amnt_error = Decimal(0)
+    data_amnt_error = Decimal(0)
+    voice_vas_amnt_error = Decimal(0)
+
+
+    #Calcul du pourcentage d'erreur
     if voice_i_amnt_ecart != 0:
-        voice_i_amnt_error = Decimal(voice_i_amnt_ecart) /Decimal(global_data['voice_i_amnt'])
+        voice_i_amnt_error = (Decimal(voice_i_amnt_ecart.__str__()) /Decimal(global_data['voice_i_amnt'].__str__())) * Decimal(100)
     if global_data['voice_o_amnt'] != 0:
-        voice_o_amnt_error = Decimal(voice_o_amnt_ecart) /Decimal(global_data['voice_o_amnt'])
+        voice_o_amnt_error = (Decimal(voice_o_amnt_ecart.__str__()) /Decimal(global_data['voice_o_amnt'].__str__())) * Decimal(100)
     if global_data['sms_o_amnt'] != 0:
-        sms_o_amnt_error = Decimal(sms_o_amnt_ecart) /Decimal(global_data['sms_o_amnt'])
-    if global_data['data_amnt_ecart'] != 0:
-        data_amnt_error = Decimal(data_amnt_ecart) /Decimal(global_data['data_amnt'])
+        sms_o_amnt_error = (Decimal(sms_o_amnt_ecart.__str__()) /Decimal(global_data['sms_o_amnt'].__str__())) * Decimal(100) 
+    if global_data['data_amnt'] != 0:
+        data_amnt_error = (Decimal(data_amnt_ecart.__str__()) /Decimal(global_data['data_amnt'].__str__())) * Decimal(100)
     if global_data['voice_vas_amnt'] != 0:
-        voice_vas_amnt_error = Decimal(voice_vas_amnt_ecart)/Decimal(global_data['voice_vas_amnt'])
+        voice_vas_amnt_error = (Decimal(voice_vas_amnt_ecart.__str__())/Decimal(global_data['voice_vas_amnt'].__str__())) * Decimal(100)
     value_error = [voice_i_amnt_error,voice_o_amnt_error,sms_o_amnt_error,data_amnt_error,voice_vas_amnt_error]
     print(value_error)
 
