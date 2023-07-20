@@ -231,8 +231,9 @@ def comparaison_donne(global_daily_usage,daily_usage,day):
     global_data = global_daily_usage[day.__str__()]
     daily_data = daily_usage[day.__str__()]
 
-    calcul_error_usage(global_data,daily_data)
-  
+    if calcul_error_usage(global_data,daily_data) != False:
+        return "Probleme dans les donnees"
+    return "Donne valide"
 
 if __name__ == "__main__":
     client = pymongo.MongoClient("mongodb://localhost:27017")

@@ -61,7 +61,7 @@ def daily_usage_total_by_day_site(client,day):
             'voice_o_amnt': {
                 '$sum': '$usage.usage_op.voice_o_amnt'
             }, 
-            'voice_o_bndle_vol': {
+            'voice_o_bndl_vol': {
                 '$sum': '$usage.usage_op.voice_o_bndl_vol'
             }, 
             'sms_o_main_cnt': {
@@ -126,7 +126,11 @@ def daily_usage_total_by_day_site(client,day):
     resultat = collection.aggregate(pipeline,cursor={})
     retour = {}
     for r in resultat:
-        retour[r["_id"]['site_name']] = data_usage_global(r)
+        try :
+            retour[r["_id"]['site_name']] = data_usage_global(r)
+        except:
+            retour["null"] = data_usage_global(r)
+    print("Donne daily usage extracte")
     return retour
 
 
@@ -164,7 +168,7 @@ def global_total_by_day_site(client,day):
             'voice_o_amnt': {
                 '$sum': '$voice_o_amnt'
             }, 
-            'voice_o_bndle_vol': {
+            'voice_o_bndl_vol': {
                 '$sum': '$voice_o_bndl_vol'
             }, 
             'sms_o_main_cnt': {
@@ -230,6 +234,7 @@ def global_total_by_day_site(client,day):
     retour = {}
     for r in resultat:
         retour[r["_id"]['site_name']] = data_usage_global(r)
+    print("Donne global daily usage extracte")
     return retour
     
 
