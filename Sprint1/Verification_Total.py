@@ -269,7 +269,7 @@ def comparaison_donne(global_daily_usage,daily_usage,day):
     global_data = global_daily_usage[day.__str__()]
     daily_data = daily_usage[day.__str__()]
 
-    #Calcul des écarts entre les données de départ et les données finales
+    #Calcul des ecarts entre les donnees de depart et les donnees finales
     sms_i_cnt_ecart = global_data['sms_i_cnt'] - daily_data['sms_i_cnt']
     voice_i_cnt_ecart = global_data['voice_i_cnt'] - daily_data['voice_i_cnt']
     voice_i_vol_ecart = global_data['voice_i_vol'] - daily_data['voice_i_vol']
@@ -298,7 +298,7 @@ def comparaison_donne(global_daily_usage,daily_usage,day):
     voice_vas_amnt_ecart = global_data['voice_vas_amnt'] - daily_data['voice_vas_amnt']
     sms_vas_amnt_ecart = global_data['sms_vas_amnt'] - daily_data['sms_vas_amnt']
 
-    #Compiler les données dans un tableau
+    #Compiler les donnees dans un tableau
     value = [sms_i_cnt_ecart,
              voice_i_cnt_ecart,
              voice_i_vol_ecart,
