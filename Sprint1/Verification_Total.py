@@ -94,8 +94,8 @@ def getTotal_usage_jour_global_daily_usage(client,day):
     }
 ]
     db = client['cbm']
-    collection = db['daily_usage']
-    resultat = collection.aggregate(pipeline)
+    collection = db['global_daily_usage']
+    resultat = collection.aggregate(pipeline,cursor={})
     for r in resultat:
         print(r)
     print("reussie")
