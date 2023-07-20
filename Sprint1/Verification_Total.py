@@ -267,8 +267,14 @@ def getTotal_usage_jour_daily_usage(client,day):
 def comparaison_donne(global_daily_usage,daily_usage,day):
     global_data = global_daily_usage[day.__str__()]
     daily_data = daily_usage[day.__str__()]
+    voice_i_amnt_ecart = global_data['voice_i_amnt'] - daily_data['voice_i_amnt']
+    voice_o_amnt_ecart = global_data['voice_o_amnt'] - daily_data['voice_o_amnt']
+    sms_o_amnt_ecart = global_data['sms_o_amnt'] - daily_data['sms_o_amnt']
+    data_amnt_ecart = global_data['data_amnt'] - daily_data['data_amnt']
+    voice_vas_amnt_ecart = global_data['voice_vas_amnt'] - daily_data['voice_vas_amnt']
 
-
+    value = [voice_i_amnt_ecart,voice_o_amnt_ecart,sms_o_amnt_ecart,data_amnt_ecart,voice_vas_amnt_ecart]
+    print(value)
 
   
 
@@ -280,4 +286,5 @@ if __name__ == "__main__":
     print(day)
     global_daily_usage = getTotal_usage_jour_daily_usage(client,date_time)
     daily_usage = getTotal_usage_jour_global_daily_usage(client,day)
+    comparaison_donne(global_daily_usage,daily_usage,day)
     
