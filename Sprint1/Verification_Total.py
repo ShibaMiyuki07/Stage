@@ -232,9 +232,9 @@ def comparaison_donne(global_daily_usage,daily_usage,day):
     global_data = global_daily_usage[day.__str__()]
     daily_data = daily_usage[day.__str__()]
 
-    if calcul_error_usage(global_data,daily_data) != False:
+    if calcul_error_usage(global_data,daily_data) != True:
         return False
-    print("Verification totale par date vrai")
+    print("Verification totale par date verifie")
     cmd = "python Verification_site.py "+sys.argv[1]
     os.system(cmd)
 
@@ -243,7 +243,7 @@ if __name__ == "__main__":
     date = sys.argv[1]
     date_time = datetime.strptime(date,'%Y-%m-%d')
     day = datetime(date_time.year,date_time.month,date_time.day)
-    print(day)
+    print("Verification globale le "+day.__str__()+" enclenche")
     global_daily_usage = getTotal_usage_jour_daily_usage(client,date_time)
     daily_usage = getTotal_usage_jour_global_daily_usage(client,day)
     if comparaison_donne(global_daily_usage,daily_usage,day) == False:

@@ -14,6 +14,7 @@ def getall_site():
     all_site = []
     for(site_name) in cursor:
         all_site.append(site_name)
+    print("Site extracte")
     return all_site
 
 def daily_usage_total_by_day_site(client,day):
@@ -130,7 +131,7 @@ def daily_usage_total_by_day_site(client,day):
             retour[r["_id"]['site_name']] = data_usage_global(r)
         except:
             retour["null"] = data_usage_global(r)
-    print("Donne daily usage extracte")
+    print("Donne par site daily usage extracte")
     return retour
 
 
@@ -253,7 +254,7 @@ if __name__ == "__main__":
     date = sys.argv[1]
     date_time = datetime.strptime(date,'%Y-%m-%d')
     day = datetime(date_time.year,date_time.month,date_time.day)
-    print(day)
+    print("Verification par site du "+day+" enclenche")
     all_site = getall_site()
     global_daily_usage = global_total_by_day_site(client,day)
     daily_usage = daily_usage_total_by_day_site(client,day)
