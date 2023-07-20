@@ -7,7 +7,7 @@ from fonction_usage import calcul_error_usage
 from fonction_usage import data_usage_global
 
 def getall_site():
-    connexion = mysql.connecter.connect(user='',password='',host='127.0.0.1',database='WORK')
+    connexion = mysql.connector.connect(user='',password='',host='127.0.0.1',database='WORK')
     cursor = connexion.cursor()
     query = "select distinct(sig_nom_site) as site_name from rf_sig_cell_krill_v3"
     cursor.execute(query)
@@ -257,5 +257,5 @@ if __name__ == "__main__":
     all_site = getall_site()
     global_daily_usage = global_total_by_day_site(client,day)
     daily_usage = daily_usage_total_by_day_site(client,day)
-    resultat = compare_data(global_daily_usage,daily_usage)
+    resultat = compare_data(global_daily_usage,daily_usage,all_site)
     print(resultat)
