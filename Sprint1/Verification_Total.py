@@ -116,7 +116,7 @@ def getTotal_usage_jour_global_daily_usage(client,day):
                                  'usage_2G' : r['usage_2G'],
                                  'usage_3G' : r['usage_3G'],
                                  'usage_4G_TDD' : r['usage_4G_TDD'],
-                                 'usage_4G_FDD' : r['usage_4G_FDD'] + r['usage_4G_4G+'],
+                                 'usage_4G_FDD' : r['usage_4G_FDD'],
                                  'data_bndl_vol' : r['data_bndl_vol'],
                                  'voice_vas_cnt' : r['voice_vas_cnt'],
                                  'voice_vas_amnt' :r['voice_vas_amnt'],
@@ -138,7 +138,7 @@ def getTotal_usage_jour_daily_usage(client,day):
         '$unwind': {
             'path': '$usage', 
             'includeArrayIndex': 'u', 
-            'preserveNullAndEmptyArrays': True
+            'preserveNullAndEmptyArrays': False
         }
     }, {
         '$unwind': {
@@ -268,12 +268,63 @@ def getTotal_usage_jour_daily_usage(client,day):
 def comparaison_donne(global_daily_usage,daily_usage,day):
     global_data = global_daily_usage[day.__str__()]
     daily_data = daily_usage[day.__str__()]
+
+    #Calcul des écarts entre les données de départ et les données finales
+    sms_i_cnt_ecart = global_data['sms_i_cnt'] - daily_data['sms_i_cnt']
+    voice_i_cnt_ecart = global_data['voice_i_cnt'] - daily_data['voice_i_cnt']
+    voice_i_vol_ecart = global_data['voice_i_vol'] - daily_data['voice_i_vol']
+    voice_o_cnt_ecart = global_data['voice_o_cnt'] - daily_data['voice_o_cnt']
+    voice_o_main_vol_ecart = global_data['voice_o_main_vol'] - daily_data['voice_o_main_vol']
+    voice_o_bndl_vol_ecart = global_data['voice_o_bndl_vol'] - daily_data['voice_o_bndl_vol']
+    sms_o_main_cnt_ecart = global_data['sms_o_main_cnt'] - daily_data['sms_o_main_cnt']
+    sms_o_bndl_cnt_ecart = global_data['sms_o_bndl_cnt'] - daily_data['sms_o_bndl_cnt']
+    data_main_vol_ecart = global_data['data_main_vol'] - daily_data['data_main_vol']
+    usage_2g_ecart = global_data['usage_2G'] - daily_data['usage_2G']
+    usage_3g_ecart = global_data['usage_3G'] - daily_data['usage_3G']
+    usage_4G_TDD_ecart = global_data['usage_4G_TDD'] - daily_data['usage_4G_TDD']
+    usage_4G_FDD_ecart = global_data['usage_4G_FDD'] - daily_data['usage_4G_FDD']
+    data_bndl_vol_ecart = global_data['data_bndl_vol'] - daily_data['data_bndl_vol']
+    voice_vas_cnt_ecart = global_data['voice_vas_cnt'] - daily_data['voice_vas_cnt']
+    voice_vas_main_vol_ecart = global_data['voice_vas_main_vol'] - daily_data['voice_vas_main_vol']
+    voice_vas_bndl_vol_ecart = global_data['voice_vas_bndl_vol'] - daily_data['voice_vas_bndl_vol']
+    sms_vas_cnt_ecart = global_data['sms_vas_cnt'] - daily_data['sms_vas_cnt']
+    sms_vas_bndl_cnt_ecart = global_data['sms_vas_bndl_cnt'] - daily_data['sms_vas_bndl_cnt']
+
+    #Ecart des revenus pa service
     voice_i_amnt_ecart = global_data['voice_i_amnt'] - daily_data['voice_i_amnt']
     voice_o_amnt_ecart = global_data['voice_o_amnt'] - daily_data['voice_o_amnt']
     sms_o_amnt_ecart = global_data['sms_o_amnt'] - daily_data['sms_o_amnt']
     data_amnt_ecart = global_data['data_amnt'] - daily_data['data_amnt']
     voice_vas_amnt_ecart = global_data['voice_vas_amnt'] - daily_data['voice_vas_amnt']
-    value = [voice_i_amnt_ecart,voice_o_amnt_ecart,sms_o_amnt_ecart,data_amnt_ecart,voice_vas_amnt_ecart]
+    sms_vas_amnt_ecart = global_data['sms_vas_amnt'] - daily_data['sms_vas_amnt']
+
+    #Compiler les données dans un tableau
+    value = [sms_i_cnt_ecart,
+             voice_i_cnt_ecart,
+             voice_i_vol_ecart,
+             voice_i_amnt_ecart,
+             voice_o_cnt_ecart,
+             voice_o_main_vol_ecart,
+             voice_o_amnt_ecart,
+             voice_o_bndl_vol_ecart,
+             sms_o_main_cnt_ecart,
+             sms_o_bndl_cnt_ecart,
+             sms_o_amnt_ecart,
+             data_main_vol_ecart,
+             data_amnt_ecart,
+             usage_2g_ecart,
+             usage_3g_ecart,
+             usage_4G_TDD_ecart
+             ,usage_4G_FDD_ecart,
+             data_bndl_vol_ecart,
+             voice_vas_cnt_ecart,
+             voice_vas_amnt_ecart,
+             voice_vas_main_vol_ecart,
+             voice_vas_bndl_vol_ecart,
+             sms_vas_cnt_ecart,
+             sms_vas_bndl_cnt_ecart,
+             sms_vas_amnt_ecart
+             ]
     print(value)
     voice_i_amnt_error = Decimal(0)
     voice_o_amnt_error = Decimal(0)
@@ -283,7 +334,7 @@ def comparaison_donne(global_daily_usage,daily_usage,day):
 
 
     #Calcul du pourcentage d'erreur
-    if voice_i_amnt_ecart != 0:
+    '''if voice_i_amnt_ecart != 0:
         voice_i_amnt_error = (Decimal(voice_i_amnt_ecart.__str__()) /Decimal(global_data['voice_i_amnt'].__str__())) * Decimal(100)
     if global_data['voice_o_amnt'] != 0:
         voice_o_amnt_error = (Decimal(voice_o_amnt_ecart.__str__()) /Decimal(global_data['voice_o_amnt'].__str__())) * Decimal(100)
@@ -294,7 +345,7 @@ def comparaison_donne(global_daily_usage,daily_usage,day):
     if global_data['voice_vas_amnt'] != 0:
         voice_vas_amnt_error = (Decimal(voice_vas_amnt_ecart.__str__())/Decimal(global_data['voice_vas_amnt'].__str__())) * Decimal(100)
     value_error = [voice_i_amnt_error,voice_o_amnt_error,sms_o_amnt_error,data_amnt_error,voice_vas_amnt_error]
-    print(value_error)
+    print(value_error)'''
 
   
 
