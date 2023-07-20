@@ -124,7 +124,7 @@ def getTotal_usage_jour_global_daily_usage(client,day):
                                  'sms_vas_cnt' : r['sms_vas_cnt'],
                                  'sms_vas_bndl_cnt' : r['sms_vas_bndl_cnt'],
                                  'sms_vas_amnt' : r['sms_vas_amnt']  }
-    print("Total global_daily_usage du"+day.__str__()+" extracte avec succes")
+    print("Total global_daily_usage du "+day.__str__()+" extracte avec succes")
     return retour
 
 def getTotal_usage_jour_daily_usage(client,day):
@@ -231,7 +231,7 @@ def getTotal_usage_jour_daily_usage(client,day):
 ]
     db = client['cbm']
     collection = db['daily_usage']
-    resultat = collection.aggregate(pipeline)
+    resultat = collection.aggregate(pipeline,cursor={})
     retour = {}
     for r in resultat:
         retour[day.__str__()] = { 'sms_i_cnt' : r['sms_i_cnt'],
@@ -261,7 +261,7 @@ def getTotal_usage_jour_daily_usage(client,day):
                                  'sms_vas_bndl_cnt' : r['sms_vas_bndl_cnt'],
                                  'sms_vas_amnt' : r['sms_vas_amnt']
                                    }
-    print("Total daily_usage du"+day.__str__()+" extracte avec succes")
+    print("Total daily_usage du "+day.__str__()+" extracte avec succes")
     return retour
 
 def comparaison_donne(global_daily_usage,daily_usage,day):
@@ -279,7 +279,7 @@ def comparaison_donne(global_daily_usage,daily_usage,day):
   
 
 if __name__ == "__main__":
-    client = pymongo.MongoClient("mongodb://localhost:27017/")
+    client = pymongo.MongoClient("mongodb://oma_dwh:Dwh4%40OrnZ@192.168.61.199:27017/?authMechanism=DEFAULT")
     date = sys.argv[1]
     date_time = datetime.strptime(date,'%Y-%m-%d')
     day = datetime(date_time.year,date_time.month,date_time.day)
