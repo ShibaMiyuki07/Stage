@@ -8,7 +8,7 @@ from fonction_usage import data_usage_global
 
 def getall_site():
     connexion = mysql.connector.connect(user='',password='',host='127.0.0.1',database='WORK')
-    cursor = connexion.cursor()
+    cursor = connexion.cursor() 
     query = "select distinct(sig_nom_site) as site_name from rf_sig_cell_krill_v3"
     cursor.execute(query)
     all_site = []

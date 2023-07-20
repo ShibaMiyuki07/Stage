@@ -1,3 +1,4 @@
+import os
 import pymongo
 import sys
 from datetime import datetime
@@ -232,8 +233,10 @@ def comparaison_donne(global_daily_usage,daily_usage,day):
     daily_data = daily_usage[day.__str__()]
 
     if calcul_error_usage(global_data,daily_data) != False:
-        return "Probleme dans les donnees"
-    return "Donne valide"
+        return False
+    print("Verification totale par date vrai")
+    cmd = "python Verification_site.py "+sys.argv[1]
+    os.system(cmd)
 
 if __name__ == "__main__":
     client = pymongo.MongoClient("mongodb://localhost:27017")
@@ -243,6 +246,6 @@ if __name__ == "__main__":
     print(day)
     global_daily_usage = getTotal_usage_jour_daily_usage(client,date_time)
     daily_usage = getTotal_usage_jour_global_daily_usage(client,day)
-    resultat = comparaison_donne(global_daily_usage,daily_usage,day)
-    print(resultat)
+    if comparaison_donne(global_daily_usage,daily_usage,day) == False:
+        print("Erreur dans les totales par date")
     
