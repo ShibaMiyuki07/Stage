@@ -137,13 +137,13 @@ def getTotal_usage_jour_daily_usage(client,day):
         '$unwind': {
             'path': '$usage', 
             'includeArrayIndex': 'u', 
-            'preserveNullAndEmptyArrays': False
+            'preserveNullAndEmptyArrays': True
         }
     }, {
         '$unwind': {
             'path': '$usage.usage_op', 
             'includeArrayIndex': 'b_s', 
-            'preserveNullAndEmptyArrays': False
+            'preserveNullAndEmptyArrays': True
         }
     }, {
         '$group': {
@@ -268,7 +268,7 @@ def comparaison_donne(global_daily_usage,daily_usage,day):
     global_data = global_daily_usage[day.__str__()]
     daily_data = daily_usage[day.__str__()]
 
-    
+
 
   
 
