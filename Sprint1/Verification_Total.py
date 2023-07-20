@@ -416,6 +416,8 @@ def comparaison_donne(global_daily_usage,daily_usage,day):
         voice_vas_amnt_error = (Decimal(voice_vas_amnt_ecart.__str__())/Decimal(global_data['voice_vas_amnt'].__str__())) * Decimal(100)
     if global_data['sms_vas_amnt'] != 0:
         sms_vas_amnt_error = (Decimal(sms_vas_amnt_ecart.__str__())/Decimal(global_data['sms_vas_amnt'].__str__())) * Decimal(100)
+
+    #Compiler les erreurs dans un tableau
     value_error = [sms_i_cnt_error,
                    voice_i_cnt_error,
                    voice_i_vol_error,
@@ -441,8 +443,11 @@ def comparaison_donne(global_daily_usage,daily_usage,day):
                    sms_vas_cnt_error,
                    sms_vas_bndl_cnt_error,
                    sms_vas_amnt_error]
-    print(value_error)
-
+    
+    for i in value_error:
+        if abs(i) >1:
+            return "Il y a erreur dans les donnees"
+    print("Données validés")
   
 
 if __name__ == "__main__":
