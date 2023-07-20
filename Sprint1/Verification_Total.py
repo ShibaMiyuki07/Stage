@@ -447,7 +447,7 @@ def comparaison_donne(global_daily_usage,daily_usage,day):
     for i in value_error:
         if abs(i) >1:
             return "Il y a erreur dans les donnees"
-    print("Données validés")
+    return "Donnee valide"
   
 
 if __name__ == "__main__":
@@ -458,5 +458,6 @@ if __name__ == "__main__":
     print(day)
     global_daily_usage = getTotal_usage_jour_daily_usage(client,date_time)
     daily_usage = getTotal_usage_jour_global_daily_usage(client,day)
-    comparaison_donne(global_daily_usage,daily_usage,day)
+    resultat = comparaison_donne(global_daily_usage,daily_usage,day)
+    print(resultat)
     
