@@ -98,6 +98,8 @@ def getTotal_usage_jour_global_daily_usage(client,day):
     collection = db['global_daily_usage']
     resultat = collection.aggregate(pipeline,cursor={})
     retour = {}
+
+    #Ajout du resultat
     for r in resultat:
         retour[day.__str__()] = { 'sms_i_cnt' : r['sms_i_cnt'],
                                  'voice_i_cnt' : r['voice_i_cnt'],
@@ -125,6 +127,8 @@ def getTotal_usage_jour_global_daily_usage(client,day):
                                  'sms_vas_cnt' : r['sms_vas_cnt'],
                                  'sms_vas_bndl_cnt' : r['sms_vas_bndl_cnt'],
                                  'sms_vas_amnt' : r['sms_vas_amnt']  }
+        
+
     print("Total global_daily_usage du "+day.__str__()+" extracte avec succes")
     return retour
 
@@ -234,6 +238,8 @@ def getTotal_usage_jour_daily_usage(client,day):
     collection = db['daily_usage']
     resultat = collection.aggregate(pipeline,cursor={})
     retour = {}
+
+    #Ajout du resultat
     for r in resultat:
         retour[day.__str__()] = { 'sms_i_cnt' : r['sms_i_cnt'],
                                  'voice_i_cnt' : r['voice_i_cnt'],
@@ -262,10 +268,14 @@ def getTotal_usage_jour_daily_usage(client,day):
                                  'sms_vas_bndl_cnt' : r['sms_vas_bndl_cnt'],
                                  'sms_vas_amnt' : r['sms_vas_amnt']
                                    }
+        
+    
     print("Total daily_usage du "+day.__str__()+" extracte avec succes")
     return retour
 
 def comparaison_donne(global_daily_usage,daily_usage,day):
+
+    #Prendre les donnees a partir des bibliotheques
     global_data = global_daily_usage[day.__str__()]
     daily_data = daily_usage[day.__str__()]
 
@@ -326,15 +336,75 @@ def comparaison_donne(global_daily_usage,daily_usage,day):
              sms_vas_amnt_ecart
              ]
     print(value)
+
+    #Initialisation des parametres d erreur
+    sms_i_cnt_error = Decimal(0)
+    voice_i_cnt_error = Decimal(0)
+    voice_i_vol_error = Decimal(0)
+    voice_o_cnt_error = Decimal(0)
+    voice_o_main_vol_error = Decimal(0)
+    voice_o_bndl_vol_error = Decimal(0)
+    sms_o_main_cnt_error = Decimal(0)
+    sms_o_bndl_cnt_error = Decimal(0)
+    data_main_vol_error = Decimal(0)
+    usage_2g_error = Decimal(0)
+    usage_3g_error = Decimal(0)
+    usage_4G_TDD_error = Decimal(0)
+    usage_4G_FDD_error = Decimal(0)
+    data_bndl_vol_error = Decimal(0)
+    voice_vas_cnt_error = Decimal(0)
+    voice_vas_main_vol_error = Decimal(0)
+    voice_vas_bndl_vol_error =Decimal(0)
+    sms_vas_cnt_error =Decimal(0)
+    sms_vas_bndl_cnt_error =Decimal(0)
     voice_i_amnt_error = Decimal(0)
     voice_o_amnt_error = Decimal(0)
     sms_o_amnt_error = Decimal(0)
     data_amnt_error = Decimal(0)
     voice_vas_amnt_error = Decimal(0)
+    sms_vas_amnt_error = Decimal(0)
 
 
     #Calcul du pourcentage d'erreur
-    '''if voice_i_amnt_ecart != 0:
+    if global_data['sms_i_cnt'] !=0:
+        sms_i_cnt_error = (Decimal(sms_i_cnt_ecart.__str__()) /Decimal(global_data['sms_i_cnt'].__str__())) * Decimal(100)
+    if global_data['voice_i_cnt'] != 0:
+        voice_i_cnt_error = (Decimal(voice_i_cnt_ecart.__str__()) /Decimal(global_data['voice_i_cnt'].__str__())) * Decimal(100)
+    if global_data['voice_i_vol'] != 0:
+        voice_i_vol_error = (Decimal(voice_i_vol_ecart.__str__()) /Decimal(global_data['voice_i_vol'].__str__())) * Decimal(100)
+    if global_data['voice_o_cnt'] != 0:
+        voice_o_cnt_error = (Decimal(voice_o_cnt_ecart.__str__()) /Decimal(global_data['voice_o_cnt'].__str__())) * Decimal(100)
+    if global_data['voice_o_main_vol'] != 0:
+        voice_o_main_vol_error = (Decimal(voice_o_main_vol_ecart.__str__()) /Decimal(global_data['voice_o_main_vol'].__str__())) * Decimal(100)
+    if global_data['voice_o_bndl_vol'] != 0:
+        voice_o_bndl_vol_error = (Decimal(voice_o_bndl_vol_ecart.__str__()) /Decimal(global_data['voice_o_bndl_vol'].__str__())) * Decimal(100)
+    if global_data['sms_o_main_cnt'] != 0:
+        sms_o_main_cnt_error = (Decimal(sms_o_main_cnt_ecart.__str__()) /Decimal(global_data['sms_o_main_cnt'].__str__())) * Decimal(100)
+    if global_data['sms_o_bndl_cnt'] != 0:
+        sms_o_bndl_cnt_error = (Decimal(sms_o_bndl_cnt_ecart.__str__()) /Decimal(global_data['sms_o_bndl_cnt'].__str__())) * Decimal(100)
+    if global_data['data_main_vol'] != 0:
+        data_main_vol_error = (Decimal(data_main_vol_ecart.__str__()) /Decimal(global_data['data_main_vol'].__str__())) * Decimal(100)
+    if global_data['usage_2G'] != 0:
+        usage_2g_error = (Decimal(usage_2g_ecart.__str__()) /Decimal(global_data['usage_2G'].__str__())) * Decimal(100)
+    if global_data['usage_3G'] != 0:
+        usage_3g_error = (Decimal(usage_3g_ecart.__str__()) /Decimal(global_data['usage_3G'].__str__())) * Decimal(100)
+    if global_data['usage_4G_TDD'] != 0:
+        usage_4G_TDD_error = (Decimal(usage_4G_TDD_ecart.__str__()) /Decimal(global_data['usage_4G_TDD'].__str__())) * Decimal(100)
+    if global_data['usage_4G_FDD'] !=0:
+        usage_4G_FDD_error = (Decimal(usage_4G_FDD_ecart.__str__()) /Decimal(global_data['usage_4G_FDD'].__str__())) * Decimal(100)
+    if global_data['data_bndl_vol'] !=0:
+        data_bndl_vol_error = (Decimal(data_bndl_vol_ecart.__str__()) /Decimal(global_data['data_bndl_vol'].__str__())) * Decimal(100)
+    if global_data['voice_vas_cnt'] != 0:
+        voice_vas_cnt_error = (Decimal(voice_vas_cnt_ecart.__str__()) /Decimal(global_data['voice_vas_cnt'].__str__())) * Decimal(100)
+    if global_data['voice_vas_main_vol'] != 0:
+        voice_vas_main_vol_error = (Decimal(voice_vas_main_vol_ecart.__str__()) /Decimal(global_data['voice_vas_main_vol'].__str__())) * Decimal(100)
+    if global_data['voice_vas_bndl_vol'] != 0:
+        voice_vas_bndl_vol_error = (Decimal(voice_vas_bndl_vol_ecart.__str__()) /Decimal(global_data['voice_vas_bndl_vol'].__str__())) * Decimal(100)
+    if global_data['sms_vas_cnt'] != 0:
+        sms_vas_cnt_error = (Decimal(sms_vas_cnt_ecart.__str__()) /Decimal(global_data['sms_vas_cnt'].__str__())) * Decimal(100)
+    if global_data['sms_vas_bndl_cnt'] != 0:
+        sms_vas_bndl_cnt_error = (Decimal(sms_vas_bndl_cnt_error.__str__()) /Decimal(global_data['sms_vas_bndl_cnt'].__str__())) * Decimal(100)
+    if global_data['voice_i_amnt'] != 0:
         voice_i_amnt_error = (Decimal(voice_i_amnt_ecart.__str__()) /Decimal(global_data['voice_i_amnt'].__str__())) * Decimal(100)
     if global_data['voice_o_amnt'] != 0:
         voice_o_amnt_error = (Decimal(voice_o_amnt_ecart.__str__()) /Decimal(global_data['voice_o_amnt'].__str__())) * Decimal(100)
@@ -344,8 +414,34 @@ def comparaison_donne(global_daily_usage,daily_usage,day):
         data_amnt_error = (Decimal(data_amnt_ecart.__str__()) /Decimal(global_data['data_amnt'].__str__())) * Decimal(100)
     if global_data['voice_vas_amnt'] != 0:
         voice_vas_amnt_error = (Decimal(voice_vas_amnt_ecart.__str__())/Decimal(global_data['voice_vas_amnt'].__str__())) * Decimal(100)
-    value_error = [voice_i_amnt_error,voice_o_amnt_error,sms_o_amnt_error,data_amnt_error,voice_vas_amnt_error]
-    print(value_error)'''
+    if global_data['sms_vas_amnt'] != 0:
+        sms_vas_amnt_error = (Decimal(sms_vas_amnt_ecart.__str__())/Decimal(global_data['sms_vas_amnt'].__str__())) * Decimal(100)
+    value_error = [sms_i_cnt_error,
+                   voice_i_cnt_error,
+                   voice_i_vol_error,
+                   voice_i_amnt_error,
+                   voice_o_cnt_error,
+                   voice_o_main_vol_error,
+                   voice_o_amnt_error,
+                   voice_o_bndl_vol_error,
+                   sms_o_main_cnt_error,
+                   sms_o_bndl_cnt_error,
+                   sms_o_amnt_error,
+                   data_main_vol_error,
+                   data_amnt_error,
+                   usage_2g_error,
+                   usage_3g_error,
+                   usage_4G_TDD_error,
+                   usage_4G_FDD_error,
+                   data_bndl_vol_error,
+                   voice_vas_cnt_error,
+                   voice_vas_amnt_error,
+                   voice_vas_main_vol_error,
+                   voice_vas_bndl_vol_error,
+                   sms_vas_cnt_error,
+                   sms_vas_bndl_cnt_error,
+                   sms_vas_amnt_error]
+    print(value_error)
 
   
 
