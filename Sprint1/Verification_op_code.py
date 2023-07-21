@@ -66,7 +66,7 @@ def getdata_null_location_daily_usage(client,day):
             'voice_o_amnt': {
                 '$sum': '$usage.usage_op.voice_o_amnt'
             }, 
-            'voice_o_bndle_vol': {
+            'voice_o_bndl_vol': {
                 '$sum': '$usage.usage_op.voice_o_bndl_vol'
             }, 
             'sms_o_main_cnt': {
@@ -170,7 +170,7 @@ def getdata_null_location_global_daily_usage(client,day):
             'voice_o_amnt': {
                 '$sum': '$voice_o_amnt'
             }, 
-            'voice_o_bndle_vol': {
+            'voice_o_bndl_vol': {
                 '$sum': '$voice_o_bndl_vol'
             }, 
             'sms_o_main_cnt': {
