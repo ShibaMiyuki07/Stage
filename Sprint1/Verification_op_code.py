@@ -40,11 +40,7 @@ def getdata_null_location_daily_usage(client,day):
         }
     }, {
         '$group': {
-            '_id': {
-                'day': '$day', 
-                'op_code': '$op_code', 
-                'site_name': '$usage.usage_op.site_name'
-            }, 
+            '_id': "$usage.op_code", 
             'sms_i_cnt': {
                 '$sum': '$usage.sms_i_cnt'
             }, 
@@ -131,8 +127,8 @@ def getdata_null_location_daily_usage(client,day):
     resultat = collection.aggregate(pipeline,cursor={})
     retour = {}
     for r in resultat :
-        retour[r['op_code']] = data_daily_usage(r)
-        if r['op_code'] == None:
+        retour[r['_id']] = data_daily_usage(r)
+        if r['_id'] == None:
             
             retour['null'] = data_daily_usage(r)
     print("Data from daily usage extracted")
@@ -148,7 +144,7 @@ def getdata_null_location_global_daily_usage(client,day):
         }
     }, {
         '$group': {
-            '_id': '$day', 
+            '_id': '$op_code', 
             'sms_i_cnt': {
                 '$sum': '$sms_i_cnt'
             }, 
@@ -235,7 +231,7 @@ def getdata_null_location_global_daily_usage(client,day):
     resultat = collection.aggregate(pipeline,cursor={})
     retour = {}
     for r in resultat:
-        retour[r['op_code']] = data_usage_global(r)
+        retour[r['_id']] = data_usage_global(r)
     return retour
 
 def comparaison_donne(global_daily_usage,daily_usage,all_op_code):

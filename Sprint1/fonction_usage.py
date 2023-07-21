@@ -132,7 +132,6 @@ def calcul_error_usage(global_data,daily_data):
              sms_vas_bndl_cnt_ecart,
              sms_vas_amnt_ecart
              ]
-    print(value)
 
     #Initialisation des parametres d erreur
     sms_i_cnt_error = Decimal(0)
