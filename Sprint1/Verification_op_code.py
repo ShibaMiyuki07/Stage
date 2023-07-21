@@ -5,7 +5,7 @@ import pymongo
 import mysql.connector
 
 def getop_code():
-    connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.196',database='DM_RF')
+    connexion = mysql.connector.connect(user='root',password='ShibaMiyuki07!',host='127.0.0.1',database='manitra')
     cursor = connexion.cursor() 
     query = "select distinct(name) as op_code from rf_operator"
     cursor.execute(query)
@@ -239,7 +239,7 @@ def comparaison_donne(global_daily_usage,daily_usage,all_op_code):
         if all_op_code[i] in daily_usage and all_op_code[i] in global_daily_usage:
             daily_data = daily_usage[all_op_code[i]]
             global_data = global_daily_usage[all_op_code[i]]
-            if calcul_error_usage(global_data,daily_data) == False:
+            if not calcul_error_usage(global_data,daily_data):
                 print("Erreur de donne avec l'operateur "+all_op_code[i].__str__())
             print("Donne de "+all_op_code[i] +" verifie")
         
@@ -253,7 +253,7 @@ def comparaison_donne(global_daily_usage,daily_usage,all_op_code):
     print("Verification termine")
 
 if __name__ == "__main__":
-    client = pymongo.MongoClient("mongodb://oma_dwh:Dwh4%40OrnZ@192.168.61.199:27017/?authMechanism=DEFAULT")
+    client = pymongo.MongoClient("mongodb://localhost:27017")
     date = sys.argv[1]
     date_time = datetime.strptime(date,'%Y-%m-%d')
     day = datetime(date_time.year,date_time.month,date_time.day)

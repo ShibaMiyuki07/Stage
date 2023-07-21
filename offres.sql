@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS `rf_subscriptions` (
   KEY `idx_codeprov` (`code_prov`),
   KEY `idx_long_name` (`long_name`),
   KEY `idx_name` (`name`)
-) ENGINE=TokuDB AUTO_INCREMENT=1541 DEFAULT CHARSET=utf8 `compression`='tokudb_zlib';
+)  AUTO_INCREMENT=1541 DEFAULT CHARSET=utf8 ;
 
 -- Listage des données de la table DM_RF.rf_subscriptions : 1 361 rows
 /*!40000 ALTER TABLE `rf_subscriptions` DISABLE KEYS */;

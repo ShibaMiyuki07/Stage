@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `rf_market` (
   `description` varchar(20) DEFAULT NULL,
   `id_billing_type` varchar(5) DEFAULT NULL,
   KEY `id_market` (`id_market`)
-) ENGINE=TokuDB DEFAULT CHARSET=utf8 `compression`='tokudb_zlib';
+)DEFAULT CHARSET=utf8;
 
 -- Listage des données de la table DM_RF.rf_market : 12 rows
 /*!40000 ALTER TABLE `rf_market` DISABLE KEYS */;

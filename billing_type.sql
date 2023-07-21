@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `rf_billing_type` (
   `name` varchar(45) NOT NULL,
   `color` varchar(6) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=TokuDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 `compression`='tokudb_zlib';
+)DEFAULT CHARSET=utf8 ;
 
 -- Listage des données de la table DM_RF.rf_billing_type : 5 rows
 /*!40000 ALTER TABLE `rf_billing_type` DISABLE KEYS */;
