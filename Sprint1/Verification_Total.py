@@ -235,8 +235,11 @@ def comparaison_donne(global_daily_usage,daily_usage,day):
     if calcul_error_usage(global_data,daily_data) != True:
         return False
     print("Verification totale par date verifie")
-    cmd = "python Verification_site.py "+sys.argv[1]
+    cmd = "python Verification_site.py "+sys.argv[1].__str__()
     os.system(cmd)
+
+def retraitement_donne_jour():
+    os.system("Echo 'retraitement a la date "+sys.argv[1].__str__()+"' ")
 
 if __name__ == "__main__":
     client = pymongo.MongoClient("mongodb://localhost:27017")
@@ -246,6 +249,5 @@ if __name__ == "__main__":
     print("Verification globale le "+day.__str__()+" enclenche")
     global_daily_usage = getTotal_usage_jour_daily_usage(client,date_time)
     daily_usage = getTotal_usage_jour_global_daily_usage(client,day)
-    if comparaison_donne(global_daily_usage,daily_usage,day) == False:
-        print("Erreur dans les totales par date")
+    comparaison_donne(global_daily_usage,daily_usage,day)
     

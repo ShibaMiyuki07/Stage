@@ -246,8 +246,11 @@ def compare_data(global_daily_usage,daily_usage,all_site):
             daily_data = daily_usage[all_site[i]]
             if calcul_error_usage(global_data,daily_data) == False :
                 return "Probleme dans les donnees"
-    return "Verification par site mety"            
-
+    if "null" in daily_usage:
+        daily_data = daily_usage["null"]
+        global_data = global_daily_usage["null"]
+        if calcul_error_usage(global_data,daily_data) == False:
+            return "Donnee incoherente"
     
 if __name__ == "__main__":
     client = pymongo.MongoClient("mongodb://oma_dwh:Dwh4%40OrnZ@192.168.61.199:27017/?authMechanism=DEFAULT")
