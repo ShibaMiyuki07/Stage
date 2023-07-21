@@ -1,24 +1,22 @@
 from datetime import datetime
-import os
 import sys
-import mysql.connector
+from fonction_usage import data_daily_usage,data_usage_global,calcul_error_usage
 import pymongo
-from fonction_usage import calcul_error_usage
+import mysql.connector
 
-from fonction_usage import data_usage_global
-
-def getall_site():
+def getop_code():
     connexion = mysql.connector.connect(user='',password='',host='127.0.0.1',database='WORK')
     cursor = connexion.cursor() 
-    query = "select distinct(sig_nom_site) as site_name from rf_sig_cell_krill_v3"
+    query = "select name as op_code from rf_operator"
     cursor.execute(query)
-    all_site = []
-    for(site_name) in cursor:
-        all_site.append(site_name)
-    print("Site extracte")
-    return all_site
+    liste_op = []
+    for(op_code) in cursor:
+        liste_op.append(op_code)
+    print("Liste des operateurs extracte")
+    return liste_op
 
-def daily_usage_total_by_day_site(client,day):
+
+def getdata_null_location_daily_usage(client,day):
     pipeline = [
     {
         '$match': {
@@ -34,13 +32,18 @@ def daily_usage_total_by_day_site(client,day):
         '$unwind': {
             'path': '$usage.usage_op', 
             'includeArrayIndex': 'b_s', 
-            'preserveNullAndEmptyArrays': True
+            'preserveNullAndEmptyArrays': False
+        }
+    }, {
+        '$match': {
+            'usage.usage_op.site_name': None
         }
     }, {
         '$group': {
             '_id': {
-                'day' : "$day",
-                'site_name' : "$usage.usage_op.site_name"
+                'day': '$day', 
+                'op_code': '$op_code', 
+                'site_name': '$usage.usage_op.site_name'
             }, 
             'sms_i_cnt': {
                 '$sum': '$usage.sms_i_cnt'
@@ -63,7 +66,7 @@ def daily_usage_total_by_day_site(client,day):
             'voice_o_amnt': {
                 '$sum': '$usage.usage_op.voice_o_amnt'
             }, 
-            'voice_o_bndl_vol': {
+            'voice_o_bndle_vol': {
                 '$sum': '$usage.usage_op.voice_o_bndl_vol'
             }, 
             'sms_o_main_cnt': {
@@ -127,28 +130,25 @@ def daily_usage_total_by_day_site(client,day):
     collection = db['daily_usage']
     resultat = collection.aggregate(pipeline,cursor={})
     retour = {}
-    for r in resultat:
-        try :
-            retour[r["_id"]['site_name']] = data_usage_global(r)
-        except:
-            retour["null"] = data_usage_global(r)
-    print("Donne par site daily usage extracte")
+    for r in resultat :
+        retour[r['op_code']] = data_daily_usage(r)
+        if r['op_code'] == None:
+            
+            retour['null'] = data_daily_usage(r)
+    print("Data from daily usage extracted")
     return retour
 
-
-def global_total_by_day_site(client,day):
+def getdata_null_location_global_daily_usage(client,day):
     pipeline = [
     {
         '$match': {
             'day': day, 
-            'usage_type': 'usage'
+            'usage_type': 'usage', 
+            'site_name': None
         }
     }, {
         '$group': {
-            '_id': {
-                'day': '$day', 
-                'site_name': '$site_name'
-            }, 
+            '_id': '$day', 
             'sms_i_cnt': {
                 '$sum': '$sms_i_cnt'
             }, 
@@ -170,7 +170,7 @@ def global_total_by_day_site(client,day):
             'voice_o_amnt': {
                 '$sum': '$voice_o_amnt'
             }, 
-            'voice_o_bndl_vol': {
+            'voice_o_bndle_vol': {
                 '$sum': '$voice_o_bndl_vol'
             }, 
             'sms_o_main_cnt': {
@@ -235,37 +235,30 @@ def global_total_by_day_site(client,day):
     resultat = collection.aggregate(pipeline,cursor={})
     retour = {}
     for r in resultat:
-        retour[r["_id"]['site_name']] = data_usage_global(r)
-        if r["_id"]['site_name'] == None:
-            retour["null"] = data_usage_global(r)
-    print("Donne par site global daily usage extracte")
+        retour[r['op_code']] = data_usage_global(r)
     return retour
-    
 
-def compare_data(global_daily_usage,daily_usage,all_site):
-    for i in range(len(all_site)):
-        if all_site[i] in global_daily_usage and all_site[i] in daily_usage:
-            global_data = global_daily_usage[all_site[i]]
-            daily_data = daily_usage[all_site[i]]
-            if calcul_error_usage(global_data,daily_data) == False :
-                return "Probleme dans les donnees"
-    if "null" in daily_usage:
-        daily_data = daily_usage["null"]
-        global_data = global_daily_usage["null"]
-        if calcul_error_usage(global_data,daily_data) == False:
-            cmd = "python Verification_op_code.py "+sys.argv[1]
-            os.system(cmd)
-    return "Donne par site verifie"
-    
-    
+def comparaison_donne(global_daily_usage,daily_usage,all_op_code):
+    for i in range(len(all_op_code)):
+        if all_op_code[i] in daily_usage and all_op_code[i] in global_daily_usage:
+            daily_data = daily_usage[all_op_code[i]]
+            global_data = global_daily_usage[all_op_code[i]]
+            if calcul_error_usage(global_data,daily_data) == False:
+                print("Erreur de donne avec l'operateur "+all_op_code[i].__str__())
+            print("Donne de "+all_op_code[i] +" verifie")
+        
+        elif all_op_code[i] in daily_usage and all_op_code[i] not in global_daily_usage:
+            print('Donne de '+all_op_code[i].__str__()+" non present dans global daily usage")
+        
+        elif all_op_code[i] not in daily_usage and all_op_code[i] not in global_daily_usage:
+            pass
+        elif all_op_code[i] not in daily_usage and all_op_code[i] in global_daily_usage:
+            print("Donne de "+all_op_code[i].__str__()+" non present dans daily usage")
+    print("Verifiication termine")
+
 if __name__ == "__main__":
-    client = pymongo.MongoClient("mongodb://oma_dwh:Dwh4%40OrnZ@192.168.61.199:27017/?authMechanism=DEFAULT")
+    client = pymongo.MongoClient("mongodb://localhost:27017")
     date = sys.argv[1]
     date_time = datetime.strptime(date,'%Y-%m-%d')
     day = datetime(date_time.year,date_time.month,date_time.day)
-    print("Verification par site du "+day.__str__()+" enclenche")
-    all_site = getall_site()
-    global_daily_usage = global_total_by_day_site(client,day)
-    daily_usage = daily_usage_total_by_day_site(client,day)
-    resultat = compare_data(global_daily_usage,daily_usage,all_site)
-    print(resultat)
+    print("Verification par op_code des valeurs nulles le "+day.__str__()+" enclenche")
