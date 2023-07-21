@@ -235,6 +235,8 @@ def global_total_by_day_site(client,day):
     retour = {}
     for r in resultat:
         retour[r["_id"]['site_name']] = data_usage_global(r)
+        if r["_id"]['site_name'] == None:
+            retour["null"] = data_usage_global(r)
     print("Donne par site global daily usage extracte")
     return retour
     
