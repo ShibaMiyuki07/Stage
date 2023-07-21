@@ -250,7 +250,7 @@ def comparaison_donne(global_daily_usage,daily_usage,all_op_code):
             pass
         elif all_op_code[i] not in daily_usage and all_op_code[i] in global_daily_usage:
             print("Donne de "+all_op_code[i].__str__()+" non present dans daily usage")
-    print("Verifiication termine")
+    print("Verification termine")
 
 if __name__ == "__main__":
     client = pymongo.MongoClient("mongodb://oma_dwh:Dwh4%40OrnZ@192.168.61.199:27017/?authMechanism=DEFAULT")
