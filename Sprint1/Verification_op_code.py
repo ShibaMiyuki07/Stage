@@ -7,7 +7,7 @@ import mysql.connector
 def getop_code():
     connexion = mysql.connector.connect(user='',password='',host='127.0.0.1',database='WORK')
     cursor = connexion.cursor() 
-    query = "select name as op_code from rf_operator"
+    query = "select distinct(name) as op_code from rf_operator"
     cursor.execute(query)
     liste_op = []
     for(op_code) in cursor:
@@ -262,3 +262,7 @@ if __name__ == "__main__":
     date_time = datetime.strptime(date,'%Y-%m-%d')
     day = datetime(date_time.year,date_time.month,date_time.day)
     print("Verification par op_code des valeurs nulles le "+day.__str__()+" enclenche")
+    global_daily_usage = getdata_null_location_global_daily_usage(client,day)
+    daily_usage = getdata_null_location_daily_usage(client,day)
+    all_op_code = getop_code()
+    comparaison_donne(global_daily_usage,daily_usage,all_op_code)
