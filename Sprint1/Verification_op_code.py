@@ -32,7 +32,7 @@ def getdata_null_location_daily_usage(client,day):
         '$unwind': {
             'path': '$usage.usage_op', 
             'includeArrayIndex': 'b_s', 
-            'preserveNullAndEmptyArrays': False
+            'preserveNullAndEmptyArrays': True
         }
     }, {
         '$match': {
@@ -236,20 +236,20 @@ def getdata_null_location_global_daily_usage(client,day):
 
 def comparaison_donne(global_daily_usage,daily_usage,all_op_code):
     for i in range(len(all_op_code)):
-        if all_op_code[i] in daily_usage and all_op_code[i] in global_daily_usage:
-            daily_data = daily_usage[all_op_code[i]]
-            global_data = global_daily_usage[all_op_code[i]]
+        if all_op_code[i][0] in daily_usage and all_op_code[i][0] in global_daily_usage:
+            daily_data = daily_usage[all_op_code[i][0]]
+            global_data = global_daily_usage[all_op_code[i][0]]
             if not calcul_error_usage(global_data,daily_data):
-                print("Erreur de donne avec l'operateur "+all_op_code[i].__str__())
-            print("Donne de "+all_op_code[i] +" verifie")
+                print("Erreur de donne avec l'operateur "+all_op_code[i][0].__str__())
+            print("Donne de "+all_op_code[i][0] +" verifie")
         
-        elif all_op_code[i] in daily_usage and all_op_code[i] not in global_daily_usage:
-            print('Donne de '+all_op_code[i].__str__()+" non present dans global daily usage")
+        elif all_op_code[i][0] in daily_usage and all_op_code[i][0] not in global_daily_usage:
+            print('Donne de '+all_op_code[i][0].__str__()+" non present dans global daily usage")
         
-        elif all_op_code[i] not in daily_usage and all_op_code[i] not in global_daily_usage:
+        elif all_op_code[i][0] not in daily_usage and all_op_code[i][0] not in global_daily_usage:
             pass
-        elif all_op_code[i] not in daily_usage and all_op_code[i] in global_daily_usage:
-            print("Donne de "+all_op_code[i].__str__()+" non present dans daily usage")
+        elif all_op_code[i][0] not in daily_usage and all_op_code[i][0] in global_daily_usage:
+            print("Donne de "+all_op_code[i][0].__str__()+" non present dans daily usage")
     print("Verification termine")
 
 if __name__ == "__main__":

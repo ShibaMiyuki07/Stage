@@ -8,7 +8,7 @@ from fonction_usage import calcul_error_usage
 from fonction_usage import data_usage_global
 
 def getall_site():
-    connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.196',database='DM_RF')
+    connexion = mysql.connector.connect(user='root',password='ShibaMiyuki07!',host='127.0.0.1',database='manitra')
     cursor = connexion.cursor() 
     query = "select distinct(sig_nom_site) as site_name from rf_sig_cell_krill_v3"
     cursor.execute(query)
@@ -253,13 +253,14 @@ def compare_data(global_daily_usage,daily_usage,all_site):
         daily_data = daily_usage["null"]
         global_data = global_daily_usage["null"]
         if calcul_error_usage(global_data,daily_data) == False:
+            print("Erreur des donnees par site dans site avec usage op non orange")
             cmd = "python Verification_op_code.py "+sys.argv[1]
             os.system(cmd)
     return "Donne par site verifie"
     
     
 if __name__ == "__main__":
-    client = pymongo.MongoClient("mongodb://oma_dwh:Dwh4%40OrnZ@192.168.61.199:27017/?authMechanism=DEFAULT")
+    client = pymongo.MongoClient("mongodb://localhost:27017")
     date = sys.argv[1]
     date_time = datetime.strptime(date,'%Y-%m-%d')
     day = datetime(date_time.year,date_time.month,date_time.day)
