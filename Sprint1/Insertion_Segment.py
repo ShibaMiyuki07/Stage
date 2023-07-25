@@ -362,11 +362,12 @@ def get_all_data_from_daily_usage(day,client):
             inserez['voice_i_amnt'] = r['usage'][i]['usage_op'][j]['voice_i_amnt']
           else:
             inserez['voice_i_amnt'] = 0   
-            
           insertion_data(inserez,client) 
-      
+
+
+
       ''' Si usage ne contient pas usage_op '''
-      else:
+    else:
         #Check si site name existe dans usage_op
           if "site_name" in r['usage'][i]:
             inserez['site_name'] = r['usage'][i]['site_name']
