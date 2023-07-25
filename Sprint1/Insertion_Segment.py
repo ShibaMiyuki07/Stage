@@ -3,7 +3,7 @@ import pymongo
 import sys
 from fonction_usage import data_daily_usage
 
-'''def get_all_segment(day,client):
+def get_all_segment(day,client):
   print('debut extraction segment par utilisateur')
   last_month = day.year.__str__()+day.month.__str__()
   if day.month == 1:
@@ -15,25 +15,17 @@ from fonction_usage import data_daily_usage
       last_month = date_to_use.year.__str__()+"0"+date_to_use.month.__str__()
     else:
       last_month = date_to_use.year.__str__()+"0"+date_to_use.month.__str__()
-    
-  pipeline = [
-    {
-        '$match': {
-            'day': last_month
-        }
-    }
-]
+  query = { "day" : last_month }
   db = client['cbm']
   collection = db['segment']
-  resultat = collection.aggregate(pipeline,cursor={})
+  resultat = collection.find(query,{ "party_id" : 1,"vbs_Segment_month" : 1 })
   retour = {}
   for r in resultat:
     retour[r['party_id']] = { 'segment' : r['vbs_Segment_month'] }
   print("Fin extraction segment par utilisateur")
   return retour
-'''  
   
-def get_segment_party_id(day,client,party_id):
+'''def get_segment_party_id(day,client,party_id):
   last_month = day.year.__str__()+day.month.__str__()
   if day.month == 1:
     date_to_use = datetime(day.year-1,12,1)
@@ -57,14 +49,14 @@ def get_segment_party_id(day,client,party_id):
   ]
   resultat = collection.aggregate(pipeline,cursor={},allowDiskUse= True)
   for r in resultat :
-    return r['vbs_Segment_month']
+    return r['vbs_Segment_month']'''
   
   
   
 def get_all_data_from_daily_usage(day,client):
   
   print('debut extraction daily usage')
-  pipeline = [
+  '''pipeline = [
     {
         '$match': {
             'day': day
@@ -176,10 +168,382 @@ def get_all_data_from_daily_usage(day,client):
     retour[r['_id']]['day'] = day
     retour[r['_id']]['segment'] =  get_segment_party_id(day,client,r['_id'])
     inserez.append(retour[r['_id']])
-    print("Donne "+i.__str__()+" extracte")
-    i+=1
   insertion_data(inserez,client)
-  return retour
+  return retour'''
+  
+  #test numero 2
+  #En utilisant l'algorithme utilise dans le serveur 199
+  query = { "day" : day ,"usage" : { "$exists" : True }}
+  db = client['cbm']
+  collection = db['daily_usage']
+  resultat = collection.find(query)
+  liste = []
+  for r in resultat:
+    inserez = {}
+    inserez['segment'] = liste_segment[r['party_id']]
+    inserez['day'] = day
+    for i in range(len(r['usage'])):
+    
+      inserez['op_code'] = r['usage'][i]['op_code']
+      
+      ''' Si usage contient usage_op '''
+      if "usage_op" in r['usage'][i]:
+        for j in range(len(r['usage'][i]['usage_op'])):
+        
+        #Check si site name existe dans usage_op
+          if "site_name" in r['usage'][i]['usage_op'][j]:
+            inserez['site_name'] = r['usage'][i]['usage_op'][j]['site_name']
+          else:
+            inserez['site_name'] = None
+            
+        #Check si voice_o_cnt existe dans usage_op
+          if "voice_o_cnt" in r['usage'][i]['usage_op'][j] : 
+            inserez['voice_o_cnt'] = r['usage'][i]['usage_op'][j]['voice_o_cnt']
+          else : 
+            inserez['voice_o_cnt'] = 0
+            
+        #Check si voice_o_main_vol existe dans usage_op    
+          if "voice_o_main_vol" in r['usage'][i]['usage_op'][j] : 
+            inserez['voice_o_main_vol'] = r['usage'][i]['usage_op'][j]['voice_o_main_vol']
+          else : 
+            inserez['voice_o_main_vol'] = 0
+            
+            
+        #Check si voice_o_amnt existe dans usage_op 
+          if "voice_o_amnt" in r['usage'][i]['usage_op'][j] : 
+            inserez['voice_o_amnt'] = r['usage'][i]['usage_op'][j]['voice_o_amnt']
+          else : 
+            inserez['voice_o_amnt'] = 0
+            
+        #Check si voice_o_bndl_vol existe dans usage_op    
+          if "voice_o_bndl_vol" in r['usage'][i]['usage_op'][j] : 
+            inserez['voice_o_bndl_vol'] = r['usage'][i]['usage_op'][j]['voice_o_bndl_vol']
+          else : 
+            inserez["voice_o_bndl_vol"] = 0
+            
+        #Check si sms_o_main_cnt existe dans usage_op 
+          if "sms_o_main_cnt" in r['usage'][i]['usage_op'][j] : 
+            inserez['sms_o_main_cnt'] = r['usage'][i]['usage_op'][j]["sms_o_main_cnt"]
+          else : 
+            inserez['sms_o_main_cnt'] = 0
+            
+        
+        #Check si sms_o_bndl_cnt existe dans usage_op 
+          if "sms_o_bndl_cnt" in r['usage'][i]['usage_op'][j] :
+            inserez['sms_o_bndl_cnt'] = r['usage'][i]['usage_op'][j]['sms_o_bndl_cnt']
+          else:
+            inserez['sms_o_bndl_cnt'] = 0
+            
+            
+        #Check si sms_o_amnt existe dans usage_op 
+          if "sms_o_amnt" in r['usage'][i]['usage_op'][j]:
+            inserez['sms_o_amnt'] = r['usage'][i]['usage_op'][j]['sms_o_amnt']
+          else:
+            inserez["sms_o_amnt"] = 0
+            
+            
+        #Check si data_main_vol existe dans usage_op 
+          if "data_main_vol" in r['usage'][i]['usage_op'][j]:
+            inserez["data_main_vol"] = r['usage'][i]['usage_op'][j]['data_main_vol']
+          else:
+            inserez['data_main_vol'] = 0
+          
+          
+        #Check si data_amnt existe dans usage_op 
+          if "data_amnt" in r['usage'][i]['usage_op'][j]:
+            inserez['data_amnt'] = r['usage'][i]['usage_op'][j]['data_amnt']
+          else :
+            inserez['data_amnt'] = 0
+            
+        #Check si usage_2G existe dans usage_op 
+          if "usage_2G" in r['usage'][i]['usage_op'][j]:
+            inserez['usage_2G'] = r['usage'][i]['usage_op'][j]['usage_2G']
+          else:
+            inserez['usage_2G'] = 0
+        
+        #Check si usage_3G existe dans usage_op 
+          if "usage_3G" in r['usage'][i]['usage_op'][j]:
+            inserez['usage_3G'] = r['usage'][i]['usage_op'][j]['usage_3G']
+          else :
+            inserez['usage_3G'] = 0
+          
+        #Check si usage_4G_FDD existe dans usage_op 
+          if "usage_4G_FDD" in r['usage'][i]['usage_op'][j]:
+            inserez['usage_4G_FDD'] = r['usage'][i]['usage_op'][j]['usage_4G_FDD']
+          else:
+            inserez['usage_4G_FDD'] = 0
+          
+          
+        #Check si usage_4G_TDD existe dans usage_op 
+          if "usage_4G_TDD" in r['usage'][i]['usage_op'][j]:
+            inserez['usage_4G_TDD'] = r['usage'][i]['usage_op'][j]['usage_4G_TDD']
+          else:
+            inserez['usage_4G_TDD'] = 0
+          
+        #Check si data_bndl_vol existe dans usage_op 
+          if "data_bndl_vol" in r['usage'][i]['usage_op'][j]:
+            inserez['data_bndl_vol'] = r['usage'][i]['usage_op'][j]['data_bndl_vol']
+          else:
+            inserez['data_bndl_vol'] = 0
+          
+          
+        #Check si voice_vas_cnt existe dans usage_op 
+          if "voice_vas_cnt" in r['usage'][i]['usage_op'][j]:
+            inserez['voice_vas_cnt'] = r['usage'][i]['usage_op'][j]['voice_vas_cnt']
+          else:
+             inserez['voice_vas_cnt'] = 0
+          
+          
+        #Check si voice_vas_amnt existe dans usage_op 
+          if "voice_vas_amnt" in r['usage'][i]['usage_op'][j]:
+            inserez['voice_vas_amnt'] = r['usage'][i]['usage_op'][j]['voice_vas_amnt']
+          else:
+            inserez['voice_vas_amnt'] = 0
+          
+          
+        #Check si voice_vas_maint_vol existe dans usage_op 
+          if "voice_vas_main_vol" in r['usage'][i]['usage_op'][j]:
+            inserez['voice_vas_main_vol'] = r['usage'][i]['usage_op'][j]['voice_vas_main_vol']
+          else:
+            inserez['voice_vas_main_vol'] = 0
+          
+          
+        #Check si voice_vas_bndl_vol existe dans usage_op 
+          if "voice_vas_bndl_vol" in r['usage'][i]['usage_op'][j]:
+            inserez['voice_vas_bndl_vol'] = r['usage'][i]['usage_op'][j]['voice_vas_bndl_vol']
+          else :
+            inserez['voice_vas_bndl_vol'] = 0
+          
+          
+        #Check si sms_vas_cnt existe dans usage_op 
+          if "sms_vas_cnt" in r['usage'][i]['usage_op'][j]:
+            inserez['sms_vas_cnt'] = r['usage'][i]['usage_op'][j]['sms_vas_cnt']
+          else:
+            inserez['sms_vas_cnt'] = 0
+          
+          
+        #Check si sms_vas_bndl_cnt existe dans usage_op 
+          if "sms_vas_bndl_cnt" in r['usage'][i]['usage_op'][j]:
+            inserez['sms_vas_bndl_cnt'] = r['usage'][i]['usage_op'][j]['sms_vas_bndl_cnt']
+          else:
+            inserez['sms_vas_bndl_cnt'] = 0
+          
+          
+        #Check si sms_vas_amnt existe dans usage_op 
+          if "sms_vas_amnt" in r['usage'][i]['usage_op'][j]:
+            inserez['sms_vas_amnt'] = r['usage'][i]['usage_op'][j]['sms_vas_amnt']
+          else:
+            inserez['sms_vas_amnt'] = 0  
+           
+           
+        #Check si sms_i_cnt existe dans usage_op 
+          if "sms_i_cnt" in r['usage'][i]['usage_op'][j]:
+            inserez['sms_i_cnt'] = r['usage'][i]['usage_op'][j]['sms_i_cnt']
+          else:
+            inserez['sms_i_cnt'] = 0
+          
+          
+        #Check si voice_i_cnt existe dans usage_op 
+          if "voice_i_cnt" in r['usage'][i]['usage_op'][j]:
+            inserez['voice_i_cnt'] = r['usage'][i]['usage_op'][j]['voice_i_cnt']
+          else:
+            inserez['voice_i_cnt'] = 0
+            
+            
+        #Check si voice_i_vol existe dans usage_op 
+          if "voice_i_vol" in r['usage'][i]['usage_op'][j]: 
+            inserez['voice_i_vol'] = r['usage'][i]['usage_op'][j]['voice_i_vol']
+          else:
+            inserez['voice_i_vol'] = 0
+          
+          
+        #Check si voice_i_amnt existe dans usage_op 
+          if "voice_i_amnt" in r['usage'][i]['usage_op'][j]:
+            inserez['voice_i_amnt'] = r['usage'][i]['usage_op'][j]['voice_i_amnt']
+          else:
+            inserez['voice_i_amnt'] = 0   
+            
+          insertion_data(inserez,client) 
+      
+      ''' Si usage ne contient pas usage_op '''
+      else:
+        #Check si site name existe dans usage_op
+          if "site_name" in r['usage'][i]:
+            inserez['site_name'] = r['usage'][i]['site_name']
+          else:
+            inserez['site_name'] = None
+            
+        #Check si voice_o_cnt existe dans usage_op
+          if "voice_o_cnt" in r['usage'][i] : 
+            inserez['voice_o_cnt'] = r['usage'][i]['voice_o_cnt']
+          else : 
+            inserez['voice_o_cnt'] = 0
+            
+        #Check si voice_o_main_vol existe dans usage_op    
+          if "voice_o_main_vol" in r['usage'][i] : 
+            inserez['voice_o_main_vol'] = r['usage'][i]['voice_o_main_vol']
+          else : 
+            inserez['voice_o_main_vol'] = 0
+            
+            
+        #Check si voice_o_amnt existe dans usage_op 
+          if "voice_o_amnt" in r['usage'][i] : 
+            inserez['voice_o_amnt'] = r['usage'][i]['voice_o_amnt']
+          else : 
+            inserez['voice_o_amnt'] = 0
+            
+        #Check si voice_o_bndl_vol existe dans usage_op    
+          if "voice_o_bndl_vol" in r['usage'][i] : 
+            inserez['voice_o_bndl_vol'] = r['usage'][i]['voice_o_bndl_vol']
+          else : 
+            inserez["voice_o_bndl_vol"] = 0
+            
+        #Check si sms_o_main_cnt existe dans usage_op 
+          if "sms_o_main_cnt" in r['usage'][i] : 
+            inserez['sms_o_main_cnt'] = r['usage'][i]["sms_o_main_cnt"]
+          else : 
+            inserez['sms_o_main_cnt'] = 0
+            
+        
+        #Check si sms_o_bndl_cnt existe dans usage_op 
+          if "sms_o_bndl_cnt" in r['usage'][i] :
+            inserez['sms_o_bndl_cnt'] = r['usage'][i]['sms_o_bndl_cnt']
+          else:
+            inserez['sms_o_bndl_cnt'] = 0
+            
+            
+        #Check si sms_o_amnt existe dans usage_op 
+          if "sms_o_amnt" in r['usage'][i]:
+            inserez['sms_o_amnt'] = r['usage'][i]['sms_o_amnt']
+          else:
+            inserez["sms_o_amnt"] = 0
+            
+            
+        #Check si data_main_vol existe dans usage_op 
+          if "data_main_vol" in r['usage'][i]:
+            inserez["data_main_vol"] = r['usage'][i]['data_main_vol']
+          else:
+            inserez['data_main_vol'] = 0
+          
+          
+        #Check si data_amnt existe dans usage_op 
+          if "data_amnt" in r['usage'][i]:
+            inserez['data_amnt'] = r['usage'][i]['data_amnt']
+          else :
+            inserez['data_amnt'] = 0
+            
+        #Check si usage_2G existe dans usage_op 
+          if "usage_2G" in r['usage'][i]:
+            inserez['usage_2G'] = r['usage'][i]['usage_2G']
+          else:
+            inserez['usage_2G'] = 0
+        
+        #Check si usage_3G existe dans usage_op 
+          if "usage_3G" in r['usage'][i]:
+            inserez['usage_3G'] = r['usage'][i]['usage_3G']
+          else :
+            inserez['usage_3G'] = 0
+          
+        #Check si usage_4G_FDD existe dans usage_op 
+          if "usage_4G_FDD" in r['usage'][i]:
+            inserez['usage_4G_FDD'] = r['usage'][i]['usage_4G_FDD']
+          else:
+            inserez['usage_4G_FDD'] = 0
+          
+          
+        #Check si usage_4G_TDD existe dans usage_op 
+          if "usage_4G_TDD" in r['usage'][i]:
+            inserez['usage_4G_TDD'] = r['usage'][i]['usage_4G_TDD']
+          else:
+            inserez['usage_4G_TDD'] = 0
+          
+        #Check si data_bndl_vol existe dans usage_op 
+          if "data_bndl_vol" in r['usage'][i]:
+            inserez['data_bndl_vol'] = r['usage'][i]['data_bndl_vol']
+          else:
+            inserez['data_bndl_vol'] = 0
+          
+          
+        #Check si voice_vas_cnt existe dans usage_op 
+          if "voice_vas_cnt" in r['usage'][i]:
+            inserez['voice_vas_cnt'] = r['usage'][i]['voice_vas_cnt']
+          else:
+             inserez['voice_vas_cnt'] = 0
+          
+          
+        #Check si voice_vas_amnt existe dans usage_op 
+          if "voice_vas_amnt" in r['usage'][i]:
+            inserez['voice_vas_amnt'] = r['usage'][i]['voice_vas_amnt']
+          else:
+            inserez['voice_vas_amnt'] = 0
+          
+          
+        #Check si voice_vas_maint_vol existe dans usage_op 
+          if "voice_vas_main_vol" in r['usage'][i]:
+            inserez['voice_vas_main_vol'] = r['usage'][i]['voice_vas_main_vol']
+          else:
+            inserez['voice_vas_main_vol'] = 0
+          
+          
+        #Check si voice_vas_bndl_vol existe dans usage_op 
+          if "voice_vas_bndl_vol" in r['usage'][i]:
+            inserez['voice_vas_bndl_vol'] = r['usage'][i]['voice_vas_bndl_vol']
+          else :
+            inserez['voice_vas_bndl_vol'] = 0
+          
+          
+        #Check si sms_vas_cnt existe dans usage_op 
+          if "sms_vas_cnt" in r['usage'][i]:
+            inserez['sms_vas_cnt'] = r['usage'][i]['sms_vas_cnt']
+          else:
+            inserez['sms_vas_cnt'] = 0
+          
+          
+        #Check si sms_vas_bndl_cnt existe dans usage_op 
+          if "sms_vas_bndl_cnt" in r['usage'][i]:
+            inserez['sms_vas_bndl_cnt'] = r['usage'][i]['sms_vas_bndl_cnt']
+          else:
+            inserez['sms_vas_bndl_cnt'] = 0
+          
+          
+        #Check si sms_vas_amnt existe dans usage_op 
+          if "sms_vas_amnt" in r['usage'][i]:
+            inserez['sms_vas_amnt'] = r['usage'][i]['sms_vas_amnt']
+          else:
+            inserez['sms_vas_amnt'] = 0  
+           
+           
+        #Check si sms_i_cnt existe dans usage_op 
+          if "sms_i_cnt" in r['usage'][i]:
+            inserez['sms_i_cnt'] = r['usage'][i]['sms_i_cnt']
+          else:
+            inserez['sms_i_cnt'] = 0
+          
+          
+        #Check si voice_i_cnt existe dans usage_op 
+          if "voice_i_cnt" in r['usage'][i]:
+            inserez['voice_i_cnt'] = r['usage'][i]['voice_i_cnt']
+          else:
+            inserez['voice_i_cnt'] = 0
+            
+            
+        #Check si voice_i_vol existe dans usage_op 
+          if "voice_i_vol" in r['usage'][i]: 
+            inserez['voice_i_vol'] = r['usage'][i]['voice_i_vol']
+          else:
+            inserez['voice_i_vol'] = 0
+          
+          
+        #Check si voice_i_amnt existe dans usage_op 
+          if "voice_i_amnt" in r['usage'][i]['usage_op'][j]:
+            inserez['voice_i_amnt'] = r['usage'][i]['voice_i_amnt']
+          else:
+            inserez['voice_i_amnt'] = 0   
+            
+          insertion_data(inserez,client) 
+  
+      
+  
   
 '''def insertion_in_data(client,day,liste_segment,daily_usage):
   print("Debut insertion des donnee")
@@ -198,13 +562,8 @@ def get_all_data_from_daily_usage(day,client):
     
 def insertion_data(data,client):
   db_insert = client['test']
-  collection_insert = db_insert['tmp_daily_segment']
-  collection_insert.insert_many(data)
-
-def delete_all_data_tmp(client):
-  db = client['test']
-  collection = db['tmp_daily_segment']
-  collection.delete_many({})
+  collection_insert = db_insert['tmp_global_daily_segment']
+  collection_insert.insert_one(data)
   
   
 if __name__ == '__main__':
@@ -212,7 +571,9 @@ if __name__ == '__main__':
   date = sys.argv[1]
   date_time = datetime.strptime(date,'%Y-%m-%d')
   day = datetime(date_time.year,date_time.month,date_time.day)
-  delete_all_data_tmp(client)
   #liste_segment = get_all_segment(day,client)
   daily_usage = get_all_data_from_daily_usage(day,client)
   #insertion_in_data(client,day,liste_segment,daily_usage)
+  
+  
+  
