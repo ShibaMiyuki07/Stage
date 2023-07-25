@@ -53,7 +53,7 @@ def get_all_segment(day,client):
   
   
   
-def get_all_data_from_daily_usage(day,client):
+def get_all_data_from_daily_usage(day,client,liste_segment):
   
   print('debut extraction daily usage')
   '''pipeline = [
@@ -177,15 +177,12 @@ def get_all_data_from_daily_usage(day,client):
   db = client['cbm']
   collection = db['daily_usage']
   resultat = collection.find(query)
-  liste = []
   for r in resultat:
     inserez = {}
     inserez['segment'] = liste_segment[r['party_id']]
     inserez['day'] = day
     for i in range(len(r['usage'])):
-    
       inserez['op_code'] = r['usage'][i]['op_code']
-      
       ''' Si usage contient usage_op '''
       if "usage_op" in r['usage'][i]:
         for j in range(len(r['usage'][i]['usage_op'])):
@@ -363,11 +360,9 @@ def get_all_data_from_daily_usage(day,client):
           else:
             inserez['voice_i_amnt'] = 0   
           insertion_data(inserez,client) 
-
-
-
-      ''' Si usage ne contient pas usage_op '''
-    else:
+      
+      #Check si usage_op n'est pas existante dans usage
+      else:
         #Check si site name existe dans usage_op
           if "site_name" in r['usage'][i]:
             inserez['site_name'] = r['usage'][i]['site_name']
