@@ -359,6 +359,7 @@ def get_all_data_from_daily_usage(day,client,liste_segment):
             inserez['voice_i_amnt'] = r['usage'][i]['usage_op'][j]['voice_i_amnt']
           else:
             inserez['voice_i_amnt'] = 0   
+            
           insertion_data(inserez,client) 
       
       #Check si usage_op n'est pas existante dans usage
@@ -567,8 +568,8 @@ if __name__ == '__main__':
   date = sys.argv[1]
   date_time = datetime.strptime(date,'%Y-%m-%d')
   day = datetime(date_time.year,date_time.month,date_time.day)
-  #liste_segment = get_all_segment(day,client)
-  daily_usage = get_all_data_from_daily_usage(day,client)
+  liste_segment = get_all_segment(day,client)
+  daily_usage = get_all_data_from_daily_usage(day,client,liste_segment)
   #insertion_in_data(client,day,liste_segment,daily_usage)
   
   
