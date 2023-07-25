@@ -1,7 +1,7 @@
 from datetime import datetime
 import sys
 import pymongo
-
+import os
 from fonction_usage import calcul_error_usage, data_daily_usage, data_usage_global
 
 def getdata_tmp(client,day):
@@ -35,7 +35,7 @@ def getdata_tmp(client,day):
             'voice_o_amnt': {
                 '$sum': '$voice_o_amnt'
             }, 
-            'voice_o_bndle_vol': {
+            'voice_o_bndl_vol': {
                 '$sum': '$voice_o_bndl_vol'
             }, 
             'sms_o_main_cnt': {
@@ -136,7 +136,7 @@ def getdata_global_daily(client,day):
             'voice_o_amnt': {
                 '$sum': '$voice_o_amnt'
             }, 
-            'voice_o_bndle_vol': {
+            'voice_o_bndl_vol': {
                 '$sum': '$voice_o_bndl_vol'
             }, 
             'sms_o_main_cnt': {
@@ -218,9 +218,14 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_segment):
             print("Donne du segment "+liste_segment[i].__str__()+" non existant dans daily usage")
         elif liste_segment[i] not in daily_usage and liste_segment[i] not in global_daily_usage:
             pass
+            
+def inserez_doc_a_comparer():
+  cmd = "python Insertion_Segment.py "+sys.argv[1]
+  os.system(cmd)
     
 if __name__ == "__main__":
-    client = pymongo.MongoClient("")
+    
+    client = pymongo.MongoClient("mongodb://oma_dwh:Dwh4%40OrnZ@192.168.61.199:27017/?authMechanism=DEFAULT")
     liste_segment = ["ZERO","SUPER LOW VALUE","LOW VALUE","MEDIUM","HIGH","SUPER HIGH VALUE","NEW","RETURN","VALUE","null"]
     date = sys.argv[1]
     date_time = datetime.strptime(date,'%Y-%m-%d')
