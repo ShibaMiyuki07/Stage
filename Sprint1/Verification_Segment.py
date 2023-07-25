@@ -205,6 +205,7 @@ def getdata_global_daily(client,day):
         else : retour["null"] = data_usage_global(r)
     return retour
 
+#Comparaison des donnees et de leur integrite
 def comparaison_donne(global_daily_usage,daily_usage,liste_segment):
     for i in range(len(liste_segment)):
         if liste_segment[i] in daily_usage and liste_segment[i] in global_daily_usage:
@@ -218,13 +219,14 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_segment):
             print("Donne du segment "+liste_segment[i].__str__()+" non existant dans daily usage")
         elif liste_segment[i] not in daily_usage and liste_segment[i] not in global_daily_usage:
             pass
-            
+
+#Insertion des documents avec leur segment 
 def inserez_doc_a_comparer():
   cmd = "python Insertion_Segment.py "+sys.argv[1]
   os.system(cmd)
     
 if __name__ == "__main__":
-    
+    inserez_doc_a_comparer()
     client = pymongo.MongoClient("mongodb://oma_dwh:Dwh4%40OrnZ@192.168.61.199:27017/?authMechanism=DEFAULT")
     liste_segment = ["ZERO","SUPER LOW VALUE","LOW VALUE","MEDIUM","HIGH","SUPER HIGH VALUE","NEW","RETURN","VALUE","null"]
     date = sys.argv[1]

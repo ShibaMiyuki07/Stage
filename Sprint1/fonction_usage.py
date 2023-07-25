@@ -105,34 +105,6 @@ def calcul_error_usage(global_data,daily_data):
     voice_vas_amnt_ecart = global_data['voice_vas_amnt'] - daily_data['voice_vas_amnt']
     sms_vas_amnt_ecart = global_data['sms_vas_amnt'] - daily_data['sms_vas_amnt']
 
-    #Compiler les donnees dans un tableau
-    value = [sms_i_cnt_ecart,
-             voice_i_cnt_ecart,
-             voice_i_vol_ecart,
-             voice_i_amnt_ecart,
-             voice_o_cnt_ecart,
-             voice_o_main_vol_ecart,
-             voice_o_amnt_ecart,
-             voice_o_bndl_vol_ecart,
-             sms_o_main_cnt_ecart,
-             sms_o_bndl_cnt_ecart,
-             sms_o_amnt_ecart,
-             data_main_vol_ecart,
-             data_amnt_ecart,
-             usage_2g_ecart,
-             usage_3g_ecart,
-             usage_4G_TDD_ecart
-             ,usage_4G_FDD_ecart,
-             data_bndl_vol_ecart,
-             voice_vas_cnt_ecart,
-             voice_vas_amnt_ecart,
-             voice_vas_main_vol_ecart,
-             voice_vas_bndl_vol_ecart,
-             sms_vas_cnt_ecart,
-             sms_vas_bndl_cnt_ecart,
-             sms_vas_amnt_ecart
-             ]
-
     #Initialisation des parametres d erreur
     sms_i_cnt_error = Decimal(0)
     voice_i_cnt_error = Decimal(0)
@@ -201,7 +173,7 @@ def calcul_error_usage(global_data,daily_data):
     if global_data['sms_vas_cnt'] != 0:
         sms_vas_cnt_error = (Decimal(sms_vas_cnt_ecart.__str__()) /Decimal(global_data['sms_vas_cnt'].__str__())) * Decimal(100)
     if global_data['sms_vas_bndl_cnt'] != 0:
-        sms_vas_bndl_cnt_error = (Decimal(sms_vas_bndl_cnt_error.__str__()) /Decimal(global_data['sms_vas_bndl_cnt'].__str__())) * Decimal(100)
+        sms_vas_bndl_cnt_error = (Decimal(sms_vas_bndl_cnt_ecart.__str__()) /Decimal(global_data['sms_vas_bndl_cnt'].__str__())) * Decimal(100)
     if global_data['voice_i_amnt'] != 0:
         voice_i_amnt_error = (Decimal(voice_i_amnt_ecart.__str__()) /Decimal(global_data['voice_i_amnt'].__str__())) * Decimal(100)
     if global_data['voice_o_amnt'] != 0:

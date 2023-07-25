@@ -200,6 +200,11 @@ def insertion_data(data,client):
   db_insert = client['test']
   collection_insert = db_insert['tmp_daily_segment']
   collection_insert.insert_many(data)
+
+def delete_all_data_tmp(client):
+  db = client['test']
+  collection = db['tmp_daily_segment']
+  collection.delete_many({})
   
   
 if __name__ == '__main__':
@@ -207,9 +212,7 @@ if __name__ == '__main__':
   date = sys.argv[1]
   date_time = datetime.strptime(date,'%Y-%m-%d')
   day = datetime(date_time.year,date_time.month,date_time.day)
+  delete_all_data_tmp(client)
   #liste_segment = get_all_segment(day,client)
   daily_usage = get_all_data_from_daily_usage(day,client)
   #insertion_in_data(client,day,liste_segment,daily_usage)
-  
-  
-  
