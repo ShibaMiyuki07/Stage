@@ -2,7 +2,6 @@ import os
 import pymongo
 import sys
 from datetime import datetime
-from  decimal import Decimal
 from fonction_usage import calcul_error_usage
 from fonction_usage import data_daily_usage,data_usage_global
 
