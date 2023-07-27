@@ -231,11 +231,12 @@ def comparaison_donne(global_daily_usage,daily_usage,day):
     global_data = global_daily_usage[day.__str__()]
     daily_data = daily_usage[day.__str__()]
 
-    if calcul_error_usage(global_data,daily_data) != True:
+    if calcul_error_usage(global_data,daily_data) == False:
         return False
-    print("Verification totale par date verifie")
-    cmd = "python Verification_site.py "+sys.argv[1].__str__()
-    os.system(cmd)
+    else:
+        print("Verification totale par date verifie")
+        cmd = "python Verification_site.py "+sys.argv[1].__str__()
+        os.system(cmd)
 
 def retraitement_donne_jour():
     os.system("Echo 'retraitement a la date "+sys.argv[1].__str__()+"' ")
