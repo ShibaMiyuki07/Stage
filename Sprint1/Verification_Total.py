@@ -105,8 +105,6 @@ def getTotal_usage_jour_global_daily_usage(client,day):
     #Ajout du resultat
     for r in resultat:
         retour[day.__str__()] = data_daily_usage(r)
-        
-
     print("Total global_daily_usage du "+day.__str__()+" extracte avec succes")
     return retour
 
@@ -220,8 +218,6 @@ def getTotal_usage_jour_daily_usage(client,day):
     #Ajout du resultat
     for r in resultat:
         retour[day.__str__()] = data_usage_global(r)
-        
-    
     print("Total daily_usage du "+day.__str__()+" extracte avec succes")
     return retour
 

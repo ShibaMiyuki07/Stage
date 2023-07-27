@@ -147,7 +147,7 @@ while($d1<=$d2){
                         }
                         else {$x['sms_i_cnt'] = 0;
                         } 
-                        if($value1['voice_i_cnt']>=0 && $value1['sms_i_cnt']!=NULL) $x['voice_i_cnt'] = $value1['voice_i_cnt'];
+                        if($value1['voice_i_cnt']>=0 && $value1['voice_i_cnt']!=NULL) $x['voice_i_cnt'] = $value1['voice_i_cnt'];
                         else $x['voice_i_cnt'] = 0;
                         if($value1['voice_i_vol']>=0 && $value1['voice_i_vol']!=NULL) $x['voice_i_vol'] = $value1['voice_i_vol'];
                         else $x['voice_i_vol'] = 0;
