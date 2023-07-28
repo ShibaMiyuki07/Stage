@@ -2,17 +2,16 @@ from datetime import datetime
 import sys
 import pymongo
 import mysql.connector
-from fonction_usage import data_daily_usage
+from fonction_usage import data_daily_usage,calcul_error_usage
 
 def getListe_Billing_type():
-    connexion = mysql.connector.connect(user='root',password='ShibaMiyuki07!',host='127.0.0.1',database='manitra')
+    connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.196',database='DM_RF')
     cursor = connexion.cursor() 
     query = "select name from rf_billing_type"
     cursor.execute(query)
     all_billing_type = []
     for(name) in cursor:
         all_billing_type.append(name)
-    print("Billing type extracte")
     return all_billing_type
 
 def getdata_daily_usage(client,day):
@@ -232,7 +231,13 @@ def getglobal_daily_usage(client,day):
 
 def comparaison_donne(global_daily_usage,daily_usage,liste_billing_type):
     for i in range(len(liste_billing_type)):
-        print(liste_billing_type[i])
+        if liste_billing_type[i][0] in daily_usage and liste_billing_type[i][0] in global_daily_usage:
+          global_data = global_daily_usage[liste_billing_type[i][0]]
+          daily_data = daily_usage[liste_billing_type[i][0]]
+          if calcul_error_usage(global_data,daily_data) == False:
+            print("Erreur de donne dans "+liste_billing_type[i][0])
+          else:
+            print("Donne dans "+liste_billing_type[i][0])  
 
 if __name__ == "__main__":
     client = pymongo.MongoClient("mongodb://oma_dwh:Dwh4%40OrnZ@192.168.61.199:27017/?authMechanism=DEFAULT")

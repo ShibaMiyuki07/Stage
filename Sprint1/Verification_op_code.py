@@ -5,7 +5,7 @@ import pymongo
 import mysql.connector
 
 def getop_code():
-    connexion = mysql.connector.connect(user='root',password='ShibaMiyuki07!',host='127.0.0.1',database='manitra')
+    connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.196',database='DM_RF')
     cursor = connexion.cursor() 
     query = "select distinct(name) as op_code from rf_operator"
     cursor.execute(query)
@@ -33,10 +33,6 @@ def getdata_null_location_daily_usage(client,day):
             'path': '$usage.usage_op', 
             'includeArrayIndex': 'b_s', 
             'preserveNullAndEmptyArrays': True
-        }
-    }, {
-        '$match': {
-            'usage.usage_op.site_name': None
         }
     }, {
         '$group': {
@@ -127,10 +123,10 @@ def getdata_null_location_daily_usage(client,day):
     resultat = collection.aggregate(pipeline,cursor={})
     retour = {}
     for r in resultat :
-        retour[r['_id']] = data_daily_usage(r)
         if r['_id'] == None:
-            
             retour['null'] = data_daily_usage(r)
+        else : 
+            retour[r['_id']] = data_daily_usage(r)
     print("Data from daily usage extracted")
     return retour
 
@@ -139,8 +135,7 @@ def getdata_null_location_global_daily_usage(client,day):
     {
         '$match': {
             'day': day, 
-            'usage_type': 'usage', 
-            'site_name': None
+            'usage_type': 'usage'
         }
     }, {
         '$group': {
@@ -231,7 +226,10 @@ def getdata_null_location_global_daily_usage(client,day):
     resultat = collection.aggregate(pipeline,cursor={})
     retour = {}
     for r in resultat:
-        retour[r['_id']] = data_usage_global(r)
+        if r['_id'] != None:
+          retour[r['_id']] = data_usage_global(r)
+        else :
+          retour['null'] = data_usage_global(r)
     return retour
 
 def comparaison_donne(global_daily_usage,daily_usage,all_op_code):
@@ -241,7 +239,8 @@ def comparaison_donne(global_daily_usage,daily_usage,all_op_code):
             global_data = global_daily_usage[all_op_code[i][0]]
             if not calcul_error_usage(global_data,daily_data):
                 print("Erreur de donne avec l'operateur "+all_op_code[i][0].__str__())
-            print("Donne de "+all_op_code[i][0] +" verifie")
+            else:
+                print("Donne de "+all_op_code[i][0] +" verifie")
         
         elif all_op_code[i][0] in daily_usage and all_op_code[i][0] not in global_daily_usage:
             print('Donne de '+all_op_code[i][0].__str__()+" non present dans global daily usage")
@@ -250,14 +249,12 @@ def comparaison_donne(global_daily_usage,daily_usage,all_op_code):
             pass
         elif all_op_code[i][0] not in daily_usage and all_op_code[i][0] in global_daily_usage:
             print("Donne de "+all_op_code[i][0].__str__()+" non present dans daily usage")
-    print("Verification termine")
 
 if __name__ == "__main__":
-    client = pymongo.MongoClient("mongodb://localhost:27017")
+    client = pymongo.MongoClient("mongodb://oma_dwh:Dwh4%40OrnZ@192.168.61.199:27017/?authMechanism=DEFAULT")
     date = sys.argv[1]
     date_time = datetime.strptime(date,'%Y-%m-%d')
     day = datetime(date_time.year,date_time.month,date_time.day)
-    print("Verification par op_code des valeurs nulles le "+day.__str__()+" enclenche")
     global_daily_usage = getdata_null_location_global_daily_usage(client,day)
     daily_usage = getdata_null_location_daily_usage(client,day)
     all_op_code = getop_code()
