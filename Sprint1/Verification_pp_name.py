@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import sys
 import pymongo
 from fonction_usage import calcul_error_usage, data_daily_usage, data_usage_global
