@@ -7,7 +7,7 @@ def insertion_data(r):
     return retour['data']
 
 
-def calcul_error(global_data,daily_data):
+def calcul_error(global_data,daily_data,taux_erreur):
     liste_key = list(daily_data.keys())
     error = []
     for i in liste_key:
@@ -16,9 +16,89 @@ def calcul_error(global_data,daily_data):
             erreur = 0.0
             if global_data[i] != 0:
                 erreur =(float) (ecart/global_data[liste_key[i]])*100
-            if abs(erreur) >1:
+            if abs(erreur) >taux_erreur:
                 error.append([i,erreur])
     if len(error)>0:
         print(error)
         return False
     return True
+
+
+def verification_cause(client,day,location):
+    pipeline_daily_usage= [
+    {
+        '$match': {
+            'day': day
+        }
+    }, {
+        '$unwind': {
+            'path': '$bundle', 
+            'includeArrayIndex': 'b', 
+            'preserveNullAndEmptyArrays': False
+        }
+    }, {
+        '$unwind': {
+            'path': '$bundle.subscription', 
+            'includeArrayIndex': 'b_s', 
+            'preserveNullAndEmptyArrays': False
+        }
+    }, 
+    {
+        '$match' : {
+            'bundle.subscription.site_name' : location
+        }
+    },
+    {
+        '$group': {
+            '_id': '$bundle.bndle_namde', 
+            'bndle_cnt': {
+                '$sum': '$bundle.subscription.bndle_cnt'
+            }, 
+            'bundle_amnt': {
+                '$sum': '$bundle.subscription.bndle_amnt'
+            }
+        }
+    }
+]
+    
+    pipeline_global = [
+    {
+        '$match': {
+            'day': day, 
+            'usage_type': 'bundle',
+            'site_name' : location
+        }
+    }, {
+        '$group': {
+            '_id': '$bndle_name', 
+            'bndle_cnt': {
+                '$sum': '$bndle_cnt'
+            }, 
+            'bundle_amnt': {
+                '$sum': '$bndle_amnt'
+            }
+        }
+    }
+]
+    db = client['cbm']
+    collection_daily = db['daily_usage']
+    collection_global = db['global_daily_usage']
+
+    resultat_daily = collection_daily.aggregate(pipeline_daily_usage,cursor={})
+    resultat_global = collection_global.aggregate(pipeline_global,cursor={})
+    donne_daily = {}
+    donne_global = {}
+    for r in resultat_daily:
+        donne_daily[r['_id']] = insertion_data(r)
+    for r in resultat_global:
+        donne_global[r['_id']] = insertion_data(r)
+
+    liste_key = list(donne_daily.keys())
+
+    for i in liste_key:
+        daily_data = donne_daily[i]
+        global_data = donne_global[i]
+        if not calcul_error(daily_data,global_data,0) :
+            print("Erreur sur "+i.__str__())
+        else:
+            pass

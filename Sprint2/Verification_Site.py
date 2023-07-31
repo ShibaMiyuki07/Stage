@@ -4,12 +4,12 @@ import sys
 import mysql.connector
 import pymongo
 
-from Fonction import insertion_data
+from Fonction import calcul_error, insertion_data, verification_cause
 
 def getall_site():
     connexion = mysql.connector.connect(user='root',password='ShibaMiyuki07!',host='127.0.0.1',database='manitra')
     cursor = connexion.cursor() 
-    query = "select distinct(sig_nom_site) as site_name from rf_sig_cell_krill_v3"
+    query = "select distinct(sig_nom_site) as site_name from rf_sig_cell_krill_v3 where sig_nom_site is not null"
     cursor.execute(query)
     all_site = []
     for(site_name) in cursor:
@@ -97,10 +97,11 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site):
         if liste_site[i] in daily_usage and liste_site[i] in global_daily_usage:
             global_data = global_daily_usage[liste_site[i]]
             daily_data = daily_usage[liste_site[i]]
-            if not comparaison_donne(global_data,daily_data):
-                print("Erreur de donne a "+liste_site[i])
+            if not calcul_error(global_data,daily_data,1):
+                print("Erreur de donne a "+liste_site[i].__str__())
+                verification_cause(client,day,liste_site[i])
             else:
-                print("Donne de "+liste_site[i]+"valide")
+                print("Donne de "+liste_site[i].__str__()+"valide")
     
 
     
