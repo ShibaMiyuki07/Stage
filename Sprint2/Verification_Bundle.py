@@ -68,7 +68,7 @@ def getglobal_usage(client,day):
         }
     }, {
         '$group': {
-            '_id': '$site_name', 
+            '_id': '$bndle_name', 
             'bndle_cnt': {
                 '$sum': '$bndle_cnt'
             }, 
