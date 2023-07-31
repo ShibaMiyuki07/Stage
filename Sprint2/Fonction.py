@@ -1,3 +1,6 @@
+from Verification_Bundle import getsubs
+
+
 def insertion_data(r):
     retour = {}
     retour['data'] = {
@@ -54,7 +57,7 @@ def verification_cause(client,day,location):
             'bndle_cnt': {
                 '$sum': '$bundle.subscription.bndle_cnt'
             }, 
-            'bundle_amnt': {
+            'bndle_amnt': {
                 '$sum': '$bundle.subscription.bndle_amnt'
             }
         }
@@ -74,7 +77,7 @@ def verification_cause(client,day,location):
             'bndle_cnt': {
                 '$sum': '$bndle_cnt'
             }, 
-            'bundle_amnt': {
+            'bndle_amnt': {
                 '$sum': '$bndle_amnt'
             }
         }
@@ -93,12 +96,19 @@ def verification_cause(client,day,location):
     for r in resultat_global:
         donne_global[r['_id']] = insertion_data(r)
 
-    liste_key = list(donne_daily.keys())
+    liste_subs = getsubs()
 
-    for i in liste_key:
-        daily_data = donne_daily[i]
-        global_data = donne_global[i]
-        if not calcul_error(daily_data,global_data,0) :
-            print("Erreur sur "+i.__str__())
-        else:
+    for i in range(len(liste_subs)):
+        if liste_subs[i] in donne_daily and liste_subs[i] in donne_global:
+            daily_data = donne_daily[liste_subs[i]]
+            global_data = donne_global[liste_subs[i]]
+            if not calcul_error(daily_data,global_data,0) :
+                print("Erreur sur "+i.__str__())
+            else:
+                pass
+        elif liste_subs[i] in donne_daily and liste_subs[i] not in donne_global:
+            print("Donne de "+liste_subs[i].__str__()+" inexistant dans global daily usage")
+        elif liste_subs[i] not in donne_daily and liste_subs[i] in donne_global:
+            print("Donne de "+liste_subs[i].__str__()+" inexistant dans daily usage")
+        elif liste_subs[i] not in donne_daily and liste_subs[i] not in donne_global:
             pass
