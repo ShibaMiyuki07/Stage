@@ -28,7 +28,10 @@ def getglobal_usage(client,day):
     retour = {}
     resultat = collection.aggregate(pipeline,cursor={})
     for r in resultat:
-        retour[day] = insertion_data(r)
+        if r['_id'] != None:
+            retour[r['_id']] = insertion_data(r)
+        else:
+            retour['null'] = insertion_data(r)
     return retour
 
 def getdaily_usage(client,day):
@@ -66,7 +69,10 @@ def getdaily_usage(client,day):
     retour = {}
     resultat = collection.aggregate(pipeline,cursor={})
     for r in resultat:
-        retour[day] = insertion_data(r)
+        if r['_id'] != None:
+            retour[r['_id']] = insertion_data(r)
+        else:
+            retour['null'] = insertion_data(r)
     return retour
 
 def comparaison_donne(daily_usage,global_daily_usage,liste_market):
