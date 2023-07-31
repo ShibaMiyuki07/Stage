@@ -18,9 +18,9 @@ def calcul_error(global_data,daily_data,taux_erreur):
             ecart =global_data[i] - daily_data[i]
             erreur = 0.0
             if global_data[i] != 0:
-                erreur =(float) (ecart/global_data[liste_key[i]])*100
+                erreur =(float) (ecart/global_data[i])*100
             if abs(erreur) >taux_erreur:
-                error.append([i,erreur])
+                error.append([i,erreur,ecart])
     if len(error)>0:
         print(error)
         return False
@@ -53,7 +53,7 @@ def verification_cause(client,day,location):
     },
     {
         '$group': {
-            '_id': '$bundle.bndle_namde', 
+            '_id': '$bundle.bndle_name', 
             'bndle_cnt': {
                 '$sum': '$bundle.subscription.bndle_cnt'
             }, 
@@ -103,12 +103,13 @@ def verification_cause(client,day,location):
             daily_data = donne_daily[liste_subs[i]]
             global_data = donne_global[liste_subs[i]]
             if not calcul_error(daily_data,global_data,0) :
-                print("Erreur sur "+i.__str__())
+                print("Erreur sur "+liste_subs[i].__str__())
             else:
                 pass
         elif liste_subs[i] in donne_daily and liste_subs[i] not in donne_global:
-            print("Donne de "+liste_subs[i].__str__()+" inexistant dans global daily usage")
+            print("Erreur Donne de "+liste_subs[i].__str__()+" inexistant dans global daily usage")
         elif liste_subs[i] not in donne_daily and liste_subs[i] in donne_global:
-            print("Donne de "+liste_subs[i].__str__()+" inexistant dans daily usage")
+            print(donne_global[liste_subs[i]])
+            print("Erreur Donne de "+liste_subs[i].__str__()+" inexistant dans daily usage")
         elif liste_subs[i] not in donne_daily and liste_subs[i] not in donne_global:
             pass

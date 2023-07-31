@@ -7,7 +7,7 @@ import pymongo
 from Fonction import calcul_error, insertion_data, verification_cause
 
 def getall_site():
-    connexion = mysql.connector.connect(user='root',password='ShibaMiyuki07!',host='127.0.0.1',database='manitra')
+    connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.196',database='DM_RF')
     cursor = connexion.cursor() 
     query = "select distinct(sig_nom_site) as site_name from rf_sig_cell_krill_v3 where sig_nom_site is not null"
     cursor.execute(query)
@@ -15,7 +15,6 @@ def getall_site():
     for(site_name) in cursor:
         all_site.append(codecs.encode(site_name[0],"UTF-8"))
     all_site.append("null")
-    print("Site extracte")
     return all_site
 
 def getglobal_usage(client,day):
@@ -31,7 +30,7 @@ def getglobal_usage(client,day):
             'bndle_cnt': {
                 '$sum': '$bndle_cnt'
             }, 
-            'bundle_amnt': {
+            'bndle_amnt': {
                 '$sum': '$bndle_amnt'
             }
         }
@@ -70,11 +69,11 @@ def getdaily_usage(client,day):
         }
     }, {
         '$group': {
-            '_id': '$bundle.site_name', 
+            '_id': '$bundle.subscription.site_name', 
             'bndle_cnt': {
                 '$sum': '$bundle.subscription.bndle_cnt'
             }, 
-            'bundle_amnt': {
+            'bndle_amnt': {
                 '$sum': '$bundle.subscription.bndle_amnt'
             }
         }
@@ -101,7 +100,7 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
                 print("Erreur de donne a "+liste_site[i].__str__())
                 verification_cause(client,day,liste_site[i])
             else:
-                print("Donne de "+liste_site[i].__str__()+"valide")
+              pass
     
 
     
