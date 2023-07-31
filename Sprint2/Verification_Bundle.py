@@ -1,5 +1,6 @@
 import codecs
 from datetime import datetime
+import os
 import sys
 import mysql.connector
 import pymongo
@@ -91,11 +92,13 @@ def getglobal_usage(client,day):
 
 
 def comparaison_donne(global_daily_usage,daily_usage,liste_subs,client,day):
+    nbr_erreur = 0
     for i in range(len(liste_subs)):
         if liste_subs[i] in daily_usage and liste_subs[i] in global_daily_usage:
             global_data = global_daily_usage[liste_subs[i]]
             daily_data = daily_usage[liste_subs[i]]
             if not calcul_error(global_data,daily_data,1):
+                nbr_erreur += 1
                 print("Erreur de donne a "+liste_subs[i].__str__())
             else:
                 pass
@@ -107,6 +110,10 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_subs,client,day):
             print("Erreur de donne "+liste_subs[i].__str__()+" global daily usage")
         elif liste_subs[i] not in daily_usage and liste_subs[i] not in global_daily_usage:
             pass
+
+    if nbr_erreur == 0:
+        cmd = "python Verification_Market.py "+sys.argv[1]
+        os.system(cmd)
 
 
 if __name__ == "__main__":

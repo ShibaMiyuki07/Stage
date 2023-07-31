@@ -1,5 +1,6 @@
 import codecs
 from datetime import datetime
+import os
 import sys
 import mysql.connector
 import pymongo
@@ -92,11 +93,13 @@ def getdaily_usage(client,day):
 
 
 def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
+    nbr_erreur = 0
     for i in range(len(liste_site)):
         if liste_site[i] in daily_usage and liste_site[i] in global_daily_usage:
             global_data = global_daily_usage[liste_site[i]]
             daily_data = daily_usage[liste_site[i]]
             if not calcul_error(global_data,daily_data,1):
+                nbr_erreur += 1
                 print("Erreur de donne a "+liste_site[i].__str__())
                 verification_cause(client,day,liste_site[i])
             else:
@@ -110,6 +113,11 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
         elif liste_site[i] not in daily_usage and liste_site[i] not in global_daily_usage:
             pass
 
+    if nbr_erreur ==0:
+        cmd = "python Verification_Bundle.py "+sys.argv[1]
+        os.system(cmd)
+
+        
     
 
 if __name__=="__main__":

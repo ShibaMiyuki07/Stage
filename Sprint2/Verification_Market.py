@@ -1,4 +1,5 @@
 from datetime import datetime
+import os
 import sys
 import pymongo
 from Fonction import insertion_data,calcul_error
@@ -17,7 +18,7 @@ def getglobal_usage(client,day):
             'bndle_cnt': {
                 '$sum': '$bndle_cnt'
             }, 
-            'bundle_amnt': {
+            'bndle_amnt': {
                 '$sum': '$bndle_amnt'
             }
         }
@@ -58,7 +59,7 @@ def getdaily_usage(client,day):
             'bndle_cnt': {
                 '$sum': '$bundle.subscription.bndle_cnt'
             }, 
-            'bundle_amnt': {
+            'bndle_amnt': {
                 '$sum': '$bundle.subscription.bndle_amnt'
             }
         }
@@ -76,11 +77,13 @@ def getdaily_usage(client,day):
     return retour
 
 def comparaison_donne(daily_usage,global_daily_usage,liste_market):
+    nbr_erreur = 0
     for i in range(len(liste_market)):
         if liste_market[i] in daily_usage and liste_market[i] in global_daily_usage:
             daily_data = daily_usage[liste_market[i]]
             global_data = global_daily_usage[liste_market[i]]
             if not calcul_error(global_data,daily_data,1):
+                nbr_erreur += 1
                 print("Erreur de donne dans le market "+liste_market[i].__str__())
             else:
                 print("Donne de "+liste_market[i].__str__()+" verifie")
@@ -94,6 +97,10 @@ def comparaison_donne(daily_usage,global_daily_usage,liste_market):
 
         elif liste_market[i] not in daily_usage and liste_market[i] not in global_daily_usage:
             pass
+
+    if nbr_erreur == 0:
+        cmd = "python Verification_Billing_Type.py "+sys.argv[1]
+        os.system(cmd)
 
 if __name__ == "__main__":
     liste_market = ["B2B","B2C","null"]

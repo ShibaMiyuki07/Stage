@@ -1,4 +1,5 @@
 from datetime import datetime
+import os
 import sys
 import pymongo
 from Fonction import calcul_error, insertion_data
@@ -17,7 +18,7 @@ def getglobal_usage(client,day):
             'bndle_cnt': {
                 '$sum': '$bndle_cnt'
             }, 
-            'bundle_amnt': {
+            'bndle_amnt': {
                 '$sum': '$bndle_amnt'
             }
         }
@@ -56,7 +57,7 @@ def getdaily_usage(client,day):
             'bndle_cnt': {
                 '$sum': '$bundle.subscription.bndle_cnt'
             }, 
-            'bundle_amnt': {
+            'bndle_amnt': {
                 '$sum': '$bundle.subscription.bndle_amnt'
             }
         }
@@ -73,8 +74,12 @@ def getdaily_usage(client,day):
 def comparaison_donne(global_daily_usage,daily_usage,day):
     global_data = global_daily_usage[day]
     daily_data = daily_usage[day]
-
-    calcul_error(global_data,daily_data,1)
+    nbr_erreur = 0
+    if not calcul_error(global_data,daily_data,1):
+        nbr_erreur += 1
+    if nbr_erreur == 0 :
+        cmd = "python Verification_Site.py "+sys.argv[1]
+        os.system(cmd)
 
     
 

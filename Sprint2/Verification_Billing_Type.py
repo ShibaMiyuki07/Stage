@@ -1,4 +1,5 @@
 from datetime import datetime
+import os
 import sys
 import pymongo
 from Fonction import calcul_error, insertion_data
@@ -87,11 +88,13 @@ def getdaily_usage(client,day):
     return retour
 
 def comparaison_donne(daily_usage,global_daily_usage,liste_bt):
+    nbr_erreur = 0
     for i in range(len(liste_bt)):
         if liste_bt[i] in daily_usage and liste_bt[i] in global_daily_usage:
             daily_data = daily_usage[liste_bt[i]]
             global_data = global_daily_usage[liste_bt[i]]
             if not calcul_error(global_data,daily_data,1):
+                nbr_erreur += 1
                 print("Erreur de donne dans le market "+liste_bt[i].__str__())
             else:
                 print("Donne de "+liste_bt[i].__str__()+" verifie")
@@ -105,6 +108,10 @@ def comparaison_donne(daily_usage,global_daily_usage,liste_bt):
 
         elif liste_bt[i] not in daily_usage and liste_bt[i] not in global_daily_usage:
             pass
+
+    if nbr_erreur == 0:
+        cmd = "python Verification_Segment.py "+sys.argv[1]
+        os.system(cmd)
 
 if __name__ == "__main__":
     liste_bt = getListe_Billing_type()

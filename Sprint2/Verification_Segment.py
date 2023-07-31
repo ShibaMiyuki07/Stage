@@ -90,7 +90,7 @@ def getglobal_usage(client,day):
             'bndle_cnt': {
                 '$sum': '$bndle_cnt'
             }, 
-            'bundle_amnt': {
+            'bndle_amnt': {
                 '$sum': '$bndle_amnt'
             }
         }
@@ -108,11 +108,13 @@ def getglobal_usage(client,day):
     return retour
 
 def comparaison_donne(global_daily_usage,daily_usage,liste_segment):
+    nbr_erreur = 0
     for i in range(len(liste_segment)):
         if liste_segment[i] in daily_usage and liste_segment[i] in global_daily_usage:
             daily_data = daily_usage[liste_segment[i]]
             global_data = global_daily_usage[liste_segment[i]]
             if not calcul_error(global_data,daily_data,1):
+                nbr_erreur += 1
                 print("Erreur de donne dans le segment "+liste_segment[i].__str__())
             else:
                 print("Donne de "+liste_segment[i].__str__()+" verifie")
@@ -126,6 +128,9 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_segment):
 
         elif liste_segment[i] not in daily_usage and liste_segment[i] not in global_daily_usage:
             pass
+    
+    if nbr_erreur == 0:
+        print("Verification termine avec succes")
 
 if __name__ == "__main__":
     liste_segment = ["ZERO","SUPER LOW VALUE","LOW VALUE","MEDIUM","HIGH","SUPER HIGH VALUE","NEW","RETURN","CHURN","null"]
