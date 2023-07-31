@@ -125,3 +125,48 @@ def verification_cause(client,day,location):
             print("Erreur Donne de "+liste_subs[i].__str__()+" inexistant dans daily usage")
         elif liste_subs[i] not in donne_daily and liste_subs[i] not in donne_global:
             pass
+
+
+def getdata_lieu_daily_usage(day,location,client):
+    pipeline = [
+    {
+        '$match': {
+            'day': day
+        }
+    }, {
+        '$unwind': {
+            'path': '$bundle', 
+            'includeArrayIndex': 'b', 
+            'preserveNullAndEmptyArrays': False
+        }
+    }, {
+        '$unwind': {
+            'path': '$bundle.subscription', 
+            'includeArrayIndex': 'b_s', 
+            'preserveNullAndEmptyArrays': False
+        }
+    }, 
+    {
+        '$match' : {
+            'bundle.subscription.site_name' : location
+        }
+    },
+    {
+        '$group': {
+            '_id': '$bundle.bndle_name', 
+            'bndle_cnt': {
+                '$sum': '$bundle.subscription.bndle_cnt'
+            }, 
+            'bndle_amnt': {
+                '$sum': '$bundle.subscription.bndle_amnt'
+            }
+        }
+    }
+]
+    db = client['cbm']
+    collection = db['daily_usage']
+    resultat = collection.aggregate(pipeline,cursor={})
+    retour={}
+    for r in resultat:
+        retour[r['_id']] = insertion_data(r)
+    return retour

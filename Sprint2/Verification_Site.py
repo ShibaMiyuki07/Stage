@@ -5,7 +5,7 @@ import sys
 import mysql.connector
 import pymongo
 
-from Fonction import calcul_error, insertion_data, verification_cause
+from Fonction import calcul_error, getdata_lieu_daily_usage, insertion_data, verification_cause
 
 def getall_site():
     connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.196',database='DM_RF')
@@ -109,6 +109,7 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
             print("Erreur de donne "+liste_site[i].__str__()+" daily usage")
         elif liste_site[i] in daily_usage and liste_site[i] not in global_daily_usage:
             print(daily_usage[liste_site[i]])
+            print(getdata_lieu_daily_usage(day,liste_site[i],client))
             print("Erreur de donne "+liste_site[i].__str__()+" global daily usage")
         elif liste_site[i] not in daily_usage and liste_site[i] not in global_daily_usage:
             pass
