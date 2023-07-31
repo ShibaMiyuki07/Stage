@@ -107,6 +107,7 @@ def verification_cause(client,day,location):
             else:
                 pass
         elif liste_subs[i] in donne_daily and liste_subs[i] not in donne_global:
+            print(donne_daily[liste_subs[i]])
             print("Erreur Donne de "+liste_subs[i].__str__()+" inexistant dans global daily usage")
         elif liste_subs[i] not in donne_daily and liste_subs[i] in donne_global:
             print(donne_global[liste_subs[i]])

@@ -100,8 +100,15 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
                 print("Erreur de donne a "+liste_site[i].__str__())
                 verification_cause(client,day,liste_site[i])
             else:
-              pass
-    
+                pass
+        elif liste_site[i] not in daily_usage and liste_site[i] in global_daily_usage:
+            print(global_daily_usage[liste_site[i]])
+            print("Erreur de donne "+liste_site[i].__str__()+" daily usage")
+        elif liste_site[i] in daily_usage and liste_site[i] not in global_daily_usage:
+            print(daily_usage[liste_site[i]])
+            print("Erreur de donne "+liste_site[i].__str__()+" global daily usage")
+        elif liste_site[i] not in daily_usage and liste_site[i] not in global_daily_usage:
+            pass
 
     
 
