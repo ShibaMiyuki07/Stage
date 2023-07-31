@@ -1,0 +1,61 @@
+[
+    {
+        '$match': {
+            'day': datetime(2023, 1, 11, 0, 0, 0, tzinfo=timezone.utc), 
+            'bundle': {
+                '$exists': True
+            }
+        }
+    }, {
+        '$lookup': {
+            'from': 'segment', 
+            'let': {
+                'party_id': '$party_id'
+            }, 
+            'pipeline': [
+                {
+                    '$match': {
+                        'day': '202212'
+                    }
+                }, {
+                    '$match': {
+                        '$expr': {
+                            '$eq': [
+                                '$$party_id', '$party_id'
+                            ]
+                        }
+                    }
+                }
+            ], 
+            'as': 'segment'
+        }
+    }, {
+        '$unwind': {
+            'path': '$segment', 
+            'includeArrayIndex': 's', 
+            'preserveNullAndEmptyArrays': True
+        }
+    }, {
+        '$unwind': {
+            'path': '$bundle', 
+            'includeArrayIndex': 'b', 
+            'preserveNullAndEmptyArrays': False
+        }
+    }, {
+        '$unwind': {
+            'path': '$bundle.subscription', 
+            'includeArrayIndex': 'b_s', 
+            'preserveNullAndEmptyArrays': False
+        }
+    }, {
+        '$group': {
+            '_id': '$segment.pot_segment_month', 
+            'bndle_cnt': {
+                '$sum': '$bundle.subscription.bndle_cnt'
+            }, 
+            'bndle_amnt': {
+                '$sum': '$bundle.subscription.bndle_amnt'
+            }
+        }
+    }
+]
