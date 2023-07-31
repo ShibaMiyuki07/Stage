@@ -92,7 +92,7 @@ def getdaily_usage(client,day):
     return retour
 
 
-def comparaison_donne(global_daily_usage,daily_usage,liste_site):
+def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
     for i in range(len(liste_site)):
         if liste_site[i] in daily_usage and liste_site[i] in global_daily_usage:
             global_data = global_daily_usage[liste_site[i]]
@@ -112,3 +112,6 @@ if __name__=="__main__":
     date_time = datetime.strptime(date,'%Y-%m-%d')
     day = datetime(date_time.year,date_time.month,date_time.day)
     liste_site = getall_site()
+    daily_usage = getdaily_usage(client,day)
+    global_daily_usage = getglobal_usage(client,day)
+    comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day)
