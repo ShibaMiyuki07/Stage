@@ -94,8 +94,12 @@ def getdaily_usage(client,day):
 
 def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
     nbr_erreur = 0
+    erreur = {}
+    erreur['usage_type'] = "bundle"
+    erreur['day'] = day
+    data = []
     for i in range(len(liste_site)):
-    
+        
         #Si le site existe on cherchera les erreurs superieur a 1% et afficheront les ecarts de donnees
         if liste_site[i] in daily_usage and liste_site[i] in global_daily_usage:
             global_data = global_daily_usage[liste_site[i]]
@@ -103,6 +107,7 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
             if not calcul_error(global_data,daily_data,1):
                 nbr_erreur += 1
                 print("Erreur de donne a "+liste_site[i].__str__())
+                data.append({"lieu": liste_site[i],"description": "donne errone dans ce site"})
                 verification_cause(client,day,liste_site[i])
             else:
                 pass
@@ -110,15 +115,16 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
         #Si le site n'existe pas dans daily usage on affichera les donnees inexistante
         elif liste_site[i] not in daily_usage and liste_site[i] in global_daily_usage:
             print("Donnes inexistant : "+global_daily_usage[liste_site[i]].__str__())
-            print("Liste des donnes"+getdata_lieu_global(day,liste_site[i],client).__str__())
             print("Erreur de donne "+liste_site[i].__str__()+" daily usage")
+            data.append({ "lieu": liste_site[i],"data" : global_daily_usage[liste_site[i]],"donne errone" : getdata_lieu_global(day,liste_site[i],client),"description":"Donne non existant dans daily usage" })
             
             
         #Si le site n'existe pas dans global daily usage on affichera les donnees inexistante
         elif liste_site[i] in daily_usage and liste_site[i] not in global_daily_usage:
             print("Donne inexistant : "+daily_usage[liste_site[i]].__str__())
-            print("Liste des donnes"+getdata_lieu_daily_usage(day,liste_site[i],client).__str__())
             print("Erreur de donne "+liste_site[i].__str__()+" global daily usage")
+            data.append({ "lieu": liste_site[i],"data" : daily_usage[liste_site[i]],"donne errone": getdata_lieu_daily_usage(day,liste_site[i],client),"description":"Donne non existant dans global daily usage" })
+            
         elif liste_site[i] not in daily_usage and liste_site[i] not in global_daily_usage:
             pass
 
@@ -126,8 +132,15 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
         cmd = "python Verification_Bundle.py "+sys.argv[1]
         os.system(cmd)
 
-        
-    
+    else:
+        erreur['nbr_erreur'] = nbr_erreur
+        erreur['data'] = data
+        insertion_donne(client,data)
+
+def insertion_donne(client,donne):
+    db = client['test']
+    collection = db['daily_usage_verification']
+    collection.insert_one(donne)
 
 if __name__=="__main__":
     client = pymongo.MongoClient("mongodb://oma_dwh:Dwh4%40OrnZ@192.168.61.199:27017/?authMechanism=DEFAULT")
