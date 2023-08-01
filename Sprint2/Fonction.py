@@ -119,15 +119,21 @@ def verification_cause(client,day,location):
             error = calcul_error(daily_data,global_data,0)
             if not  error['retour']:
                 print("Erreur sur "+liste_subs[i].__str__())
-                details({'bndle_name' : liste_subs[i],'data' : error['data'],'description': 'donne errone dans souscription'})
+                details.append({'bndle_name' : liste_subs[i],'data' : error['data'],'description': 'donne errone dans souscription'})
             else:
                 pass
+                
+        #Si l'offre n'existe pas dans global daily usage ajoute les donne dans la base
         elif liste_subs[i] in donne_daily and liste_subs[i] not in donne_global:
             print("Erreur Donne de "+liste_subs[i].__str__()+" inexistant dans global daily usage")
             details.append({ "description": "Donne inexistante dans global daily usage",'bndle_name' : liste_subs[i],'donne' : donne_daily[liste_subs[i]]})
+            
+        #Si l'offre n'existe pas dans daily usage ajoute les donne dans la base
         elif liste_subs[i] not in donne_daily and liste_subs[i] in donne_global:
             details.append({ "description": "Donne inexistante dans daily usage",'bndle_name' : liste_subs[i],'donne' : donne_global[liste_subs[i]]})
             print("Erreur Donne de "+liste_subs[i].__str__()+" inexistant dans daily usage")
+            
+        #Si l'offre n'existe pas dans les deux ne rien faire
         elif liste_subs[i] not in donne_daily and liste_subs[i] not in donne_global:
             pass
     return details
