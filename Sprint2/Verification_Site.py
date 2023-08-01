@@ -115,6 +115,7 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
                 
         #Si le site n'existe pas dans daily usage on affichera les donnees inexistante
         elif liste_site[i] not in daily_usage and liste_site[i] in global_daily_usage:
+            nbr_erreur += 1
             print("Donnes inexistant : "+global_daily_usage[liste_site[i]].__str__())
             print("Erreur de donne "+liste_site[i].__str__()+" daily usage")
             data.append({ "lieu": liste_site[i],"data" : global_daily_usage[liste_site[i]],"donne errone" : getdata_lieu_global(day,liste_site[i],client),"description":"Donne non existant dans daily usage" })
@@ -122,6 +123,7 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
             
         #Si le site n'existe pas dans global daily usage on affichera les donnees inexistante
         elif liste_site[i] in daily_usage and liste_site[i] not in global_daily_usage:
+            nbr_erreur += 1
             print("Donne inexistant : "+daily_usage[liste_site[i]].__str__())
             print("Erreur de donne "+liste_site[i].__str__()+" global daily usage")
             data.append({ "lieu": liste_site[i],"data" : daily_usage[liste_site[i]],"donne errone": getdata_lieu_daily_usage(day,liste_site[i],client),"description":"Donne non existant dans global daily usage" })
@@ -135,12 +137,13 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
 
     else:
         erreur['nbr_erreur'] = nbr_erreur
-        erreur['data'] = data
-        insertion_donne(client,data)
+        erreur['erreur'] = data
+        insertion_donne(client,erreur)
 
 def insertion_donne(client,donne):
     db = client['test']
     collection = db['daily_usage_verification']
+    collection.delete_one({ "day" : donne['day'] })
     collection.insert_one(donne)
 
 if __name__=="__main__":
