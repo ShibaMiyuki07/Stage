@@ -89,23 +89,29 @@ def getglobal_usage(client,day):
             retour["null"] = insertion_data(r)
     return retour
 
-def comparaison_donne(global_daily_usage,daily_usage,liste_site):
+def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
+    erreur = {}
+    erreur['day'] = day
+    erreur['usage_type'] = 'topup'
+    data = []
     for i in range(len(liste_site)):
         if liste_site[i] in global_daily_usage and liste_site[i] in daily_usage:
             global_data = global_daily_usage[liste_site[i]]
             daily_data = daily_usage[liste_site[i]]
             error = calcul_error(global_data,daily_data,1)
             if not error['retour']:
-                print(error['data'])
                 print('Erreur de donne a '+liste_site[i].__str__())
+                data.append({ 'lieu' : liste_site[i],'data' : error['data'],'description' : 'Donne errone dans ce site' })
             else:
                 pass
         elif liste_site[i] in global_daily_usage and liste_site[i] not in daily_usage:
             print(global_daily_usage[liste_site[i]])
             print('erreur donne de '+liste_site[i]+" inexistant dans daily usage")
+            data.append({ 'lieu' : liste_site[i],'data' : global_daily_usage[liste_site[i]],'description' : 'Donne inexistant dans daily usage' })
         elif liste_site[i] in daily_usage and liste_site[i] not in global_daily_usage:
             print(daily_usage[liste_site[i]])
             print('erreur donne de '+liste_site[i].__str__()+" inexistant dans global daily usage")
+            data.append({ 'lieu' : liste_site[i],'data' : daily_usage[liste_site[i]],'description' : 'Donne inexistant dans global daily usage' })
         elif liste_site[i] not in daily_usage and liste_site[i] not in global_daily_usage:
             pass
 
@@ -119,5 +125,5 @@ if __name__ == "__main__":
     day = datetime(date_time.year,date_time.month,date_time.day)
     global_daily_usage = getglobal_usage(client,day)
     daily_usage = getdaily_usage(client,day)
-    comparaison_donne(global_daily_usage,daily_usage,liste_site)
+    comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day)
 
