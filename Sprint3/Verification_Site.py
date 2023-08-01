@@ -96,12 +96,15 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site):
             daily_data = daily_usage[liste_site[i]]
             error = calcul_error(global_data,daily_data,1)
             if not error['retour']:
+                print(error['data'])
                 print('Erreur de donne a '+liste_site[i].__str__())
             else:
-                print('Donne valide a '+liste_site[i].__str__())
-        elif liste_site[i] in global_daily_usage and liste_site not in daily_usage:
+                pass
+        elif liste_site[i] in global_daily_usage and liste_site[i] not in daily_usage:
+            print(global_daily_usage[liste_site[i]])
             print('erreur donne de '+liste_site[i]+" inexistant dans daily usage")
         elif liste_site[i] in daily_usage and liste_site[i] not in global_daily_usage:
+            print(daily_usage[liste_site[i]])
             print('erreur donne de '+liste_site[i].__str__()+" inexistant dans global daily usage")
         elif liste_site[i] not in daily_usage and liste_site[i] not in global_daily_usage:
             pass
