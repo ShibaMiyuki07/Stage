@@ -5,7 +5,7 @@ import sys
 import mysql.connector
 import pymongo
 
-from Fonction import calcul_error, getdata_lieu_daily_usage, insertion_data, verification_cause
+from Fonction import calcul_error, getdata_lieu_daily_usage, insertion_data, verification_cause,getdata_lieu_global
 
 def getall_site():
     connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.196',database='DM_RF')
@@ -14,7 +14,7 @@ def getall_site():
     cursor.execute(query)
     all_site = []
     for(site_name) in cursor:
-        all_site.append(codecs.encode(site_name[0],"UTF-8"))
+        all_site.append(site_name[0])
     all_site.append("null")
     return all_site
 
@@ -43,7 +43,7 @@ def getglobal_usage(client,day):
     resultat = collection.aggregate(pipeline,cursor={})
     for r in resultat:
         if r['_id'] != None:
-            retour[codecs.encode(r['_id'],"UTF-8")] = insertion_data(r)
+            retour[r['_id']] = insertion_data(r)
         else :
             retour['null'] = insertion_data(r)
     return retour
@@ -86,7 +86,7 @@ def getdaily_usage(client,day):
     resultat = collection.aggregate(pipeline,cursor={})
     for r in resultat:
         if r['_id'] != None:
-            retour[codecs.encode(r['_id'],"UTF-8")] = insertion_data(r)
+            retour[r['_id']] = insertion_data(r)
         else :
             retour['null'] = insertion_data(r)
     return retour
@@ -95,6 +95,8 @@ def getdaily_usage(client,day):
 def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
     nbr_erreur = 0
     for i in range(len(liste_site)):
+    
+        #Si le site existe on cherchera les erreurs superieur a 1% et afficheront les ecarts de donnees
         if liste_site[i] in daily_usage and liste_site[i] in global_daily_usage:
             global_data = global_daily_usage[liste_site[i]]
             daily_data = daily_usage[liste_site[i]]
@@ -104,12 +106,18 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
                 verification_cause(client,day,liste_site[i])
             else:
                 pass
+                
+        #Si le site n'existe pas dans daily usage on affichera les donnees inexistante
         elif liste_site[i] not in daily_usage and liste_site[i] in global_daily_usage:
-            print(global_daily_usage[liste_site[i]])
+            print("Donnes inexistant : "+global_daily_usage[liste_site[i]].__str__())
+            print("Liste des donnes"+getdata_lieu_global(day,liste_site[i],client).__str__())
             print("Erreur de donne "+liste_site[i].__str__()+" daily usage")
+            
+            
+        #Si le site n'existe pas dans global daily usage on affichera les donnees inexistante
         elif liste_site[i] in daily_usage and liste_site[i] not in global_daily_usage:
-            print(daily_usage[liste_site[i]])
-            print(getdata_lieu_daily_usage(day,liste_site[i],client))
+            print("Donne inexistant : "+daily_usage[liste_site[i]].__str__())
+            print("Liste des donnes"+getdata_lieu_daily_usage(day,liste_site[i],client).__str__())
             print("Erreur de donne "+liste_site[i].__str__()+" global daily usage")
         elif liste_site[i] not in daily_usage and liste_site[i] not in global_daily_usage:
             pass

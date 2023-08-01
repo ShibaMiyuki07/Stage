@@ -8,7 +8,7 @@ def getsubs():
     cursor.execute(query)
     subs_list = []
     for(name) in cursor:
-        subs_list.append(codecs.encode(name[0],"UTF-8"))
+        subs_list.append(name[0])
     subs_list.append("null")
     return subs_list
 
@@ -106,7 +106,6 @@ def verification_cause(client,day,location):
         donne_daily[r['_id']] = insertion_data(r)
     for r in resultat_global:
         donne_global[r['_id']] = insertion_data(r)
-
     liste_subs = getsubs()
 
     for i in range(len(liste_subs)):
@@ -165,6 +164,35 @@ def getdata_lieu_daily_usage(day,location,client):
 ]
     db = client['cbm']
     collection = db['daily_usage']
+    resultat = collection.aggregate(pipeline,cursor={})
+    retour={}
+    for r in resultat:
+        retour[r['_id']] = insertion_data(r)
+    return retour
+    
+    
+def getdata_lieu_global(day,location,client):
+    pipeline = [
+    {
+        '$match': {
+            'day': day, 
+            'usage_type': 'bundle',
+            'site_name' : location
+        }
+    }, {
+        '$group': {
+            '_id': '$bndle_name', 
+            'bndle_cnt': {
+                '$sum': '$bndle_cnt'
+            }, 
+            'bndle_amnt': {
+                '$sum': '$bndle_amnt'
+            }
+        }
+    }
+]
+    db = client['cbm']
+    collection = db['global_daily_usage']
     resultat = collection.aggregate(pipeline,cursor={})
     retour={}
     for r in resultat:
