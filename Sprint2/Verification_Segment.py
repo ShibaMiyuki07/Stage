@@ -107,10 +107,14 @@ def getglobal_usage(client,day):
             retour['null'] = insertion_data(r)
     return retour
 
-def comparaison_donne(global_daily_usage,daily_usage,liste_segment,day):
+def comparaison_donne(global_daily_usage,daily_usage,liste_segment,day,client):
     erreur = {}
+    erreur['day'] = day
+    erreur['usage_type'] = 'bundle'
+    data = []
     nbr_erreur = 0
     for i in range(len(liste_segment)):
+        #Si les donnees sont existantes dans les 2 bases
         if liste_segment[i] in daily_usage and liste_segment[i] in global_daily_usage:
             daily_data = daily_usage[liste_segment[i]]
             global_data = global_daily_usage[liste_segment[i]]
@@ -118,24 +122,47 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_segment,day):
             if not error['retour']:
                 nbr_erreur += 1
                 print("Erreur de donne dans le segment "+liste_segment[i].__str__())
+                data.append({'segment' : liste_segment[i] ,'data' : error['data'], 'description' : 'Donne errone dans ce segment'})
             else:
                 print("Donne de "+liste_segment[i].__str__()+" verifie")
+
+        #Si le segemnt n'existe pas dans global daily usage
         elif liste_segment[i] in daily_usage and liste_segment[i] not in global_daily_usage:
             nbr_erreur += 1
-            print(daily_usage[liste_segment[i]])
             print("Erreur de Donne de "+liste_segment[i].__str__()+" non existant dans global daily usage")
+            data.append({'segment' : liste_segment[i] ,'data' : daily_usage[liste_segment[i]], 'description' : 'Donne inexistant dans global daily usage'})
         
+        #Si le segment n'existe pas dans daily usage
         elif liste_segment[i] not in daily_usage and liste_segment[i] in global_daily_usage:
             nbr_erreur += 1
             print(global_daily_usage[liste_segment[i]])
             print("Erreur de Donne de "+liste_segment[i].__str__()+" non existant dans daily usage")
+            data.append({'segment' : liste_segment[i] ,'data' : global_daily_usage[liste_segment[i]], 'description' : 'Donne inexistant dans daily usage'})
 
+        #Si il n'existe pas dans les deux
         elif liste_segment[i] not in daily_usage and liste_segment[i] not in global_daily_usage:
             pass
     
     if nbr_erreur == 0:
-        print("Verification termine avec succes")
+        #Ajout des donnes dans 
+        erreur['erreur_segment_cnt'] = nbr_erreur
+    else:
+        erreur['erreur_segment_cnt'] = nbr_erreur
+        erreur['erreur_segment'] = data
+    insertion_donne(client,erreur)
 
+
+def insertion_donne(client,donne):
+    db = client['test']
+    collection = db['daily_usage_verification']
+    resultat = collection.aggregate([{'$match' : {"day" : donne['day'],'usage_type' : 'bunde'}},{'$count' : 'nbr'}  ])
+    count = 0
+    for r in resultat:
+        count = r['nbr']
+    if count>0:
+        collection.update_one({"day" : donne['day'],'usage_type' : 'bundle' },{"$set" : {"erreur_segment" : donne['data'],"erreur_segment_cnt" : donne['erreur_segment_cnt']}})
+    else:
+        collection.insert_one(donne)
 if __name__ == "__main__":
     liste_segment = ["ZERO","SUPER LOW VALUE","LOW VALUE","MEDIUM","HIGH","SUPER HIGH VALUE","NEW","RETURN","CHURN","null"]
     client = pymongo.MongoClient("mongodb://oma_dwh:Dwh4%40OrnZ@192.168.61.199:27017/?authMechanism=DEFAULT")

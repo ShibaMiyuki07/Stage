@@ -108,6 +108,8 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
             if not error['retour']:
                 nbr_erreur += 1
                 print("Erreur de donne a "+liste_site[i].__str__())
+
+                #Ajout des donne commente dans la base de donne
                 data.append({"lieu": liste_site[i],"data" : error["data"],"description": "donne errone dans ce site","details" :verification_cause(client,day,liste_site[i]) })
                 
             else:
@@ -118,6 +120,8 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
             nbr_erreur += 1
             print("Donnes inexistant : "+global_daily_usage[liste_site[i]].__str__())
             print("Erreur de donne "+liste_site[i].__str__()+" daily usage")
+
+            #Ajout des donne commente dans la base de donne
             data.append({ "lieu": liste_site[i],"data" : global_daily_usage[liste_site[i]],"donne errone" : getdata_lieu_global(day,liste_site[i],client),"description":"Donne non existant dans daily usage" })
             
             
@@ -126,6 +130,8 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
             nbr_erreur += 1
             print("Donne inexistant : "+daily_usage[liste_site[i]].__str__())
             print("Erreur de donne "+liste_site[i].__str__()+" global daily usage")
+
+            #Ajout des donne commente dans la base de donne
             data.append({ "lieu": liste_site[i],"data" : daily_usage[liste_site[i]],"donne errone": getdata_lieu_daily_usage(day,liste_site[i],client),"description":"Donne non existant dans global daily usage" })
             
         elif liste_site[i] not in daily_usage and liste_site[i] not in global_daily_usage:
@@ -136,15 +142,21 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
         os.system(cmd)
 
     else:
-        erreur['nbr_erreur'] = nbr_erreur
-        erreur['erreur'] = data
-        insertion_donne(client,erreur)
+        erreur['erreur_site_cnt'] = nbr_erreur
+        erreur['erreur_site'] = data
+    insertion_donne(client,erreur)
 
 def insertion_donne(client,donne):
     db = client['test']
     collection = db['daily_usage_verification']
-    collection.delete_one({ "day" : donne['day'] })
-    collection.insert_one(donne)
+    resultat = collection.aggregate([{'$match' : {"day" : donne['day'],'usage_type' : 'bundle'}},{'$count' : 'nbr'}  ])
+    count = 0
+    for r in resultat:
+        count = r['nbr']
+    if count>0:
+        collection.update_one({"day" : donne['day'] ,'usage_type' : "bundle"},{"$set" : {"erreur_site" : donne['data'],"erreur_site_cnt" : donne['erreur_site_cnt']}})
+    else:
+        collection.insert_one(donne)
 
 if __name__=="__main__":
     client = pymongo.MongoClient("mongodb://oma_dwh:Dwh4%40OrnZ@192.168.61.199:27017/?authMechanism=DEFAULT")
