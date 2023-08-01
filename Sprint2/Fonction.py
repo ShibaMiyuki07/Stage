@@ -37,7 +37,7 @@ def calcul_error(global_data,daily_data,taux_erreur):
                 error["error"] = erreur
                 error['ecart'] = ecart
                 liste_error.append(error)
-    if len(error)>0:
+    if len(liste_error)>0:
         return {"retour" : False,"data" : liste_error}
     return {"retour" : True}
 
