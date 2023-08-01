@@ -1,0 +1,18 @@
+[
+    {
+        '$match': {
+            'day': datetime(2023, 1, 11, 0, 0, 0, tzinfo=timezone.utc), 
+            'usage_type': 'topup'
+        }
+    }, {
+        '$group': {
+            '_id': '$day', 
+            'rec_cnt': {
+                '$sum': '$rec_cnt'
+            }, 
+            'rec_amnt': {
+                '$sum': '$rec_amnt'
+            }
+        }
+    }
+]
