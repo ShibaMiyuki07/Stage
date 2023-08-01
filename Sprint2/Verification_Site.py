@@ -108,8 +108,8 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
             if not error['retour']:
                 nbr_erreur += 1
                 print("Erreur de donne a "+liste_site[i].__str__())
-                data.append({"lieu": liste_site[i],"data" : error["data"],"description": "donne errone dans ce site"})
-                verification_cause(client,day,liste_site[i])
+                data.append({"lieu": liste_site[i],"data" : error["data"],"description": "donne errone dans ce site","details" :verification_cause(client,day,liste_site[i]) })
+                
             else:
                 pass
                 

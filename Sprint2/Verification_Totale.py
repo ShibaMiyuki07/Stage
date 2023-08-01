@@ -77,10 +77,9 @@ def comparaison_donne(global_daily_usage,daily_usage,day):
     nbr_erreur = 0
     if not calcul_error(global_data,daily_data,1)["retour"]:
         nbr_erreur += 1
-    if nbr_erreur == 0 :
+    if nbr_erreur >= 0 :
         cmd = "python Verification_Site.py "+sys.argv[1]
         os.system(cmd)
-
     
 
 if __name__ == "__main__":

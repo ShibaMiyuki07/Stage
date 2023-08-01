@@ -101,7 +101,7 @@ def verification_cause(client,day,location):
     db = client['cbm']
     collection_daily = db['daily_usage']
     collection_global = db['global_daily_usage']
-
+    details = []
     resultat_daily = collection_daily.aggregate(pipeline_daily_usage,cursor={})
     resultat_global = collection_global.aggregate(pipeline_global,cursor={})
     donne_daily = {}
@@ -116,18 +116,20 @@ def verification_cause(client,day,location):
         if liste_subs[i] in donne_daily and liste_subs[i] in donne_global:
             daily_data = donne_daily[liste_subs[i]]
             global_data = donne_global[liste_subs[i]]
-            if not calcul_error(daily_data,global_data,0) :
+            error = calcul_error(daily_data,global_data,0)
+            if not  error['retour']:
                 print("Erreur sur "+liste_subs[i].__str__())
             else:
                 pass
         elif liste_subs[i] in donne_daily and liste_subs[i] not in donne_global:
-            print(donne_daily[liste_subs[i]])
             print("Erreur Donne de "+liste_subs[i].__str__()+" inexistant dans global daily usage")
+            details.append({ "description": "Donne inexistante dans global daily usage",'bndle_name' : liste_subs[i],'donne' : donne_daily[liste_subs[i]]})
         elif liste_subs[i] not in donne_daily and liste_subs[i] in donne_global:
-            print(donne_global[liste_subs[i]])
+            details.append({ "description": "Donne inexistante dans daily usage",'bndle_name' : liste_subs[i],'donne' : donne_global[liste_subs[i]]})
             print("Erreur Donne de "+liste_subs[i].__str__()+" inexistant dans daily usage")
         elif liste_subs[i] not in donne_daily and liste_subs[i] not in donne_global:
             pass
+    return details
 
 
 def getdata_lieu_daily_usage(day,location,client):
