@@ -119,6 +119,7 @@ def verification_cause(client,day,location):
             error = calcul_error(daily_data,global_data,0)
             if not  error['retour']:
                 print("Erreur sur "+liste_subs[i].__str__())
+                details({'bndle_name' : liste_subs[i],'data' : error['data'],'description': 'donne errone dans souscription'})
             else:
                 pass
         elif liste_subs[i] in donne_daily and liste_subs[i] not in donne_global:
