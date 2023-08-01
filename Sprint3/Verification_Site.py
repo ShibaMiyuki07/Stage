@@ -91,6 +91,7 @@ def getglobal_usage(client,day):
 
 def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
     erreur = {}
+    nbr_erreur = 0
     erreur['day'] = day
     erreur['usage_type'] = 'topup'
     data = []
@@ -100,21 +101,38 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
             daily_data = daily_usage[liste_site[i]]
             error = calcul_error(global_data,daily_data,1)
             if not error['retour']:
+                nbr_erreur +=1
                 print('Erreur de donne a '+liste_site[i].__str__())
                 data.append({ 'lieu' : liste_site[i],'data' : error['data'],'description' : 'Donne errone dans ce site' })
             else:
                 pass
         elif liste_site[i] in global_daily_usage and liste_site[i] not in daily_usage:
-            print(global_daily_usage[liste_site[i]])
+            nbr_erreur += 1
             print('erreur donne de '+liste_site[i]+" inexistant dans daily usage")
             data.append({ 'lieu' : liste_site[i],'data' : global_daily_usage[liste_site[i]],'description' : 'Donne inexistant dans daily usage' })
         elif liste_site[i] in daily_usage and liste_site[i] not in global_daily_usage:
-            print(daily_usage[liste_site[i]])
+            nbr_erreur += 1
             print('erreur donne de '+liste_site[i].__str__()+" inexistant dans global daily usage")
             data.append({ 'lieu' : liste_site[i],'data' : daily_usage[liste_site[i]],'description' : 'Donne inexistant dans global daily usage' })
         elif liste_site[i] not in daily_usage and liste_site[i] not in global_daily_usage:
             pass
 
+    if nbr_erreur>0:
+        erreur['erreur_site_cnt'] = nbr_erreur
+        erreur['erreur_site'] = data
+        insertion_donne(client,erreur)
+
+def insertion_donne(client,donne):
+    db = client['test']
+    collection = db['daily_usage_verification']
+    resultat = collection.find({"day" : donne['day'],'usage_type' : 'topup'})
+    count = 0
+    for r in resultat:
+        count += 1
+    if count>0:
+        collection.update_one({"day" : donne['day'] ,'usage_type' : "topup"},{"$set" : {"erreur_site" : donne['data'],"erreur_site_cnt" : donne['erreur_site_cnt']}})
+    else:
+        collection.insert_one(donne)
     
 
 if __name__ == "__main__":
