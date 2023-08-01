@@ -178,9 +178,9 @@ def getdata_lieu_daily_usage(day,location,client):
     db = client['cbm']
     collection = db['daily_usage']
     resultat = collection.aggregate(pipeline,cursor={})
-    retour={}
+    retour=[]
     for r in resultat:
-        retour[r['_id']] = insertion_data(r)
+        retour.append({ 'bndle_name' : r['_id'],'bndle_cnt' : r['bndle_cnt'],'bndle_amnt' : r['bndle_amnt'] })
     return retour
     
     
@@ -207,7 +207,7 @@ def getdata_lieu_global(day,location,client):
     db = client['cbm']
     collection = db['global_daily_usage']
     resultat = collection.aggregate(pipeline,cursor={})
-    retour={}
+    retour=[]
     for r in resultat:
-        retour[r['_id']] = insertion_data(r)
+        retour.append({ 'bndle_name' : r['_id'],'bndle_cnt' : r['bndle_cnt'],'bndle_amnt' : r['bndle_amnt'] })
     return retour

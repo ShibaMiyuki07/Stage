@@ -15,7 +15,7 @@ def getall_site():
     all_site = []
     for(site_name) in cursor:
         all_site.append(site_name[0])
-    all_site.append("None")
+    all_site.append("null")
     return all_site
 
 def getglobal_usage(client,day):
@@ -45,7 +45,7 @@ def getglobal_usage(client,day):
         if r['_id'] != None:
             retour[r['_id']] = insertion_data(r)
         else :
-            retour['None'] = insertion_data(r)
+            retour['null'] = insertion_data(r)
     return retour
 
 
@@ -88,7 +88,7 @@ def getdaily_usage(client,day):
         if r['_id'] != None:
             retour[r['_id']] = insertion_data(r)
         else :
-            retour['None'] = insertion_data(r)
+            retour['null'] = insertion_data(r)
     return retour
 
 
@@ -144,9 +144,10 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
     else:
         erreur['erreur_site_cnt'] = nbr_erreur
         erreur['erreur_site'] = data
-    insertion_donne(client,erreur)
+        insertion_donne(client,erreur)
 
 def insertion_donne(client,donne):
+
     db = client['test']
     collection = db['daily_usage_verification']
     resultat = collection.aggregate([{'$match' : {"day" : donne['day'],'usage_type' : 'bundle'}},{'$count' : 'nbr'}  ])
