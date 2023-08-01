@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import sys
 import pymongo
 from Fonction import calcul_error, insertion_data
@@ -76,7 +76,7 @@ def comparaison_donne(global_daily_usage,daily_usage,day):
     global_data = global_daily_usage[day]
     daily_data = daily_usage[day]
     error = calcul_error(global_data,daily_data,1)
-    if not error['error']:
+    if not error['retour']:
         print('Erreur de donne')
     else:
         print('Donne valide par jour')
