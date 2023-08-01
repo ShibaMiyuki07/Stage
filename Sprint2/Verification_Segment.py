@@ -143,13 +143,10 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_segment,day,client):
         elif liste_segment[i] not in daily_usage and liste_segment[i] not in global_daily_usage:
             pass
     
-    if nbr_erreur == 0:
-        #Ajout des donnes dans 
-        erreur['erreur_segment_cnt'] = nbr_erreur
-    else:
+    if nbr_erreur>0:
         erreur['erreur_segment_cnt'] = nbr_erreur
         erreur['erreur_segment'] = data
-    insertion_donne(client,erreur)
+        insertion_donne(client,erreur)
 
 
 def insertion_donne(client,donne):

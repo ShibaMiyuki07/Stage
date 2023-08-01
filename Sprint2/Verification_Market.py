@@ -121,11 +121,8 @@ def comparaison_donne(daily_usage,global_daily_usage,liste_market,day,client):
             pass
 
     #Si il n'y a eu aucune erreur lors du traitement
-    if nbr_erreur == 0:
-        cmd = "python Verification_Billing_Type.py "+sys.argv[1]
-        os.system(cmd)
 
-    else:
+    if nbr_erreur>0:
         erreur['erreur_market_cnt'] = nbr_erreur
         erreur['erreur_market'] = data
         insertion_donne(client,erreur)

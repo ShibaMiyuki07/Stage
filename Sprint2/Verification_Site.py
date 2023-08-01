@@ -137,16 +137,13 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
         elif liste_site[i] not in daily_usage and liste_site[i] not in global_daily_usage:
             pass
 
-    if nbr_erreur ==0:
-        cmd = "python Verification_Bundle.py "+sys.argv[1]
-        os.system(cmd)
 
-    else:
+    if nbr_erreur>0:
         erreur['erreur_site_cnt'] = nbr_erreur
         erreur['erreur_site'] = data
         insertion_donne(client,erreur)
-        cmd = "python Verification_Bundle.py "+sys.argv[1]
-        os.system(cmd)
+    cmd = "python Verification_Bundle.py "+sys.argv[1]
+    os.system(cmd)
 
 def insertion_donne(client,donne):
 

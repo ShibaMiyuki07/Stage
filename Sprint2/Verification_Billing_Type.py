@@ -128,10 +128,7 @@ def comparaison_donne(daily_usage,global_daily_usage,liste_bt,client,day):
         elif liste_bt[i] not in daily_usage and liste_bt[i] not in global_daily_usage:
             pass
 
-    if nbr_erreur == 0:
-        cmd = "python Verification_Segment.py "+sys.argv[1]
-        os.system(cmd)
-    else:
+    if nbr_erreur>0:
         erreur['erreur_billing_type'] = data
         erreur['erreur_billing_type_cnt'] = nbr_erreur
         insertion_donne(client,erreur)
