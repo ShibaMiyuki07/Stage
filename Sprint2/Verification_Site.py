@@ -15,7 +15,7 @@ def getall_site():
     all_site = []
     for(site_name) in cursor:
         all_site.append(site_name[0])
-    all_site.append("null")
+    all_site.append("None")
     return all_site
 
 def getglobal_usage(client,day):
@@ -45,7 +45,7 @@ def getglobal_usage(client,day):
         if r['_id'] != None:
             retour[r['_id']] = insertion_data(r)
         else :
-            retour['null'] = insertion_data(r)
+            retour['None'] = insertion_data(r)
     return retour
 
 
@@ -88,7 +88,7 @@ def getdaily_usage(client,day):
         if r['_id'] != None:
             retour[r['_id']] = insertion_data(r)
         else :
-            retour['null'] = insertion_data(r)
+            retour['None'] = insertion_data(r)
     return retour
 
 

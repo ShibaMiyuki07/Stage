@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import sys
 import pymongo
 from Fonction import calcul_error, insertion_data
