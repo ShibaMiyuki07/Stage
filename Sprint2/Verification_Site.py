@@ -145,6 +145,8 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
         erreur['erreur_site_cnt'] = nbr_erreur
         erreur['erreur_site'] = data
         insertion_donne(client,erreur)
+        cmd = "python Verification_Bundle.py "+sys.argv[1]
+        os.system(cmd)
 
 def insertion_donne(client,donne):
 

@@ -134,6 +134,10 @@ def comparaison_donne(daily_usage,global_daily_usage,liste_bt,client,day):
     else:
         erreur['erreur_billing_type'] = data
         erreur['erreur_billing_type_cnt'] = nbr_erreur
+        insertion_donne(client,erreur)
+    cmd = "python Verification_Segment.py "+sys.argv[1]
+    os.system(cmd)
+    
 
 def insertion_donne(client,donne):
     db = client['test']

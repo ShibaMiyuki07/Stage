@@ -137,6 +137,9 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_subs,client,day):
     else:
         erreur['erreur_bndle'] = data
         erreur['erreur_bndle_cnt'] = nbr_erreur
+        insertion_donne(client,erreur)
+    cmd = "python Verification_Market.py "+sys.argv[1]
+    os.system(cmd)
 
 def insertion_donne(client,donne):
     db = client['test']
