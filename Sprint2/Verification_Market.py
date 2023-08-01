@@ -82,7 +82,8 @@ def comparaison_donne(daily_usage,global_daily_usage,liste_market):
         if liste_market[i] in daily_usage and liste_market[i] in global_daily_usage:
             daily_data = daily_usage[liste_market[i]]
             global_data = global_daily_usage[liste_market[i]]
-            if not calcul_error(global_data,daily_data,1):
+            error = calcul_error(global_data,daily_data,1)
+            if not error['retour']:
                 nbr_erreur += 1
                 print("Erreur de donne dans le market "+liste_market[i].__str__())
             else:

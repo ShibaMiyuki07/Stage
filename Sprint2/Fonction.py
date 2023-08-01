@@ -23,7 +23,8 @@ def insertion_data(r):
 
 def calcul_error(global_data,daily_data,taux_erreur):
     liste_key = list(daily_data.keys())
-    error = []
+    liste_error = []
+    
     for i in liste_key:
         if i in daily_data and i in global_data:
             ecart =global_data[i] - daily_data[i]
@@ -31,11 +32,14 @@ def calcul_error(global_data,daily_data,taux_erreur):
             if global_data[i] != 0:
                 erreur =(float) (ecart/global_data[i])*100
             if abs(erreur) >taux_erreur:
-                error.append([i,erreur,ecart])
+                error = {}
+                error["nom"] = i
+                error["error"] = erreur
+                error['ecart'] = ecart
+                liste_error.append(error)
     if len(error)>0:
-        print(error)
-        return False
-    return True
+        return {"retour" : False,"data" : liste_error}
+    return {"retour" : True}
 
 
 def verification_cause(client,day,location):

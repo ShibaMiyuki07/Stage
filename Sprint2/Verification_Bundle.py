@@ -97,7 +97,8 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_subs,client,day):
         if liste_subs[i] in daily_usage and liste_subs[i] in global_daily_usage:
             global_data = global_daily_usage[liste_subs[i]]
             daily_data = daily_usage[liste_subs[i]]
-            if not calcul_error(global_data,daily_data,1):
+            error = calcul_error(global_data,daily_data,1)
+            if not error['retour']:
                 nbr_erreur += 1
                 print("Erreur de donne a "+liste_subs[i].__str__())
             else:

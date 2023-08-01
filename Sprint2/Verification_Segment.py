@@ -107,22 +107,26 @@ def getglobal_usage(client,day):
             retour['null'] = insertion_data(r)
     return retour
 
-def comparaison_donne(global_daily_usage,daily_usage,liste_segment):
+def comparaison_donne(global_daily_usage,daily_usage,liste_segment,day):
+    erreur = {}
     nbr_erreur = 0
     for i in range(len(liste_segment)):
         if liste_segment[i] in daily_usage and liste_segment[i] in global_daily_usage:
             daily_data = daily_usage[liste_segment[i]]
             global_data = global_daily_usage[liste_segment[i]]
-            if not calcul_error(global_data,daily_data,1):
+            error = calcul_error(global_data,daily_data,1)
+            if not error['retour']:
                 nbr_erreur += 1
                 print("Erreur de donne dans le segment "+liste_segment[i].__str__())
             else:
                 print("Donne de "+liste_segment[i].__str__()+" verifie")
         elif liste_segment[i] in daily_usage and liste_segment[i] not in global_daily_usage:
+            nbr_erreur += 1
             print(daily_usage[liste_segment[i]])
             print("Erreur de Donne de "+liste_segment[i].__str__()+" non existant dans global daily usage")
         
         elif liste_segment[i] not in daily_usage and liste_segment[i] in global_daily_usage:
+            nbr_erreur += 1
             print(global_daily_usage[liste_segment[i]])
             print("Erreur de Donne de "+liste_segment[i].__str__()+" non existant dans daily usage")
 
@@ -140,4 +144,4 @@ if __name__ == "__main__":
     day = datetime(date_time.year,date_time.month,date_time.day)
     global_daily_usage = getglobal_usage(client,day)
     daily_usage = getdaily_usage(client,day)
-    comparaison_donne(global_daily_usage,daily_usage,liste_segment)
+    comparaison_donne(global_daily_usage,daily_usage,liste_segment,day)

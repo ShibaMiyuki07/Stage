@@ -104,10 +104,11 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
         if liste_site[i] in daily_usage and liste_site[i] in global_daily_usage:
             global_data = global_daily_usage[liste_site[i]]
             daily_data = daily_usage[liste_site[i]]
-            if not calcul_error(global_data,daily_data,1):
+            error = calcul_error(global_data,daily_data,1)
+            if not error['retour']:
                 nbr_erreur += 1
                 print("Erreur de donne a "+liste_site[i].__str__())
-                data.append({"lieu": liste_site[i],"description": "donne errone dans ce site"})
+                data.append({"lieu": liste_site[i],"data" : error["data"],"description": "donne errone dans ce site"})
                 verification_cause(client,day,liste_site[i])
             else:
                 pass
