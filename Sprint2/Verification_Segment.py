@@ -155,14 +155,16 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_segment,day,client):
 def insertion_donne(client,donne):
     db = client['test']
     collection = db['daily_usage_verification']
-    resultat = collection.aggregate([{'$match' : {"day" : donne['day'],'usage_type' : 'bunde'}},{'$count' : 'nbr'}  ])
+    resultat = collection.find({"day" : donne['day'],'usage_type' : 'bundle'})
     count = 0
     for r in resultat:
-        count = r['nbr']
+        count += 1
     if count>0:
-        collection.update_one({"day" : donne['day'],'usage_type' : 'bundle' },{"$set" : {"erreur_segment" : donne['data'],"erreur_segment_cnt" : donne['erreur_segment_cnt']}})
+        collection.update_one({"day" : donne['day'],'usage_type' : 'bundle' },{"$set" : {"erreur_segment" : donne['erreur_segment'],"erreur_segment_cnt" : donne['erreur_segment_cnt']}})
     else:
         collection.insert_one(donne)
+        
+        
 if __name__ == "__main__":
     liste_segment = ["ZERO","SUPER LOW VALUE","LOW VALUE","MEDIUM","HIGH","SUPER HIGH VALUE","NEW","RETURN","CHURN","null"]
     client = pymongo.MongoClient("mongodb://oma_dwh:Dwh4%40OrnZ@192.168.61.199:27017/?authMechanism=DEFAULT")
@@ -171,4 +173,4 @@ if __name__ == "__main__":
     day = datetime(date_time.year,date_time.month,date_time.day)
     global_daily_usage = getglobal_usage(client,day)
     daily_usage = getdaily_usage(client,day)
-    comparaison_donne(global_daily_usage,daily_usage,liste_segment,day)
+    comparaison_donne(global_daily_usage,daily_usage,liste_segment,day,client)

@@ -135,10 +135,10 @@ def comparaison_donne(daily_usage,global_daily_usage,liste_market,day,client):
 def insertion_donne(client,donne):
     db = client['test']
     collection = db['daily_usage_verification']
-    resultat = collection.aggregate([{'$match' : {"day" : donne['day'],'usage_type' : 'bundle'}},{'$count' : 'nbr'}  ])
+    resultat = collection.find({"day" : donne['day'],'usage_type' : 'bundle'})
     count = 0
     for r in resultat:
-        count = r['nbr']
+        count += 1
     if count>0:
         collection.update_one({"day" : donne['day'],'usage_type' : 'bundle' },{"$set" : {"erreur_market" : donne['data'],"erreur_market_cnt":donne['erreur_market_cnt']}})
     else:

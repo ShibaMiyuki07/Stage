@@ -95,7 +95,7 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_subs,client,day):
     erreur = {}
     data = []
     erreur['day'] = day
-    erreur['usage_type']
+    erreur['usage_type'] = 'bundle'
     nbr_erreur = 0
     for i in range(len(liste_subs)):
         #Si l'offre existe dans les deux
@@ -144,7 +144,7 @@ def comparaison_donne(global_daily_usage,daily_usage,liste_subs,client,day):
 def insertion_donne(client,donne):
     db = client['test']
     collection = db['daily_usage_verification']
-    resultat = collection.aggregate([{'$match' : {"day" : donne['day'],"usage_type" : "bundle"}},{'$count' : 'nbr'}  ])
+    resultat = collection.find({"day" : donne['day'],"usage_type" : "bundle"} )
     count = 0
     for r in resultat:
         count = r['nbr']
