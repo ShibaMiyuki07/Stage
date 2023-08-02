@@ -125,7 +125,7 @@ def verification_cause(day,location):
             'bndle_cnt': {
                 '$sum': '$bundle.subscription.bndle_cnt'
             }, 
-            'bundle_amnt': {
+            'bndle_amnt': {
                 '$sum': '$bundle.subscription.bndle_amnt'
             }
         }
