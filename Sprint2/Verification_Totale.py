@@ -1,3 +1,4 @@
+import os
 import sys
 from Utils import calcul_error, date_to_datetime, getcollection_daily_aggrege, getcollection_global, insertion_data
 
@@ -58,9 +59,10 @@ def comparaison_donne(daily_usage,global_daily_usage,day):
     error = calcul_error(global_data,daily_data,0)
     if not error['retour'] :
         print('Donne contenant erreur')
-        print(error['data'])
     else:
         print('donne verifier') 
+    cmd = "python Verification_Site.py "+sys.argv[1]
+    os.system()
 
 if __name__ == "__main__":
     day = date_to_datetime(sys.argv[1])

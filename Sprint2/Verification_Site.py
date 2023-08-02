@@ -1,3 +1,4 @@
+import os
 import sys
 from Utils import calcul_error, date_to_datetime, getcollection_daily_aggrege, getcollection_global, getdata_daily_usage, getdata_global, insertion_data, insertion_database, verification_cause
 import mysql.connector
@@ -101,7 +102,8 @@ def comparaison_donne(daily_usage,global_daily_usage,liste_site,day):
         donne_erreur['erreur_site'] = data
         insertion_database(day,donne_erreur)
 
-    
+    cmd = "python Verification_Billing_Type.py "+sys.argv[1]
+    os.system(cmd)
     
 
 
