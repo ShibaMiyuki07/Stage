@@ -30,13 +30,13 @@ def comparaison_donne(global_daily_usage,daily_usage,liste,day,nom):
     erreur = {}
     nbr_erreur = 0
     erreur['day'] = day
-    erreur['usage_type'] = 'bundle'
+    erreur['usage_type'] = 'topup'
     data = []
     for i in range(len(liste)):
         if liste[i] in global_daily_usage and liste[i] in daily_usage:
             global_data = global_daily_usage[liste[i]]
             daily_data = daily_usage[liste[i]]
-            error = calcul_error(global_data,daily_data,0)
+            error = calcul_error(global_data,daily_data,1)
             if not error['retour']:
                 nbr_erreur +=1
                 data.append({ nom : liste[i],'data' : error['data'],'description' : 0 })
@@ -65,7 +65,7 @@ def getcollection_for_insertion():
 
 def insertion_database(day,donne):
     collection = getcollection_for_insertion()
-    resultat = collection.find({'day' : day,'usage_type' : 'bundle'})
+    resultat = collection.find({'day' : day,'usage_type' : 'topup'})
     count = 0
     for r in resultat:
         count += 1
@@ -73,7 +73,7 @@ def insertion_database(day,donne):
     if count>0:
         list_key = list(donne.keys())
         for r in list_key:
-            collection.update_one({'day' : day,'usage_type' : 'bundle'},{"$set" : {r : donne[r]}})
+            collection.update_one({'day' : day,'usage_type' : 'topup'},{"$set" : {r : donne[r]}})
     else:
         collection.insert_one(donne)
 
@@ -109,10 +109,10 @@ def getall_site():
     all_site.append("null")
     return all_site
 
-def getall_subscription():
+def getall_rec_type():
     connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.196',database='DM_RF')
     cursor = connexion.cursor() 
-    query = "select distinct(name) as name from rf_subscriptions where name is not null"
+    query = "select distinct(name) as name from rf_rec_type where name is not null"
     cursor.execute(query)
     all_site = []
     for(name) in cursor:

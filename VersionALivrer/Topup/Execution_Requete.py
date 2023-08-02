@@ -6,15 +6,15 @@ def getdata_daily(day,nom):
         {
             '$match': {
                 'day': day,
-                'usage_type': 'bundle',
+                'usage_type': 'topup',
                 'type_aggregation' : nom
             }
         },
         {
             '$project' : {
                 '_id' : '$'+nom,
-                'bndle_cnt' : 1,
-                'bndle_amnt' : 1
+                'rec_cnt' : 1,
+                'rec_amnt' : 1
             }
         }
     ]
@@ -33,16 +33,16 @@ def  getglobal_usage(day,nom):
     {
         '$match': {
             'day': day, 
-            'usage_type': 'bundle'
+            'usage_type': 'topup'
         }
     }, {
         '$group': {
             '_id': '$'+nom, 
-            'bndle_cnt': {
-                '$sum': '$bndle_cnt'
+            'rec_cnt': {
+                '$sum': '$rec_cnt'
             }, 
-            'bndle_amnt': {
-                '$sum': '$bndle_amnt'
+            'rec_amnt': {
+                '$sum': '$rec_amnt'
             }
         }
     }
