@@ -1,11 +1,8 @@
-from datetime import datetime
-import os
 import sys
-import pymongo
-from Fonction import calcul_error, insertion_data
+from Utils import calcul_error, date_to_datetime, getcollection_daily_usage, getcollection_global, insertion_data
 
 
-def getglobal_usage(client,day):
+def getglobal_usage(day):
     pipeline = [
     {
         '$match': {
@@ -24,69 +21,48 @@ def getglobal_usage(client,day):
         }
     }
 ]
-    db = client['cbm']
-    collection = db['global_daily_usage']
+    collection = getcollection_global()
+    resultat = collection.aggregate(pipeline)
     retour = {}
-    resultat = collection.aggregate(pipeline,cursor={})
     for r in resultat:
-        retour[day] = insertion_data(r)
+        retour[r['_id']] = insertion_data(r)
     return retour
 
-
-def getdaily_usage(client,day):
+def getdaily_usage(day):
     pipeline = [
     {
         '$match': {
-            'day': day
+            'day': day,
+            'type_aggregation' : "day"
         }
-    }, {
-        '$unwind': {
-            'path': '$bundle', 
-            'includeArrayIndex': 'b', 
-            'preserveNullAndEmptyArrays': False
-        }
-    }, {
-        '$unwind': {
-            'path': '$bundle.subscription', 
-            'includeArrayIndex': 'b_s', 
-            'preserveNullAndEmptyArrays': False
-        }
-    }, {
-        '$group': {
-            '_id': '$day', 
-            'bndle_cnt': {
-                '$sum': '$bundle.subscription.bndle_cnt'
-            }, 
-            'bndle_amnt': {
-                '$sum': '$bundle.subscription.bndle_amnt'
-            }
+    },
+    {
+        '$project' : {
+            '_id' : 'day',
+            'bndle_cnt' : 1,
+            'bndle_amnt' : 1
         }
     }
 ]
-    db = client['cbm']
-    collection = db['daily_usage']
+    collection = getcollection_daily_usage()
+    resultat = collection.aggregate(pipeline)
     retour = {}
-    resultat = collection.aggregate(pipeline,cursor={})
     for r in resultat:
-        retour[day] = insertion_data(r)
+        retour[r['_id']] = insertion_data(r)
     return retour
 
-def comparaison_donne(global_daily_usage,daily_usage,day):
-    global_data = global_daily_usage[day]
+def comparaison_donne(daily_usage,global_daily_usage,day):
     daily_data = daily_usage[day]
-    nbr_erreur = 0
-    if not calcul_error(global_data,daily_data,1)["retour"]:
-        nbr_erreur += 1
-    if nbr_erreur >= 0 :
-        cmd = "python Verification_Site.py "+sys.argv[1]
-        os.system(cmd)
-    
+    global_data = global_daily_usage[day]
+    error = calcul_error(global_data,daily_data,0)
+    if not error['retour'] :
+        print('Donne contenant erreur')
+        print(error['data'])
+    else:
+        print('donne verifier') 
 
 if __name__ == "__main__":
-    client = pymongo.MongoClient("mongodb://oma_dwh:Dwh4%40OrnZ@192.168.61.199:27017/?authMechanism=DEFAULT")
-    date = sys.argv[1]
-    date_time = datetime.strptime(date,'%Y-%m-%d')
-    day = datetime(date_time.year,date_time.month,date_time.day)
-    global_daily_usage = getglobal_usage(client,day)
-    daily_usage = getdaily_usage(client,day)
-    comparaison_donne(global_daily_usage,daily_usage,day)
+    day = date_to_datetime(sys.argv[1])
+    global_daily_usage = getglobal_usage(day)
+    daily_usage = getdaily_usage(day)
+    comparaison_donne(daily_usage,global_daily_usage,day)
