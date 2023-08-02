@@ -39,7 +39,7 @@ def getdaily_usage(day):
     },
     {
         '$project' : {
-            '_id' : 'day',
+            '_id' : '$day',
             'bndle_cnt' : 1,
             'bndle_amnt' : 1
         }

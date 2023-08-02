@@ -25,7 +25,7 @@ def getdaily_usage(day):
     },
     {
         '$project' : {
-            '_id' : 'site_name',
+            '_id' : '$site_name',
             'bndle_cnt' : 1,
             'bndle_amnt' : 1
         }
@@ -76,7 +76,7 @@ def comparaison_donne(daily_usage,global_daily_usage,liste_site,day):
     donne_erreur['day'] = day
     donne_erreur['usage_type'] = 'bundle'
     data = []
-    for i in range(liste_site):
+    for i in range(len(liste_site)):
         if liste_site[i] in daily_usage and liste_site[i] in global_daily_usage:
             daily_data = daily_usage[liste_site[i]]
             global_data = global_daily_usage[liste_site[i]]
