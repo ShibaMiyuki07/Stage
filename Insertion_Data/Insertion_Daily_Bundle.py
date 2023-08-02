@@ -155,6 +155,46 @@ def Insertion_billing_type(day):
     
     insertion_data(getcollection_insertion('tmp_daily_aggregation'),data)
 
+
+def Insertion_pp_name(day):
+    data = []
+    pipeline = [
+    {
+        '$match': {
+            'day': day
+        }
+    }, {
+        '$unwind': {
+            'path': '$bundle', 
+            'includeArrayIndex': 'b', 
+            'preserveNullAndEmptyArrays': False
+        }
+    }, {
+        '$unwind': {
+            'path': '$bundle.subscription', 
+            'includeArrayIndex': 'b_s', 
+            'preserveNullAndEmptyArrays': False
+        }
+    }, {
+        '$group': {
+            '_id': '$pp_name', 
+            'bndle_cnt': {
+                '$sum': '$bundle.subscription.bndle_cnt'
+            }, 
+            'bndle_amnt': {
+                '$sum': '$bundle.subscription.bndle_amnt'
+            }
+        }
+    }
+]
+    collection = getcollection_daily_usage()
+    resultat = collection.aggregate(pipeline)
+    for r in resultat:
+        data.append({ 'day': day,'pp_name' : r['_id'],'usage_type' : 'bundle','type_aggregation' : 'pp_name','bndle_cnt' : r['bndle_cnt'],'bndle_amnt':r['bndle_amnt'] })
+    
+    insertion_data(getcollection_insertion('tmp_daily_aggregation'),data)
+
+
 def Insertion_bundle(day):
     data = []
     pipeline = [
@@ -176,7 +216,7 @@ def Insertion_bundle(day):
         }
     }, {
         '$group': {
-            '_id': '$bundle.subscription.bndle_name', 
+            '_id': '$bundle.bndle_name', 
             'bndle_cnt': {
                 '$sum': '$bundle.subscription.bndle_cnt'
             }, 
@@ -189,7 +229,7 @@ def Insertion_bundle(day):
     collection = getcollection_daily_usage()
     resultat = collection.aggregate(pipeline)
     for r in resultat:
-        data.append({ 'day': day,'bndle_name' : r['_id'],'usage_type' : 'bundle','type_aggregation' : 'bundle','bndle_cnt' : r['bndle_cnt'],'bndle_amnt':r['bndle_amnt'] })
+        data.append({ 'day': day,'bndle_name' : r['_id'],'usage_type' : 'bundle','type_aggregation' : 'bndle_name','bndle_cnt' : r['bndle_cnt'],'bndle_amnt':r['bndle_amnt'] })
     
     insertion_data(getcollection_insertion('tmp_daily_aggregation'),data)
 
@@ -280,6 +320,7 @@ if __name__ == "__main__":
     day = datetime(date_time.year,date_time.month,date_time.day)
     Insertion_day(day)
     Insertion_billing_type(day)
+    Insertion_pp_name(day)
     Insertion_bundle(day)
     Insertion_market(day)
     Insertion_site_name(day)
