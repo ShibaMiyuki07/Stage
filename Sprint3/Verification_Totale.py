@@ -1,69 +1,92 @@
+from datetime import datetime
 import sys
-from Utils import calcul_error, date_to_datetime, getcollection_daily_usage, getcollection_global, insertion_data
+import pymongo
+from Fonction import calcul_error, insertion_data
 
 
-def getglobal_usage(day):
+def getdaily_usage(client,day):
     pipeline = [
     {
         '$match': {
             'day': day, 
-            'usage_type': 'bundle'
+            'topup': {
+                '$exists': True
+            }
+        }
+    }, {
+        '$unwind': {
+            'path': '$topup', 
+            'includeArrayIndex': 't', 
+            'preserveNullAndEmptyArrays': False
+        }
+    }, {
+        '$unwind': {
+            'path': '$topup.recharge', 
+            'includeArrayIndex': 'tp', 
+            'preserveNullAndEmptyArrays': False
         }
     }, {
         '$group': {
             '_id': '$day', 
-            'bndle_cnt': {
-                '$sum': '$bndle_cnt'
+            'rec_cnt': {
+                '$sum': '$topup.recharge.rec_cnt'
             }, 
-            'bndle_amnt': {
-                '$sum': '$bndle_amnt'
+            'rec_amnt': {
+                '$sum': '$topup.recharge.rec_amnt'
             }
         }
     }
 ]
-    collection = getcollection_global()
+    db = client['cbm']
+    collection = db['daily_usage']
+    retour={}
     resultat = collection.aggregate(pipeline)
-    retour = {}
     for r in resultat:
-        retour[day] = insertion_data(r)
+        retour[r['_id']] = insertion_data(r)
     return retour
-
-def getdaily_usage(day):
+    
+def getglobal_usage(client,day):
     pipeline = [
     {
         '$match': {
-            'day': day,
-            'type_aggregation' : "day"
+            'day': day, 
+            'usage_type': 'topup'
         }
-    },
-    {
-        '$project' : {
-            '_id' : 'day',
-            'bndle_cnt' : 1,
-            'bndle_amnt' : 1
+    }, {
+        '$group': {
+            '_id': '$day', 
+            'rec_cnt': {
+                '$sum': '$rec_cnt'
+            }, 
+            'rec_amnt': {
+                '$sum': '$rec_amnt'
+            }
         }
     }
 ]
-    collection = getcollection_daily_usage()
+    db = client['cbm']
+    collection = db['global_daily_usage']
+    retour={}
     resultat = collection.aggregate(pipeline)
-    retour = {}
     for r in resultat:
-        retour[day] = insertion_data(r)
+        retour[r['_id']] = insertion_data(r)
     return retour
 
-def comparaison_donne(daily_usage,global_daily_usage,day):
-    daily_data = daily_usage[day]
+def comparaison_donne(global_daily_usage,daily_usage,day):
     global_data = global_daily_usage[day]
-    error = calcul_error(global_data,daily_data,0)
-    if not error['retour'] :
-        print('Donne contenant erreur')
-        print(error['data'])
+    daily_data = daily_usage[day]
+    error = calcul_error(global_data,daily_data,1)
+    if not error['retour']:
+        print('Erreur de donne')
     else:
-        print('donne verifier') 
+        print('Donne valide par jour')
 
 if __name__ == "__main__":
-    day = date_to_datetime(sys.argv[1])
-    print(day)
-    global_daily_usage = getglobal_usage(day)
-    daily_usage = getdaily_usage(day)
-    comparaison_donne(daily_usage,global_daily_usage,day)
+    client = pymongo.MongoClient("mongodb://oma_dwh:Dwh4%40OrnZ@192.168.61.199:27017/?authMechanism=DEFAULT")
+    date = sys.argv[1]
+    date_time = datetime.strptime(date,'%Y-%m-%d')
+    day = datetime(date_time.year,date_time.month,date_time.day)
+    global_daily_usage = getglobal_usage(client,day)
+    daily_usage = getdaily_usage(client,day)
+    comparaison_donne(global_daily_usage,daily_usage,day)
+
