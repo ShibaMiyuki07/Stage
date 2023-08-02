@@ -1,13 +1,9 @@
-import codecs
-from datetime import datetime
 import os
 import sys
+from Utils import calcul_error, date_to_datetime, getcollection_daily_aggrege, getcollection_global, getdata_daily_usage, getdata_global, insertion_data, insertion_database, verification_cause
 import mysql.connector
-import pymongo
 
-from Fonction import calcul_error, getdata_lieu_daily_usage, insertion_data, verification_cause,getdata_lieu_global
-
-def getall_site():
+def getsite():
     connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.196',database='DM_RF')
     cursor = connexion.cursor() 
     query = "select distinct(sig_nom_site) as site_name from rf_sig_cell_krill_v3 where sig_nom_site is not null"
@@ -18,7 +14,35 @@ def getall_site():
     all_site.append("null")
     return all_site
 
-def getglobal_usage(client,day):
+
+def getdaily_usage(day):
+    pipeline = [
+    {
+        '$match': {
+            'day': day,
+            'usage_type' : 'bundle',
+            'type_aggregation' : "site_name"
+        }
+    },
+    {
+        '$project' : {
+            '_id' : '$site_name',
+            'bndle_cnt' : 1,
+            'bndle_amnt' : 1
+        }
+    }
+]
+    collection = getcollection_daily_aggrege()
+    resultat = collection.aggregate(pipeline)
+    retour = {}
+    for r in resultat:
+        if r['_id'] != None:
+            retour[r['_id']] = insertion_data(r)
+        else:
+            retour['null'] = insertion_data(r)
+    return retour
+
+def getglobal_usage(day):
     pipeline = [
     {
         '$match': {
@@ -37,133 +61,55 @@ def getglobal_usage(client,day):
         }
     }
 ]
-    db = client['cbm']
-    collection = db['global_daily_usage']
+    collection = getcollection_global()
+    resultat = collection.aggregate(pipeline)
     retour = {}
-    resultat = collection.aggregate(pipeline,cursor={})
     for r in resultat:
         if r['_id'] != None:
             retour[r['_id']] = insertion_data(r)
-        else :
+        else:
             retour['null'] = insertion_data(r)
     return retour
 
-
-
-def getdaily_usage(client,day):
-    pipeline = [
-    {
-        '$match': {
-            'day': day
-        }
-    }, {
-        '$unwind': {
-            'path': '$bundle', 
-            'includeArrayIndex': 'b', 
-            'preserveNullAndEmptyArrays': False
-        }
-    }, {
-        '$unwind': {
-            'path': '$bundle.subscription', 
-            'includeArrayIndex': 'b_s', 
-            'preserveNullAndEmptyArrays': False
-        }
-    }, {
-        '$group': {
-            '_id': '$bundle.subscription.site_name', 
-            'bndle_cnt': {
-                '$sum': '$bundle.subscription.bndle_cnt'
-            }, 
-            'bndle_amnt': {
-                '$sum': '$bundle.subscription.bndle_amnt'
-            }
-        }
-    }
-]
-    db = client['cbm']
-    collection = db['daily_usage']
-    retour = {}
-    resultat = collection.aggregate(pipeline,cursor={})
-    for r in resultat:
-        if r['_id'] != None:
-            retour[r['_id']] = insertion_data(r)
-        else :
-            retour['null'] = insertion_data(r)
-    return retour
-
-
-def comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day):
+def comparaison_donne(daily_usage,global_daily_usage,liste_site,day):
     nbr_erreur = 0
-    erreur = {}
-    erreur['usage_type'] = "bundle"
-    erreur['day'] = day
+    donne_erreur = {}
+    donne_erreur['day'] = day
+    donne_erreur['usage_type'] = 'bundle'
     data = []
     for i in range(len(liste_site)):
-        
-        #Si le site existe on cherchera les erreurs superieur a 1% et afficheront les ecarts de donnees
         if liste_site[i] in daily_usage and liste_site[i] in global_daily_usage:
-            global_data = global_daily_usage[liste_site[i]]
             daily_data = daily_usage[liste_site[i]]
+            global_data = global_daily_usage[liste_site[i]]
             error = calcul_error(global_data,daily_data,1)
             if not error['retour']:
                 nbr_erreur += 1
-                print("Erreur de donne a "+liste_site[i].__str__())
-
-                #Ajout des donne commente dans la base de donne
-                data.append({"lieu": liste_site[i],"data" : error["data"],"description": "donne errone dans ce site","details" :verification_cause(client,day,liste_site[i]) })
-                
+                data.append({'lieu' : liste_site[i],'description' : 0,'data' : error['data'],'donne errone' : verification_cause(day,liste_site[i])})
             else:
                 pass
-                
-        #Si le site n'existe pas dans daily usage on affichera les donnees inexistante
-        elif liste_site[i] not in daily_usage and liste_site[i] in global_daily_usage:
-            nbr_erreur += 1
-            print("Donnes inexistant : "+global_daily_usage[liste_site[i]].__str__())
-            print("Erreur de donne "+liste_site[i].__str__()+" daily usage")
-
-            #Ajout des donne commente dans la base de donne
-            data.append({ "lieu": liste_site[i],"data" : global_daily_usage[liste_site[i]],"donne errone" : getdata_lieu_global(day,liste_site[i],client),"description":"Donne non existant dans daily usage" })
-            
-            
-        #Si le site n'existe pas dans global daily usage on affichera les donnees inexistante
+        
         elif liste_site[i] in daily_usage and liste_site[i] not in global_daily_usage:
             nbr_erreur += 1
-            print("Donne inexistant : "+daily_usage[liste_site[i]].__str__())
-            print("Erreur de donne "+liste_site[i].__str__()+" global daily usage")
-
-            #Ajout des donne commente dans la base de donne
-            data.append({ "lieu": liste_site[i],"data" : daily_usage[liste_site[i]],"donne errone": getdata_lieu_daily_usage(day,liste_site[i],client),"description":"Donne non existant dans global daily usage" })
-            
+            data.append({'lieu' : liste_site[i], 'description' : -1,'data' : daily_usage[liste_site[i]],'donne errone' : getdata_daily_usage(day,liste_site[i])})
+        elif liste_site[i] not in daily_usage and liste_site[i] in global_daily_usage:
+            nbr_erreur +=1
+            data.append({'lieu' : liste_site[i],'description' : 1,'data' : global_daily_usage[liste_site[i]],'donne errone' : getdata_global(day,liste_site[i])})
         elif liste_site[i] not in daily_usage and liste_site[i] not in global_daily_usage:
             pass
 
+    if nbr_erreur != 0:
+        donne_erreur['erreur_site_cnt'] = nbr_erreur
+        donne_erreur['erreur_site'] = data
+        insertion_database(day,donne_erreur)
 
-    if nbr_erreur>0:
-        erreur['erreur_site_cnt'] = nbr_erreur
-        erreur['erreur_site'] = data
-        insertion_donne(client,erreur)
-    cmd = "python Verification_Bundle.py "+sys.argv[1]
+    cmd = "python Verification_Billing_Type.py "+sys.argv[1]
     os.system(cmd)
+    
 
-def insertion_donne(client,donne):
 
-    db = client['test']
-    collection = db['daily_usage_verification']
-    resultat = collection.find({"day" : donne['day'],'usage_type' : 'bundle'})
-    count = 0
-    for r in resultat:
-        count += 1
-    if count>0:
-        collection.update_one({"day" : donne['day'] ,'usage_type' : "bundle"},{"$set" : {"erreur_site" : donne['data'],"erreur_site_cnt" : donne['erreur_site_cnt']}})
-    else:
-        collection.insert_one(donne)
-
-if __name__=="__main__":
-    client = pymongo.MongoClient("mongodb://oma_dwh:Dwh4%40OrnZ@192.168.61.199:27017/?authMechanism=DEFAULT")
-    date = sys.argv[1]
-    date_time = datetime.strptime(date,'%Y-%m-%d')
-    day = datetime(date_time.year,date_time.month,date_time.day)
-    liste_site = getall_site()
-    daily_usage = getdaily_usage(client,day)
-    global_daily_usage = getglobal_usage(client,day)
-    comparaison_donne(global_daily_usage,daily_usage,liste_site,client,day)
+if __name__ == "__main__":
+    liste_site = getsite()
+    day = date_to_datetime(sys.argv[1])
+    global_daily_usage = getglobal_usage(day)
+    daily_usage = getdaily_usage(day)
+    comparaison_donne(daily_usage,global_daily_usage,liste_site,day)

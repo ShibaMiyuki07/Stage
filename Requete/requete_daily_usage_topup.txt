@@ -1,0 +1,32 @@
+[
+    {
+        '$match': {
+            'day': datetime(2023, 1, 11, 0, 0, 0, tzinfo=timezone.utc), 
+            'topup': {
+                '$exists': True
+            }
+        }
+    }, {
+        '$unwind': {
+            'path': '$topup', 
+            'includeArrayIndex': 't', 
+            'preserveNullAndEmptyArrays': False
+        }
+    }, {
+        '$unwind': {
+            'path': '$topup.recharge', 
+            'includeArrayIndex': 'tp', 
+            'preserveNullAndEmptyArrays': False
+        }
+    }, {
+        '$group': {
+            '_id': '$day', 
+            'rec_cnt': {
+                '$sum': '$topup.recharge.rec_cnt'
+            }, 
+            'rec_amnt': {
+                '$sum': '$topup.recharge.rec_amnt'
+            }
+        }
+    }
+]

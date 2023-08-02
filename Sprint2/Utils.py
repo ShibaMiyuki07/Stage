@@ -1,24 +1,75 @@
-import codecs
+from datetime import datetime
 import mysql.connector
+import pymongo
+
 
 def getsubs():
     connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.196',database='DM_RF')
-    cursor = connexion.cursor() 
+    cursor = connexion.cursor()
     query = "select name from rf_subscriptions where name is not null"
     cursor.execute(query)
-    subs_list = []
+    list_subs = []
     for(name) in cursor:
-        subs_list.append(name[0])
-    subs_list.append("null")
-    return subs_list
+        list_subs.append(name[0])
+    list_subs.append('null')
+    return list_subs
+
+
+def connexion_base():
+    client = pymongo.MongoClient("mongodb://oma_dwh:Dwh4%40OrnZ@192.168.61.199:27017/?authMechanism=DEFAULT")
+    return client
+
+def getcollection_daily_aggrege():
+    client = connexion_base()
+    db = client['test']
+    collection = db['tmp_daily_aggregation']
+    return collection
+
+def getcollection_global():
+    client =connexion_base()
+    db = client['cbm']
+    collection = db['global_daily_usage']
+    return collection
+
+def getcollection_daily_usage():
+    client = connexion_base()
+    db = client['cbm']
+    collection = db['daily_usage']
+    return collection
+
+def getcollection_for_insertion():
+    client = connexion_base()
+    db = client['test']
+    collection = db['daily_usage_verification']
+    return collection
 
 def insertion_data(r):
-    retour = {}
-    retour['data'] = {
-        'bndle_cnt' : r['bndle_cnt'],
-        'bndle_amnt' : r['bndle_amnt']
-    }
-    return retour['data']
+    keys = list(r.keys())
+    data = {}
+    for i in keys:
+        if i != "_id":
+            data[i] = r[i]
+    return data
+
+def insertion_database(day,donne):
+    collection = getcollection_for_insertion()
+    resultat = collection.find({'day' : day,'usage_type' : 'bundle'})
+    count = 0
+    for r in resultat:
+        count += 1
+    
+    if count>0:
+        list_key = list(donne.keys())
+        for r in list_key:
+            collection.update_one({'day' : day,'usage_type' : 'bundle'},{"$set" : {r : donne[r]}})
+        
+    else:
+        collection.insert_one(donne)
+
+def date_to_datetime(date):
+    date_time = datetime.strptime(date,'%Y-%m-%d')
+    day = datetime(date_time.year,date_time.month,date_time.day)
+    return day
 
 
 def calcul_error(global_data,daily_data,taux_erreur):
@@ -42,8 +93,9 @@ def calcul_error(global_data,daily_data,taux_erreur):
     return {"retour" : True}
 
 
-def verification_cause(client,day,location):
-    pipeline_daily_usage= [
+#Voir les causes des erreurs par site
+def verification_cause(day,location):
+    pipeline_daily_usage = [
     {
         '$match': {
             'day': day
@@ -63,9 +115,10 @@ def verification_cause(client,day,location):
     }, 
     {
         '$match' : {
-            'bundle.subscription.site_name' : location
+            'bundle.subscription.site_name' : location,
         }
     },
+
     {
         '$group': {
             '_id': '$bundle.bndle_name', 
@@ -79,7 +132,7 @@ def verification_cause(client,day,location):
     }
 ]
     
-    pipeline_global = [
+    pipeline_global_usage = [
     {
         '$match': {
             'day': day, 
@@ -98,48 +151,48 @@ def verification_cause(client,day,location):
         }
     }
 ]
-    db = client['cbm']
-    collection_daily = db['daily_usage']
-    collection_global = db['global_daily_usage']
-    details = []
-    resultat_daily = collection_daily.aggregate(pipeline_daily_usage,cursor={})
-    resultat_global = collection_global.aggregate(pipeline_global,cursor={})
-    donne_daily = {}
-    donne_global = {}
-    for r in resultat_daily:
-        donne_daily[r['_id']] = insertion_data(r)
-    for r in resultat_global:
-        donne_global[r['_id']] = insertion_data(r)
-    liste_subs = getsubs()
+    collection_daily_usage = getcollection_daily_usage()
+    collection_global_usage = getcollection_global()
 
+    resultat_global = collection_global_usage.aggregate(pipeline_global_usage)
+    resultat_daily = collection_daily_usage.aggregate(pipeline_daily_usage)
+    donne_global = {}
+    donne_daily = {}
+    for r in resultat_global:
+        if r['_id'] != None:
+            donne_global[r['_id']] = insertion_data(r)
+        else : 
+            donne_global['null'] = insertion_data(r)
+
+    for r in resultat_daily:
+        if r['_id'] != None:
+            donne_daily[r['_id']] = insertion_data(r)
+        else:
+            donne_daily['null'] = insertion_data(r)
+
+    liste_subs = getsubs()
+    details = []
     for i in range(len(liste_subs)):
         if liste_subs[i] in donne_daily and liste_subs[i] in donne_global:
             daily_data = donne_daily[liste_subs[i]]
             global_data = donne_global[liste_subs[i]]
-            error = calcul_error(daily_data,global_data,0)
-            if not  error['retour']:
-                print("Erreur sur "+liste_subs[i].__str__())
-                details.append({'bndle_name' : liste_subs[i],'data' : error['data'],'description': 'donne errone dans souscription'})
+
+            error = calcul_error(global_data,daily_data,0)
+            if not error['retour']:
+                details.append({'bndle_name' : liste_subs[i],'donne' : error['data'],'description' : 0})
             else:
                 pass
-                
-        #Si l'offre n'existe pas dans global daily usage ajoute les donne dans la base
+
         elif liste_subs[i] in donne_daily and liste_subs[i] not in donne_global:
-            print("Erreur Donne de "+liste_subs[i].__str__()+" inexistant dans global daily usage")
-            details.append({ "description": "Donne inexistante dans global daily usage",'bndle_name' : liste_subs[i],'donne' : donne_daily[liste_subs[i]]})
-            
-        #Si l'offre n'existe pas dans daily usage ajoute les donne dans la base
+            details.append({'bndle_name' : liste_subs[i],'donne' : donne_daily[liste_subs[i]],'description' : -1})
         elif liste_subs[i] not in donne_daily and liste_subs[i] in donne_global:
-            details.append({ "description": "Donne inexistante dans daily usage",'bndle_name' : liste_subs[i],'donne' : donne_global[liste_subs[i]]})
-            print("Erreur Donne de "+liste_subs[i].__str__()+" inexistant dans daily usage")
-            
-        #Si l'offre n'existe pas dans les deux ne rien faire
+            details.append({'bndle_name': liste_subs[i],'donne' : donne_global[liste_subs[i]],'description' : 1})
         elif liste_subs[i] not in donne_daily and liste_subs[i] not in donne_global:
             pass
+
     return details
 
-
-def getdata_lieu_daily_usage(day,location,client):
+def getdata_daily_usage(day,location):
     pipeline = [
     {
         '$match': {
@@ -160,9 +213,10 @@ def getdata_lieu_daily_usage(day,location,client):
     }, 
     {
         '$match' : {
-            'bundle.subscription.site_name' : location
+            'bundle.subscription.site_name' : location,
         }
     },
+
     {
         '$group': {
             '_id': '$bundle.bndle_name', 
@@ -175,16 +229,15 @@ def getdata_lieu_daily_usage(day,location,client):
         }
     }
 ]
-    db = client['cbm']
-    collection = db['daily_usage']
-    resultat = collection.aggregate(pipeline,cursor={})
-    retour=[]
+    retour = []
+    collection = getcollection_daily_usage()
+    resultat  = collection.aggregate(pipeline)
     for r in resultat:
-        retour.append({ 'bndle_name' : r['_id'],'bndle_cnt' : r['bndle_cnt'],'bndle_amnt' : r['bndle_amnt'] })
+        retour.append({'bndle_name' : r['_id'],'bndle_cnt' : r['bndle_cnt'] , 'bndle_amnt' : r['bndle_amnt']})
     return retour
-    
-    
-def getdata_lieu_global(day,location,client):
+
+
+def getdata_global(day,location):
     pipeline = [
     {
         '$match': {
@@ -204,10 +257,10 @@ def getdata_lieu_global(day,location,client):
         }
     }
 ]
-    db = client['cbm']
-    collection = db['global_daily_usage']
-    resultat = collection.aggregate(pipeline,cursor={})
-    retour=[]
+    
+    collection = getcollection_global()
+    resultat = collection.aggregate(pipeline)
+    retour = []
     for r in resultat:
-        retour.append({ 'bndle_name' : r['_id'],'bndle_cnt' : r['bndle_cnt'],'bndle_amnt' : r['bndle_amnt'] })
+        retour.append({'bndle_name' : r['_id'],'bndle_cnt':r['bndle_cnt'],'bndle_amnt' : r['bndle_amnt']})
     return retour

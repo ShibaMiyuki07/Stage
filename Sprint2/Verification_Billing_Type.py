@@ -1,8 +1,6 @@
-from datetime import datetime
 import os
 import sys
-import pymongo
-from Fonction import calcul_error, insertion_data
+from Utils import calcul_error, date_to_datetime, getcollection_daily_aggrege, insertion_data, insertion_database
 import mysql.connector
 
 def getListe_Billing_type():
@@ -12,10 +10,37 @@ def getListe_Billing_type():
     cursor.execute(query)
     all_billing_type = []
     for(name) in cursor:
-        all_billing_type.append(name [0])
+        all_billing_type.append(name)
     return all_billing_type
 
-def getglobal_usage(client,day):
+def getdaily_usage(day):
+    pipeline = [
+    {
+        '$match': {
+            'day': day,
+            'usage_type' : 'bundle',
+            'type_aggregation' : "billing_type"
+        }
+    },
+    {
+        '$project' : {
+            '_id' : '$billing_type',
+            'bndle_cnt' : 1,
+            'bndle_amnt' : 1
+        }
+    }
+]
+    collection = getcollection_daily_aggrege()
+    resultat = collection.aggregate(pipeline)
+    retour = {}
+    for r in resultat:
+        if r['_id'] != None:
+            retour[r['_id']] = insertion_data(r)
+        else:
+            retour['null'] = insertion_data(r)
+    return retour
+
+def getglobal_usage(day):
     pipeline = [
     {
         '$match': {
@@ -34,10 +59,9 @@ def getglobal_usage(client,day):
         }
     }
 ]
-    db = client['cbm']
-    collection = db['global_daily_usage']
+    collection = getcollection_daily_aggrege()
+    resultat = collection.aggregate(pipeline)
     retour = {}
-    resultat = collection.aggregate(pipeline,cursor={})
     for r in resultat:
         if r['_id'] != None:
             retour[r['_id']] = insertion_data(r)
@@ -45,117 +69,44 @@ def getglobal_usage(client,day):
             retour['null'] = insertion_data(r)
     return retour
 
-
-def getdaily_usage(client,day):
-    pipeline = [
-    {
-        '$match': {
-            'day': day
-        }
-    }, {
-        '$unwind': {
-            'path': '$bundle', 
-            'includeArrayIndex': 'b', 
-            'preserveNullAndEmptyArrays': False
-        }
-    }, {
-        '$unwind': {
-            'path': '$bundle.subscription', 
-            'includeArrayIndex': 'b_s', 
-            'preserveNullAndEmptyArrays': False
-        }
-    }, {
-        '$group': {
-            '_id': '$billing_type', 
-            'bndle_cnt': {
-                '$sum': '$bundle.subscription.bndle_cnt'
-            }, 
-            'bndle_amnt': {
-                '$sum': '$bundle.subscription.bndle_amnt'
-            }
-        }
-    }
-]
-    db = client['cbm']
-    collection = db['daily_usage']
-    retour = {}
-    resultat = collection.aggregate(pipeline,cursor={})
-    for r in resultat:
-        if r['_id'] != None:
-            retour[r['_id']] = insertion_data(r)
-        else:
-            retour['null'] = insertion_data(r)
-    return retour
-
-def comparaison_donne(daily_usage,global_daily_usage,liste_bt,client,day):
-    erreur = {}
-    data = []
-    erreur['day'] = day
-    erreur['usage_type'] = 'bundle'
+def comparaison_donne(daily_usage,global_daily_usage,liste_billing_type,day):
+    donne_erreur = {}
     nbr_erreur = 0
-    for i in range(len(liste_bt)):
-        #Si billing type existe dans daily et global
-        if liste_bt[i] in daily_usage and liste_bt[i] in global_daily_usage:
-            daily_data = daily_usage[liste_bt[i]]
-            global_data = global_daily_usage[liste_bt[i]]
+    data = []
+    donne_erreur['day'] = day
+    donne_erreur['usage_type'] = 'bundle'
+    for i in range(len(liste_billing_type)):
+        if liste_billing_type[i] in daily_usage and liste_billing_type[i] in global_daily_usage:
+            global_data = global_daily_usage[liste_billing_type[i]]
+            daily_data = daily_usage[liste_billing_type[i]]
             error = calcul_error(global_data,daily_data,1)
             if not error['retour']:
                 nbr_erreur += 1
-                print("Erreur de donne dans le market "+liste_bt[i].__str__())
-
-                #Ajout des donne d'erreur dans la base de donne
-                data.append({'billing_type' : liste_bt[i],"data" : error['data'],'description' : "Donne de billing type errone"})
+                data.append({"billing_type" : liste_billing_type[i],'error' : error['data'],'description' : 0})
             else:
                 pass
-        
-        #Si billing type n'existe pas dans global daily usage
-        elif liste_bt[i] in daily_usage and liste_bt[i] not in global_daily_usage:
-            print(daily_usage[liste_bt[i]])
-            print("Erreur de Donne de "+liste_bt[i].__str__()+" non existant dans global daily usage")
 
-            #Ajout des donne d'erreur dans la base de donne
-            data.append({'billing_type' : liste_bt[i],"data" : daily_usage[liste_bt[i]],'description' : "Donne inexistant dans global daily usage"})
-        
-        #Si billing type n'existe pas dans daily usage
-        elif liste_bt[i] not in daily_usage and liste_bt[i] in global_daily_usage:
-            print(global_daily_usage[liste_bt[i]])
-            print("Erreur de Donne de "+liste_bt[i].__str__()+" non existant dans daily usage")
-
-            #Ajout des donne d'erreur dans la base de donne
-            data.append({'billing_type' : liste_bt[i],"data" : global_daily_usage[liste_bt[i]],'description' : "Donne inexistant dans daily usage"})
-
-        #Si il n'existe pas 
-        elif liste_bt[i] not in daily_usage and liste_bt[i] not in global_daily_usage:
+        elif liste_billing_type[i] in daily_usage and liste_billing_type[i] not in global_daily_usage:
+            nbr_erreur += 1
+            data.append({'billing_type' : liste_billing_type[i],'error' : daily_usage[liste_billing_type[i]],'description' : -1})
+        elif liste_billing_type[i] not in daily_usage and liste_billing_type[i] in global_daily_usage:
+            nbr_erreur += 1
+            data.append({'billing_type' : liste_billing_type[i],'error' : global_daily_usage[liste_billing_type[i]],'description' : 1})
+        elif liste_billing_type[i] not in daily_usage and liste_billing_type[i] not in global_daily_usage:
             pass
 
-    if nbr_erreur>0:
-        erreur['erreur_billing_type'] = data
-        erreur['erreur_billing_type_cnt'] = nbr_erreur
-        insertion_donne(client,erreur)
-    cmd = "python Verification_Segment.py "+sys.argv[1]
+    if nbr_erreur != 0:
+        donne_erreur['erreur_billing_type_cnt'] = nbr_erreur
+        donne_erreur['erreur_billing_type'] = data
+        insertion_database(day,donne_erreur) 
+
+    cmd = "python Verification_Bundle.py "+sys.argv[1]
     os.system(cmd)
-    
-
-def insertion_donne(client,donne):
-    db = client['test']
-    collection = db['daily_usage_verification']
-    resultat = collection.find({"day" : donne['day'],"usage_type" : "bundle"})
-    count = 0
-    for r in resultat:
-        count += 1
-    if count>0:
-        collection.update_one({"day" : donne['day'],'usage_type' : 'bundle' },{"$set" : {"erreur_billing_type" : donne['erreur_billing_type'],"erreur_billing_type_cnt" : donne['erreur_billing_type_cnt']}})
-    else:
-        collection.insert_one(donne)
-
 
 
 if __name__ == "__main__":
-    liste_bt = getListe_Billing_type()
-    client = pymongo.MongoClient("mongodb://oma_dwh:Dwh4%40OrnZ@192.168.61.199:27017/?authMechanism=DEFAULT")
-    date = sys.argv[1]
-    date_time = datetime.strptime(date,'%Y-%m-%d')
-    day = datetime(date_time.year,date_time.month,date_time.day)
-    global_daily_usage = getglobal_usage(client,day)
-    daily_usage = getdaily_usage(client,day)
-    comparaison_donne(global_daily_usage,daily_usage,liste_bt,client,day)
+    liste_billing_type = getListe_Billing_type()
+    day = date_to_datetime(sys.argv[1])
+    daily_usage = getdaily_usage(day)
+    global_daily_usage = getglobal_usage(day)
+    comparaison_donne(daily_usage,global_daily_usage,liste_billing_type,day)
