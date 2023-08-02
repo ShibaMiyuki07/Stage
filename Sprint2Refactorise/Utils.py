@@ -30,7 +30,7 @@ def comparaison_donne(global_daily_usage,daily_usage,liste,day,nom):
     erreur = {}
     nbr_erreur = 0
     erreur['day'] = day
-    erreur['usage_type'] = 'topup'
+    erreur['usage_type'] = 'bundle'
     data = []
     for i in range(len(liste)):
         if liste[i] in global_daily_usage and liste[i] in daily_usage:
@@ -109,10 +109,10 @@ def getall_site():
     all_site.append("null")
     return all_site
 
-def getall_rec_type():
+def getall_subscription():
     connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.196',database='DM_RF')
     cursor = connexion.cursor() 
-    query = "select distinct(name) as name from rf_rec_type where name is not null"
+    query = "select distinct(name) as name from rf_subscriptions where name is not null"
     cursor.execute(query)
     all_site = []
     for(name) in cursor:
