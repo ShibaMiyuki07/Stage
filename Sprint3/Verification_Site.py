@@ -1,7 +1,7 @@
 from datetime import datetime
 import sys
 import pymongo
-from Fonction import calcul_error, insertion_data
+from Utils import calcul_error, insertion_data
 import mysql.connector
 
 def getall_site():
