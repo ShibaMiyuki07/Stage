@@ -44,7 +44,6 @@ def comparaison_donne(global_daily_usage,daily_usage,liste,day,nom):
                 pass
         elif liste[i] in global_daily_usage and liste[i] not in daily_usage:
             nbr_erreur += 1
-            print('erreur donne de '+liste[i]+" inexistant dans daily usage")
             data.append({ nom : liste[i],'data' : global_daily_usage[liste[i]],'description' : -1 })
         elif liste[i] in daily_usage and liste[i] not in global_daily_usage:
             nbr_erreur += 1
@@ -133,7 +132,7 @@ def getListe_Billing_type():
     return all_billing_type
 
 def getliste_pp():
-    connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser!',host='192.168.61.196',database='DM_RF')
+    connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.196',database='DM_RF')
     cursor = connexion.cursor() 
     query = "select description from rf_tp"
     cursor.execute(query)

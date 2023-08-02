@@ -6,7 +6,7 @@ def getdata_daily(day,nom):
         {
             '$match': {
                 'day': day,
-                'usage_type': 'bundle',
+                'usage_type': 'topup',
                 'type_aggregation' : nom
             }
         },

@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import sys
 from Execution_Requete import getdata_daily, getglobal_usage
 
