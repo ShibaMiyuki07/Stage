@@ -25,7 +25,7 @@ def getglobal_usage(day):
     resultat = collection.aggregate(pipeline)
     retour = {}
     for r in resultat:
-        retour[r['_id']] = insertion_data(r)
+        retour[day] = insertion_data(r)
     return retour
 
 def getdaily_usage(day):
@@ -48,7 +48,7 @@ def getdaily_usage(day):
     resultat = collection.aggregate(pipeline)
     retour = {}
     for r in resultat:
-        retour[r['_id']] = insertion_data(r)
+        retour[day] = insertion_data(r)
     return retour
 
 def comparaison_donne(daily_usage,global_daily_usage,day):
@@ -63,6 +63,7 @@ def comparaison_donne(daily_usage,global_daily_usage,day):
 
 if __name__ == "__main__":
     day = date_to_datetime(sys.argv[1])
+    print(day)
     global_daily_usage = getglobal_usage(day)
     daily_usage = getdaily_usage(day)
     comparaison_donne(daily_usage,global_daily_usage,day)
