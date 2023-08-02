@@ -115,7 +115,7 @@ def verification_cause(day,location):
     }, 
     {
         '$match' : {
-            'bundle.subscription.bndle_name' : location,
+            'bundle.subscription.site_name' : location,
         }
     },
 
@@ -213,7 +213,7 @@ def getdata_daily_usage(day,location):
     }, 
     {
         '$match' : {
-            'bundle.subscription.bndle_name' : location,
+            'bundle.subscription.site_name' : location,
         }
     },
 
@@ -223,7 +223,7 @@ def getdata_daily_usage(day,location):
             'bndle_cnt': {
                 '$sum': '$bundle.subscription.bndle_cnt'
             }, 
-            'bundle_amnt': {
+            'bndle_amnt': {
                 '$sum': '$bundle.subscription.bndle_amnt'
             }
         }
