@@ -36,7 +36,7 @@ def comparaison_donne(global_daily_usage,daily_usage,liste,day,nom):
         if liste[i] in global_daily_usage and liste[i] in daily_usage:
             global_data = global_daily_usage[liste[i]]
             daily_data = daily_usage[liste[i]]
-            error = calcul_error(global_data,daily_data,1)
+            error = calcul_error(global_data,daily_data,0)
             if not error['retour']:
                 nbr_erreur +=1
                 data.append({ nom : liste[i],'data' : error['data'],'description' : 0 })
@@ -65,7 +65,7 @@ def getcollection_for_insertion():
 
 def insertion_database(day,donne):
     collection = getcollection_for_insertion()
-    resultat = collection.find({'day' : day,'usage_type' : 'topup'})
+    resultat = collection.find({'day' : day,'usage_type' : 'bundle'})
     count = 0
     for r in resultat:
         count += 1
@@ -73,7 +73,7 @@ def insertion_database(day,donne):
     if count>0:
         list_key = list(donne.keys())
         for r in list_key:
-            collection.update_one({'day' : day,'usage_type' : 'topup'},{"$set" : {r : donne[r]}})
+            collection.update_one({'day' : day,'usage_type' : 'bundle'},{"$set" : {r : donne[r]}})
     else:
         collection.insert_one(donne)
 

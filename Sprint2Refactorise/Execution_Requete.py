@@ -13,8 +13,8 @@ def getdata_daily(day,nom):
         {
             '$project' : {
                 '_id' : '$'+nom,
-                'rec_cnt' : 1,
-                'rec_amnt' : 1
+                'bndle_cnt' : 1,
+                'bndle_amnt' : 1
             }
         }
     ]
@@ -38,11 +38,11 @@ def  getglobal_usage(day,nom):
     }, {
         '$group': {
             '_id': '$'+nom, 
-            'rec_cnt': {
-                '$sum': '$rec_cnt'
+            'bndle_cnt': {
+                '$sum': '$bndle_cnt'
             }, 
-            'rec_amnt': {
-                '$sum': '$rec_amnt'
+            'bndle_amnt': {
+                '$sum': '$bndle_amnt'
             }
         }
     }
