@@ -1,5 +1,5 @@
 import sys
-from Utils import calcul_error, date_to_datetime, getcollection_daily_usage, getcollection_global, insertion_data
+from Utils import calcul_error, date_to_datetime, getcollection_daily_aggrege, getcollection_global, insertion_data
 
 
 def getglobal_usage(day):
@@ -33,6 +33,7 @@ def getdaily_usage(day):
     {
         '$match': {
             'day': day,
+            'usage_type': 'bundle',
             'type_aggregation' : "day"
         }
     },
@@ -44,7 +45,7 @@ def getdaily_usage(day):
         }
     }
 ]
-    collection = getcollection_daily_usage()
+    collection = getcollection_daily_aggrege()
     resultat = collection.aggregate(pipeline)
     retour = {}
     for r in resultat:
