@@ -50,19 +50,21 @@ def Insertion_site_name(day):
     pipeline = [
     {
         '$match': {
-            'day': day,
-            'om' : {'$exists' : True}
+            'day': day, 
+            'om': {
+                '$exists': True
+            }
         }
     }, {
         '$unwind': {
             'path': '$om', 
-            'includeArrayIndex': 'b', 
+            'includeArrayIndex': 'o', 
             'preserveNullAndEmptyArrays': False
         }
     }, {
         '$unwind': {
             'path': '$om.transaction', 
-            'includeArrayIndex': 'b_s', 
+            'includeArrayIndex': 'ot', 
             'preserveNullAndEmptyArrays': False
         }
     }, {
@@ -73,10 +75,16 @@ def Insertion_site_name(day):
             }, 
             'om_tr_amnt': {
                 '$sum': '$om.transaction.om_tr_amnt'
-            },
+            }, 
             'om_amnt': {
                 '$sum': '$om.transaction.om_amnt'
-            },
+            }
+        }
+    }, {
+        '$match': {
+            'om_tr_amnt': {
+                '$gt': 0
+            }
         }
     }
 ]
@@ -92,19 +100,21 @@ def Insertion_market(day):
     pipeline = [
     {
         '$match': {
-            'day': day,
-            'om' : {'$exists' : True}
+            'day': day, 
+            'om': {
+                '$exists': True
+            }
         }
     }, {
         '$unwind': {
             'path': '$om', 
-            'includeArrayIndex': 'b', 
+            'includeArrayIndex': 'o', 
             'preserveNullAndEmptyArrays': False
         }
     }, {
         '$unwind': {
             'path': '$om.transaction', 
-            'includeArrayIndex': 'b_s', 
+            'includeArrayIndex': 'ot', 
             'preserveNullAndEmptyArrays': False
         }
     }, {
@@ -115,10 +125,16 @@ def Insertion_market(day):
             }, 
             'om_tr_amnt': {
                 '$sum': '$om.transaction.om_tr_amnt'
-            },
+            }, 
             'om_amnt': {
                 '$sum': '$om.transaction.om_amnt'
-            },
+            }
+        }
+    }, {
+        '$match': {
+            'om_tr_amnt': {
+                '$gt': 0
+            }
         }
     }
 ]
@@ -134,19 +150,21 @@ def Insertion_billing_type(day):
     pipeline = [
     {
         '$match': {
-            'day': day,
-            'om' : {'$exists' : True}
+            'day': day, 
+            'om': {
+                '$exists': True
+            }
         }
     }, {
         '$unwind': {
             'path': '$om', 
-            'includeArrayIndex': 'b', 
+            'includeArrayIndex': 'o', 
             'preserveNullAndEmptyArrays': False
         }
     }, {
         '$unwind': {
             'path': '$om.transaction', 
-            'includeArrayIndex': 'b_s', 
+            'includeArrayIndex': 'ot', 
             'preserveNullAndEmptyArrays': False
         }
     }, {
@@ -157,10 +175,16 @@ def Insertion_billing_type(day):
             }, 
             'om_tr_amnt': {
                 '$sum': '$om.transaction.om_tr_amnt'
-            },
+            }, 
             'om_amnt': {
                 '$sum': '$om.transaction.om_amnt'
-            },
+            }
+        }
+    }, {
+        '$match': {
+            'om_tr_amnt': {
+                '$gt': 0
+            }
         }
     }
 ]
@@ -177,19 +201,21 @@ def Insertion_pp_name(day):
     pipeline = [
     {
         '$match': {
-            'day': day,
-            'om' : {'$exists' : True}
+            'day': day, 
+            'om': {
+                '$exists': True
+            }
         }
     }, {
         '$unwind': {
             'path': '$om', 
-            'includeArrayIndex': 'b', 
+            'includeArrayIndex': 'o', 
             'preserveNullAndEmptyArrays': False
         }
     }, {
         '$unwind': {
             'path': '$om.transaction', 
-            'includeArrayIndex': 'b_s', 
+            'includeArrayIndex': 'ot', 
             'preserveNullAndEmptyArrays': False
         }
     }, {
@@ -200,10 +226,16 @@ def Insertion_pp_name(day):
             }, 
             'om_tr_amnt': {
                 '$sum': '$om.transaction.om_tr_amnt'
-            },
+            }, 
             'om_amnt': {
                 '$sum': '$om.transaction.om_amnt'
-            },
+            }
+        }
+    }, {
+        '$match': {
+            'om_tr_amnt': {
+                '$gt': 0
+            }
         }
     }
 ]
@@ -220,19 +252,21 @@ def Insertion_Transaction_Type(day):
     pipeline = [
     {
         '$match': {
-            'day': day,
-            'om' : {'$exists' : True}
+            'day': day, 
+            'om': {
+                '$exists': True
+            }
         }
     }, {
         '$unwind': {
             'path': '$om', 
-            'includeArrayIndex': 'b', 
+            'includeArrayIndex': 'o', 
             'preserveNullAndEmptyArrays': False
         }
     }, {
         '$unwind': {
             'path': '$om.transaction', 
-            'includeArrayIndex': 'b_s', 
+            'includeArrayIndex': 'ot', 
             'preserveNullAndEmptyArrays': False
         }
     }, {
@@ -243,10 +277,16 @@ def Insertion_Transaction_Type(day):
             }, 
             'om_tr_amnt': {
                 '$sum': '$om.transaction.om_tr_amnt'
-            },
+            }, 
             'om_amnt': {
                 '$sum': '$om.transaction.om_amnt'
-            },
+            }
+        }
+    }, {
+        '$match': {
+            'om_tr_amnt': {
+                '$gt': 0
+            }
         }
     }
 ]
@@ -274,7 +314,7 @@ def Insertion_segment(day):
             'day': day, 
             'om': {
                 '$exists': True
-            }
+            },
         }
     }, {
         '$lookup': {
@@ -325,10 +365,16 @@ def Insertion_segment(day):
             }, 
             'om_tr_amnt': {
                 '$sum': '$om.transaction.om_tr_amnt'
-            },
+            }, 
             'om_amnt': {
                 '$sum': '$om.transaction.om_amnt'
-            },
+            }
+        }
+    }, {
+        '$match': {
+            'om_tr_amnt': {
+                '$gt': 0
+            }
         }
     }
 ]
