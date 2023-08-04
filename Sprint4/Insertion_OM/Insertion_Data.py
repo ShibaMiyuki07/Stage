@@ -10,17 +10,18 @@ def getall_site():
     all_site = {}
     for(site_id,site_name,site_code) in cursor:
           all_site[site_id] = {'site_name' : site_name,'site_code' : site_code}
+    print('site extracted')
     return all_site
 
 def getmsisdn_location(day):
     connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.196',database='DM_OD')
     cursor = connexion.cursor() 
     query = "select msisdn as numero,site_id  from caller_daily_location where upd_dt='"+day.__str__()+"'"
-    print(query)
     cursor.execute(query)
     all_msisdn_location = {}
     for (numero,site_id) in cursor:
           all_msisdn_location[numero] = {'numero' : numero,'site_id' : site_id}
+    print('msisdn location extracted')
     return all_msisdn_location
 
 
@@ -37,7 +38,10 @@ def getom_service():
     cursor.execute(query)
     all_msisdn_location = {}
     for (msisdn,service_type,transaction_tag,classification,user_type,service) in cursor:
+          all_msisdn_location[msisdn] = {}
+          all_msisdn_location[msisdn][transaction_tag] = {}
           all_msisdn_location[msisdn][transaction_tag][service_type] = {'classification' : classification ,'user_type' : user_type,'service' : service}
+    print('om service extracted')
     return all_msisdn_location
 
 
@@ -68,7 +72,7 @@ def getsegment(day):
                 '_id' : 0,
                 'vbs_Segment_month' : 1,
                 'party_id' : 1,
-                'market_id' : 1,
+                'market' : 1,
                 'billing_type' : 1,
                 'pp_name' : 1
             }
@@ -78,11 +82,12 @@ def getsegment(day):
     collection = getcollection_in_cbm('segment')
     resultats = collection.aggregate(pipeline)
     for r in resultats:
-        retour['party_id'] = {'segment' : r['vbs_Segment_month'],'market' : r['market_id'],'billing_type' : r['billing_type'],'pp_name' : r['pp_name']}
+        retour['party_id'] = {'segment' : r['vbs_Segment_month'],'market' : r['market'],'billing_type' : r['billing_type'],'pp_name' : r['pp_name']}
+    print('segment extracted')
     return retour
     
 
-def gettransactions(day,msisdn_location,liste_segment,liste_om_service):
+def gettransactions(day,msisdn_location,liste_segment,liste_om_service,liste_site):
     pipeline = [
           {
                '$match' : {
@@ -112,35 +117,55 @@ def gettransactions(day,msisdn_location,liste_segment,liste_om_service):
     for r in resultats:
         if r['sender_domain_code'] == 'SUBS' or r['receiver_msisdn_acc'] == 'IND01' or r['receiver_msisdn_acc'] == '261IND01' or r['receiver_msisdn_acc'] == 'PTUPS' or r['receiver_msisdn_acc'] == '261PTUPS':
             numero_sender = "261"+ r['sender_msisdn'][1:]
+            numero_receiver = "261"+r['receiver_msisdn_acc'][1:]
         if r['receiver_domain'] == 'SUBS' or r['sender_msisdn'] == 'IND01' or r['sender_msisdn'] == '261IND01' or r['sender_msisdn'] == 'PTUPS' or r['sender_msisdn'] == '261PTUPS':
             numero_sender = "261"+ r['receiver_msisdn_acc'][1:]
+            numero_receiver = "261"+ r['sender_msisdn'][1:]
 
-        classification = ""
-        service = ""
-        if liste_om_service[r['sender_msisdn']][r['transaction_tag']][r['service_type']]['user_type'] == 'sender':
-            classification = liste_om_service[r['sender_msisdn']][r['transaction_tag']][r['service_type']]['classification']
-            service =  liste_om_service[r['sender_msisdn']][r['transaction_tag']][r['service_type']]['service']
-        else:
-            if liste_om_service[r['receiver_msisdn_acc']][r['transaction_tag']][r['service_type']]['user_type'] == 'receiver':
-                classification = liste_om_service[r['receiver_msisdn_acc']][r['transaction_tag']][r['service_type']]['classification']
-                service = liste_om_service[r['receiver_msisdn_acc']][r['transaction_tag']][r['service_type']]['service']
+        classification = None
+        service = None
+        if numero_sender in liste_om_service :
+            if liste_om_service[numero_sender][r['transaction_tag']][r['service_type']]['user_type'] == 'sender':
+              classification = liste_om_service[r['sender_msisdn']][r['transaction_tag']][r['service_type']]['classification']
+              service =  liste_om_service[numero_sender][r['transaction_tag']][r['service_type']]['service']
             else:
-                classification = r['transaction_tag']
-                service = "AUTRES"
+                if numero_receiver in liste_om_service:
+                    if liste_om_service[r['receiver_msisdn_acc']][r['transaction_tag']][r['service_type']]['user_type'] == 'receiver':
+                      classification = liste_om_service[r['receiver_msisdn_acc']][r['transaction_tag']][r['service_type']]['classification']
+                      service = liste_om_service[r['receiver_msisdn_acc']][r['transaction_tag']][r['service_type']]['service']
+                    else:
+                      classification = r['transaction_tag']
+                      service = "AUTRES"
 
         type_compte = ''
         if r['sender_domain_code'] == 'SUBS' or r['receiver_domain'] == 'SUBS':
             type_compte = 'SUBSCRIBER'
         else:
             type_compte = 'CHANNEL'
+            
+        site_name = None
+        if msisdn_location[numero_sender]['site_id'] in liste_site:
+          site_name = liste_site[msisdn_location[numero_sender]['site_id']]
+          
+        segment = None
+        market = None
+        billing_type = None
+        pp_name = None
+        if numero_sender in liste_segment:
+          segment = liste_segment[numero_sender]['segment']
+          market = liste_segment[numero_sender]['market']
+          billing_type = liste_segment[numero_sender]['billing_type']
+          pp_name = liste_segment[numero_sender]['pp_name']
+          
+        
          
         data.append({
             'day' : day,
-            "site_name" : msisdn_location[numero_sender],
-            'segment' : liste_segment[numero_sender]['segment'],
-            'market' : liste_segment[numero_sender]['market'],
-            'billing_type' : liste_segment[numero_sender]['billing_type'],
-            'pp_name' : liste_segment[numero_sender]['pp_name'],
+            "site_name" : site_name,
+            'segment' : segment,
+            'market' : market,
+            'billing_type' : billing_type,
+            'pp_name' : pp_name,
             'transaction_type' : r['service_type'].__str__()+"|"+ r['transaction_tag'].__str__(),
             'om_tr_amnt' : r['transaction_amount'],
             'om_amnt' : r['service_charge_received'],
@@ -149,7 +174,8 @@ def gettransactions(day,msisdn_location,liste_segment,liste_om_service):
             'type_compte' : type_compte
             })
         
-    return data
+    insertion_om_details(data)
+    print('insertion termine')
 
 def insertion_om_details(data):
     client = connexion_base()
@@ -168,4 +194,4 @@ if __name__ == "__main__":
     msisdn_location = getmsisdn_location(date)
     liste_segment = getsegment(day)
     liste_om_service = getom_service()
-    gettransactions(day,msisdn_location)
+    gettransactions(day,msisdn_location,liste_segment,liste_om_service,liste_site)
