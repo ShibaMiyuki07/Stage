@@ -5,7 +5,7 @@ import pymongo
 def getall_site():
     connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.196',database='DM_RF')
     cursor = connexion.cursor() 
-    query = "SELECT sig_id id, sig_code_site site, sig_nom_site nom_site, max(sig_secteur_name_v3) secteur FROM DM_RF.rf_sig_cell_krill_v3 sig group by sig_id  "
+    query = "SELECT sig_id id, sig_code_site site, sig_nom_site nom_site, max(sig_secteur_name_v3) secteur FROM rf_sig_cell_krill_v3 sig group by sig_id  "
     cursor.execute(query)
     all_site = {}
     for(id,site,nom_site,secteur) in cursor:
@@ -39,6 +39,9 @@ def getom_service():
     all_msisdn_location = {}
     for (msisdn_9,service_type,transaction_tag,classification,user_type,service) in cursor:
           msisdn = "261"+msisdn_9[1:]
+          all_msisdn_location[msisdn] = {}
+          all_msisdn_location[msisdn][transaction_tag] = {}
+          all_msisdn_location[msisdn][transaction_tag][service_type] = {}
           all_msisdn_location[msisdn][transaction_tag][service_type]['classification'] = classification
           all_msisdn_location[msisdn][transaction_tag][service_type]['user_type'] = user_type
           all_msisdn_location[msisdn][transaction_tag][service_type]['service'] = service
