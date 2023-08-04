@@ -35,12 +35,13 @@ def getom_service():
     connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.196',database='DM_RF')
     cursor = connexion.cursor() 
     query = "select msisdn_9,service_type,transaction_tag,classification,user_type,service from rf_om_service"
-    print(query)
     cursor.execute(query)
     all_msisdn_location = {}
     for (msisdn_9,service_type,transaction_tag,classification,user_type,service) in cursor:
           msisdn = "261"+msisdn_9[1:]
-          all_msisdn_location[msisdn.__str__()+transaction_tag.__str__()+service_type.__str__()] = {'classification' : classification,'user_type' : user_type,'service' : service}
+          all_msisdn_location[msisdn] = {}
+          all_msisdn_location[msisdn][transaction_tag] = {}
+          all_msisdn_location[msisdn][transaction_tag][service_type] = {'classification' : classification,'user_type' : user_type,'service' : service}
     print('om service extracted')
     return all_msisdn_location
 
@@ -126,18 +127,31 @@ def gettransactions(day,msisdn_location,liste_segment,liste_om_service,liste_sit
             else:
                 numero_receiver = r['sender_msisdn']
     
+        
         classification = None
         service = None
-        if liste_om_service[numero_sender.__str__()+r['transaction_tag'].__str__()+r['service_type'].__str__()]['user_type'] == 'sender':
-            classification = liste_om_service[numero_sender.__str__()+r['transaction_tag'].__str__()+r['service_type'].__str__()]['classification']
-            service = liste_om_service[numero_sender.__str__()+r['transaction_tag'].__str__()+r['service_type'].__str__()]['service']
-        else:
-            if liste_om_service[numero_receiver.__str__()+r['transaction_tag'].__str__()+r['service_type'].__str__()]['user_type'] == 'receiver':
-                classification = liste_om_service[numero_receiver.__str__()+r['transaction_tag'].__str__()+r['service_type'].__str__()]['classification']
-                service = liste_om_service[numero_receiver.__str__()+r['transaction_tag'].__str__()+r['service_type'].__str__()]['service']
+        if numero_sender in liste_om_service and r['transaction_tag'] in liste_om_service[numero_sender] and r['service_type'] in liste_om_service[numero_sender][r['transaction_tag']]:
+            if liste_om_service[numero_sender][r['transaction_tag']][r['service_type']]['user_type']:
+              classification = liste_om_service[numero_sender][r['transaction_tag']][r['service_type']]['classification']
+              service = liste_om_service[numero_sender][r['transaction_tag']][r['service_type']]['service']
+              
+            if numero_receiver in liste_om_service and r['transaction_tag'] in liste_om_service[numero_receiver] and r['service_type'] in liste_om_service[numero_receiver][r['transaction_tag']]:
+               if liste_om_service[numero_receiver][r['transaction_tag']][r['service_type']]['user_type']:
+                  classification = liste_om_service[numero_receiver][r['transaction_tag']][r['service_type']]['classification']
+                  service = liste_om_service[numero_receiver][r['transaction_tag']][r['service_type']]['service']
+                  
             else:
-                service = "AUTRES"
-                classification = r['transaction_tag']
+              classification = r['transaction_tag']
+              service = "AUTRES"
+        else:
+          if numero_receiver in liste_om_service and r['transaction_tag'] in liste_om_service[numero_receiver] and r['service_type'] in liste_om_service[numero_receiver][r['transaction_tag']]:
+               if liste_om_service[numero_receiver][r['transaction_tag']][r['service_type']]['user_type']:
+                  classification = liste_om_service[numero_receiver][r['transaction_tag']][r['service_type']]['classification']
+                  service = liste_om_service[numero_receiver][r['transaction_tag']][r['service_type']]['service']
+                  
+          else:
+              classification = r['transaction_tag']
+              service = "AUTRES"
 
 
         type_compte = ''
