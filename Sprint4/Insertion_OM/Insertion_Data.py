@@ -5,11 +5,11 @@ import pymongo
 def getall_site():
     connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.196',database='DM_RF')
     cursor = connexion.cursor() 
-    query = "select sig_id_site as site_id,sig_nom_site as site_name,sig_code_site as site_code from rf_sig_cell_krill_v3  "
+    query = "SELECT sig_id id, sig_code_site site, sig_nom_site nom_site, max(sig_secteur_name_v3) secteur FROM DM_RF.rf_sig_cell_krill_v3 sig group by sig_id  "
     cursor.execute(query)
     all_site = {}
-    for(site_id,site_name,site_code) in cursor:
-          all_site[site_id] = {'site_name' : site_name,'site_code' : site_code}
+    for(id,site,nom_site,secteur) in cursor:
+          all_site[id] = {'site_name' : nom_site,'site_code' : site,'secteur' : secteur}
     print('site extracted')
     return all_site
 
@@ -39,9 +39,10 @@ def getom_service():
     all_msisdn_location = {}
     for (msisdn_9,service_type,transaction_tag,classification,user_type,service) in cursor:
           msisdn = "261"+msisdn_9[1:]
-          all_msisdn_location[msisdn] = {}
-          all_msisdn_location[msisdn][transaction_tag] = {}
-          all_msisdn_location[msisdn][transaction_tag][service_type] = {'classification' : classification ,'user_type' : user_type,'service' : service}
+          all_msisdn_location[msisdn][transaction_tag][service_type]['classification'] = classification
+          all_msisdn_location[msisdn][transaction_tag][service_type]['user_type'] = user_type
+          all_msisdn_location[msisdn][transaction_tag][service_type]['service'] = service
+
     print('om service extracted')
     return all_msisdn_location
 
@@ -83,7 +84,7 @@ def getsegment(day):
     collection = getcollection_in_cbm('segment')
     resultats = collection.aggregate(pipeline)
     for r in resultats:
-        retour['party_id'] = {'segment' : r['vbs_Segment_month'],'market' : r['market'],'billing_type' : r['billing_type'],'pp_name' : r['pp_name']}
+        retour[r['party_id']] = {'segment' : r['vbs_Segment_month'],'market' : r['market'],'billing_type' : r['billing_type'],'pp_name' : r['pp_name']}
     print('segment extracted')
     return retour
     
@@ -155,9 +156,11 @@ def gettransactions(day,msisdn_location,liste_segment,liste_om_service,liste_sit
             type_compte = 'CHANNEL'
             
         site_name = None
+        secteur = None
         if numero_sender in msisdn_location:
           if msisdn_location[numero_sender]['site_id'] in liste_site:
-            site_name = liste_site[msisdn_location[numero_sender]['site_id']]
+            site_name = liste_site[msisdn_location[numero_sender]['site_id']]['site_name']
+            secteur = liste_site[msisdn_location[numero_sender]['site_id']]['secteur']
           
         segment = None
         market = None
@@ -183,7 +186,8 @@ def gettransactions(day,msisdn_location,liste_segment,liste_om_service,liste_sit
             'om_amnt' : r['service_charge_received'],
             'classification' : classification,
             'service' : service,
-            'type_compte' : type_compte
+            'type_compte' : type_compte,
+            'secteur' : secteur
             })
         
     insertion_om_details(data)
