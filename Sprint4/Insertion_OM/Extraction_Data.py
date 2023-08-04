@@ -2,7 +2,6 @@ from datetime import datetime
 import sys
 import mysql.connector
 import pymongo
-import codecs
 def getall_site():
     connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.196',database='DM_RF')
     cursor = connexion.cursor() 
