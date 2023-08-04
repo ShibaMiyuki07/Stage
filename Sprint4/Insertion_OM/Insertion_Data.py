@@ -40,7 +40,7 @@ def getom_service():
     all_msisdn_location = {}
     for (msisdn_9,service_type,transaction_tag,classification,user_type,service) in cursor:
           msisdn = "261"+msisdn_9[1:]
-          all_msisdn_location[msisdn+transaction_tag+service_type] = {'classification' : classification,'user_type' : user_type,'service' : service}
+          all_msisdn_location[msisdn.__str__()+transaction_tag.__str__()+service_type.__str__()] = {'classification' : classification,'user_type' : user_type,'service' : service}
     print('om service extracted')
     return all_msisdn_location
 
@@ -128,13 +128,13 @@ def gettransactions(day,msisdn_location,liste_segment,liste_om_service,liste_sit
     
         classification = None
         service = None
-        if liste_om_service[numero_sender+r['transaction_tag']+r['service_type']]['user_type'] == 'sender':
-            classification = liste_om_service[numero_sender+r['transaction_tag']+r['service_type']]['classification']
-            service = liste_om_service[numero_receiver+r['transaction_tag']+r['service_type']]['service']
+        if liste_om_service[numero_sender.__str__()+r['transaction_tag'].__str__()+r['service_type'].__str__()]['user_type'] == 'sender':
+            classification = liste_om_service[numero_sender.__str__()+r['transaction_tag'].__str__()+r['service_type'].__str__()]['classification']
+            service = liste_om_service[numero_sender.__str__()+r['transaction_tag'].__str__()+r['service_type'].__str__()]['service']
         else:
-            if liste_om_service[numero_receiver+r['transaction_tag']+r['service_type']]['user_type'] == 'receiver':
-                classification = liste_om_service[numero_receiver+r['transaction_tag']+r['service_type']]['classification']
-                service = liste_om_service[numero_receiver+r['transaction_tag']+r['service_type']]['service']
+            if liste_om_service[numero_receiver.__str__()+r['transaction_tag'].__str__()+r['service_type'].__str__()]['user_type'] == 'receiver':
+                classification = liste_om_service[numero_receiver.__str__()+r['transaction_tag'].__str__()+r['service_type'].__str__()]['classification']
+                service = liste_om_service[numero_receiver.__str__()+r['transaction_tag'].__str__()+r['service_type'].__str__()]['service']
             else:
                 service = "AUTRES"
                 classification = r['transaction_tag']
