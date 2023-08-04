@@ -215,3 +215,4 @@ if __name__ == "__main__":
     liste_segment = getsegment(day)
     liste_om_service = getom_service()
     gettransactions(day,msisdn_location,liste_segment,liste_om_service,liste_site)
+    cmd = "python Insertion_Data.py "+sys.argv[1]

@@ -1,7 +1,7 @@
 from datetime import datetime
 import sys
 
-from Utils import getcollection_for_insertion, getcollection_om_details, insertion_data
+from Utils import connexion_base, getcollection_for_insertion, getcollection_om_details, insertion_data
 
 
 
@@ -211,6 +211,11 @@ def Insertion_segment(day):
     
     insertion_data(getcollection_for_insertion('tmp_daily_aggregation'),data)
 
+def remove():
+    client = connexion_base()
+    db = client['test']
+    collection = db['tmp_om_details']
+    collection.delete_many({})
 
 if __name__ == "__main__":
     date = sys.argv[1]
@@ -223,6 +228,7 @@ if __name__ == "__main__":
     Insertion_market(day)
     Insertion_site_name(day)
     Insertion_segment(day)
+    remove()
 
 
     
