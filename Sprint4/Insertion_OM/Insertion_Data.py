@@ -42,9 +42,9 @@ def getom_service():
           all_msisdn_location[msisdn] = {}
           all_msisdn_location[msisdn][transaction_tag] = {}
           all_msisdn_location[msisdn][transaction_tag][service_type] = {}
-          all_msisdn_location[msisdn][transaction_tag][service_type]['classification'] = classification
-          all_msisdn_location[msisdn][transaction_tag][service_type]['user_type'] = user_type
-          all_msisdn_location[msisdn][transaction_tag][service_type]['service'] = service
+          all_msisdn_location[msisdn][transaction_tag][service_type]['classification'] = classification.decode('utf-8','ignore')
+          all_msisdn_location[msisdn][transaction_tag][service_type]['user_type'] = user_type.decode('utf-8','ignore')
+          all_msisdn_location[msisdn][transaction_tag][service_type]['service'] = service.decode('utf-8','ignore')
 
     print('om service extracted')
     return all_msisdn_location
