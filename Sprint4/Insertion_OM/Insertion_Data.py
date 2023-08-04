@@ -40,13 +40,7 @@ def getom_service():
     all_msisdn_location = {}
     for (msisdn_9,service_type,transaction_tag,classification,user_type,service) in cursor:
           msisdn = "261"+msisdn_9[1:]
-          all_msisdn_location[msisdn] = {}
-          all_msisdn_location[msisdn][transaction_tag] = {}
-          all_msisdn_location[msisdn][transaction_tag][service_type] = {}
-          all_msisdn_location[msisdn][transaction_tag][service_type]['classification'] = classification
-          all_msisdn_location[msisdn][transaction_tag][service_type]['user_type'] = user_type
-          all_msisdn_location[msisdn][transaction_tag][service_type]['service'] = service
-    print(all_msisdn_location['261324549548']['PAIEMENT SALAIRE']['CASHIN'].keys())
+          all_msisdn_location[msisdn+transaction_tag+service_type] = {'classification' : classification,'user_type' : user_type,'service' : service}
     print('om service extracted')
     return all_msisdn_location
 
@@ -134,23 +128,17 @@ def gettransactions(day,msisdn_location,liste_segment,liste_om_service,liste_sit
     
         classification = None
         service = None
-        if numero_sender in liste_om_service :
-          print(liste_om_service[numero_sender].keys())
-          '''if r['transaction_tag'] in liste_om_service[numero_sender]:
-            if r['service_type'] in liste_om_service[numero_sender][r['transaction_tag']]:
-              if liste_om_service[numero_sender][r['transaction_tag']][r['service_type']]['user_type'] == 'sender':
-                classification = liste_om_service[numero_sender][r['transaction_tag']][r['service_type']]['classification']
-                service =  liste_om_service[numero_sender][r['transaction_tag']][r['service_type']]['service']
-              else:
-                  if numero_receiver in liste_om_service:
-                      if r['transaction_tag'] in liste_om_service[numero_receiver]:
-                        if r['service_type'] in liste_om_service[numero_receiver]:
-                          if liste_om_service[numero_receiver][r['transaction_tag']][r['service_type']]['user_type'] == 'receiver':
-                            classification = liste_om_service[numero_receiver][r['transaction_tag']][r['service_type']]['classification']
-                            service = liste_om_service[numero_receiver][r['transaction_tag']][r['service_type']]['service']
-                          else:
-                            classification = r['transaction_tag']
-                            service = "AUTRES"'''
+        if liste_om_service[numero_sender+r['transaction_tag']+r['service_type']]['user_type'] == 'sender':
+            classification = liste_om_service[numero_sender+r['transaction_tag']+r['service_type']]['classification']
+            service = liste_om_service[numero_receiver+r['transaction_tag']+r['service_type']]['service']
+        else:
+            if liste_om_service[numero_receiver+r['transaction_tag']+r['service_type']]['user_type'] == 'receiver':
+                classification = liste_om_service[numero_receiver+r['transaction_tag']+r['service_type']]['classification']
+                service = liste_om_service[numero_receiver+r['transaction_tag']+r['service_type']]['service']
+            else:
+                service = "AUTRES"
+                classification = r['transaction_tag']
+
 
         type_compte = ''
         if r['sender_domain_code'] == 'SUBS' or r['receiver_domain'] == 'SUBS':
