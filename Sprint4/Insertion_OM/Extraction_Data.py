@@ -2,6 +2,7 @@ from datetime import datetime
 import sys
 import mysql.connector
 import pymongo
+import os
 def getall_site():
     connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.196',database='DM_RF')
     cursor = connexion.cursor() 
@@ -216,3 +217,4 @@ if __name__ == "__main__":
     liste_om_service = getom_service()
     gettransactions(day,msisdn_location,liste_segment,liste_om_service,liste_site)
     cmd = "python Insertion_Data.py "+sys.argv[1]
+    os.system(cmd)

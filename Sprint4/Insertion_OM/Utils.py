@@ -20,7 +20,7 @@ def getcollection_om_details():
 def insertion_data(collection,donne):
     collection.insert_many(donne)
 
-def getcollection_insertion(nom_collection):
+def getcollection_for_insertion(nom_collection):
     client = connexion_base()
     db = client['test']
     collection = db[nom_collection]

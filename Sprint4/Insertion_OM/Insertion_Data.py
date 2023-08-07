@@ -16,7 +16,7 @@ def Insertion_day(day):
         '$group': {
             '_id': '$day', 
             'om_cnt': {
-                '$sum': '$om_cnt'
+                '$sum': 1
             }, 
             'om_tr_amnt': {
                 '$sum': '$om_tr_amnt'
@@ -45,7 +45,7 @@ def Insertion_site_name(day):
         '$group': {
             '_id': '$site_name', 
             'om_cnt': {
-                '$sum': '$om_cnt'
+                '$sum': 1
             }, 
             'om_tr_amnt': {
                 '$sum': '$om_tr_amnt'
@@ -72,9 +72,9 @@ def Insertion_market(day):
         }
     },  {
         '$group': {
-            '_id': '$site_name', 
+            '_id': '$market', 
             'om_cnt': {
-                '$sum': '$om_cnt'
+                '$sum': 1
             }, 
             'om_tr_amnt': {
                 '$sum': '$om_tr_amnt'
@@ -103,7 +103,7 @@ def Insertion_billing_type(day):
         '$group': {
             '_id': '$billing_type', 
             'om_cnt': {
-                '$sum': '$om_cnt'
+                '$sum': 1
             }, 
             'om_tr_amnt': {
                 '$sum': '$om_tr_amnt'
@@ -133,7 +133,7 @@ def Insertion_pp_name(day):
         '$group': {
             '_id': '$pp_name', 
             'om_cnt': {
-                '$sum': '$om_cnt'
+                '$sum': 1
             }, 
             'om_tr_amnt': {
                 '$sum': '$om_tr_amnt'
@@ -163,7 +163,7 @@ def Insertion_Transaction_Type(day):
         '$group': {
             '_id': '$transaction_type', 
             'om_cnt': {
-                '$sum': '$om_cnt'
+                '$sum': 1
             }, 
             'om_tr_amnt': {
                 '$sum': '$om_tr_amnt'
@@ -192,7 +192,7 @@ def Insertion_segment(day):
         '$group': {
             '_id': '$segment', 
             'om_cnt': {
-                '$sum': '$om_cnt'
+                '$sum': 1
             }, 
             'om_tr_amnt': {
                 '$sum': '$om_tr_amnt'
