@@ -82,7 +82,7 @@ def  getglobal_usage(day,nom):
             'voice_o_amnt': {
                 '$sum': '$voice_o_amnt'
             }, 
-            'voice_o_bndle_vol': {
+            'voice_o_bndl_vol': {
                 '$sum': '$voice_o_bndl_vol'
             }, 
             'sms_o_main_cnt': {
