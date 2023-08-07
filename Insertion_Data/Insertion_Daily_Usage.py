@@ -46,7 +46,7 @@ def Insertion_day(day):
             'voice_o_amnt': {
                 '$sum': '$usage.usage_op.voice_o_amnt'
             }, 
-            'voice_o_bndle_vol': {
+            'voice_o_bndl_vol': {
                 '$sum': '$usage.usage_op.voice_o_bndl_vol'
             }, 
             'sms_o_main_cnt': {
@@ -187,7 +187,7 @@ def Insertion_day(day):
             'voice_o_amnt': {
                 '$sum': '$usage.usage_op.voice_o_amnt'
             }, 
-            'voice_o_bndle_vol': {
+            'voice_o_bndl_vol': {
                 '$sum': '$usage.usage_op.voice_o_bndl_vol'
             }, 
             'sms_o_main_cnt': {
@@ -297,7 +297,7 @@ def Insertion_op_code(day):
             'voice_o_amnt': {
                 '$sum': '$usage.usage_op.voice_o_amnt'
             }, 
-            'voice_o_bndle_vol': {
+            'voice_o_bndl_vol': {
                 '$sum': '$usage.usage_op.voice_o_bndl_vol'
             }, 
             'sms_o_main_cnt': {
@@ -437,7 +437,7 @@ def Insertion_Market(day):
             'voice_o_amnt': {
                 '$sum': '$usage.usage_op.voice_o_amnt'
             }, 
-            'voice_o_bndle_vol': {
+            'voice_o_bndl_vol': {
                 '$sum': '$usage.usage_op.voice_o_bndl_vol'
             }, 
             'sms_o_main_cnt': {
@@ -577,7 +577,7 @@ def Insertion_Billing_Type(day):
             'voice_o_amnt': {
                 '$sum': '$usage.usage_op.voice_o_amnt'
             }, 
-            'voice_o_bndle_vol': {
+            'voice_o_bndl_vol': {
                 '$sum': '$usage.usage_op.voice_o_bndl_vol'
             }, 
             'sms_o_main_cnt': {
@@ -717,7 +717,7 @@ def Insertion_pp_name(day):
             'voice_o_amnt': {
                 '$sum': '$usage.usage_op.voice_o_amnt'
             }, 
-            'voice_o_bndle_vol': {
+            'voice_o_bndl_vol': {
                 '$sum': '$usage.usage_op.voice_o_bndl_vol'
             }, 
             'sms_o_main_cnt': {
@@ -898,7 +898,7 @@ def Insertion_Segment(day):
             'voice_o_amnt': {
                 '$sum': '$usage.usage_op.voice_o_amnt'
             }, 
-            'voice_o_bndle_vol': {
+            'voice_o_bndl_vol': {
                 '$sum': '$usage.usage_op.voice_o_bndl_vol'
             }, 
             'sms_o_main_cnt': {
