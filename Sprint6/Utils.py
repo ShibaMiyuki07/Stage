@@ -24,7 +24,7 @@ def getcollection_global():
     db = client['cbm']
     collection = db['global_daily_usage']
     return collection
-
+    
 def comparaison_donne(global_daily_usage,daily_usage,liste,day,nom):
     erreur = {}
     nbr_erreur = 0
