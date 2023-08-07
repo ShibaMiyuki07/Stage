@@ -23,5 +23,3 @@ if __name__ == "__main__":
         daily_usage = getdata_daily(day,liste_verification[i])
         global_daily_usage = getglobal_usage(day,liste_verification[i])
         comparaison_donne(global_daily_usage,daily_usage,donne[liste_verification[i]],day,liste_verification[i])
-        
-
