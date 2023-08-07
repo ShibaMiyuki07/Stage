@@ -1,4 +1,5 @@
 import pymongo
+import mysql.connector
 
 
 def connexion_base():
@@ -25,3 +26,7 @@ def getcollection_insertion(nom_collection):
 
 def insertion_data(collection,donne):
     collection.insert_many(donne)
+
+def connexion_sql():
+    connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.196')
+    return connexion
