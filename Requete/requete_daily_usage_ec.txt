@@ -1,0 +1,35 @@
+[
+    {
+        '$match': {
+            'day': datetime(2023, 1, 11, 0, 0, 0, tzinfo=timezone.utc), 
+            'EC': {
+                '$exists': True
+            }
+        }
+    }, {
+        '$unwind': {
+            'path': '$EC', 
+            'includeArrayIndex': 'e', 
+            'preserveNullAndEmptyArrays': False
+        }
+    }, {
+        '$group': {
+            '_id': '$day', 
+            'ec_fees': {
+                '$sum': '$EC.ec_fees'
+            }, 
+            'ec_payback': {
+                '$sum': '$EC.ec_payback'
+            }, 
+            'ec_loan': {
+                '$sum': '$EC.ec_loan'
+            }, 
+            'ec_qty': {
+                '$sum': '$EC.ec_qty'
+            }, 
+            'ca_reactivation': {
+                '$sum': '$EC.ca_reactivation'
+            }
+        }
+    }
+]

@@ -1,0 +1,27 @@
+[
+    {
+        '$match': {
+            'day': datetime(2023, 1, 11, 0, 0, 0, tzinfo=timezone.utc), 
+            'usage_type': 'ec'
+        }
+    }, {
+        '$group': {
+            '_id': '$day', 
+            'ec_loan': {
+                '$sum': '$ec_loan'
+            }, 
+            'ec_qty': {
+                '$sum': '$ec_qty'
+            }, 
+            'ec_fees': {
+                '$sum': '$ec_fees'
+            }, 
+            'ec_payback': {
+                '$sum': '$ec_payback'
+            }, 
+            'ca_reactivation': {
+                '$sum': '$ca_reactivation'
+            }
+        }
+    }
+]
