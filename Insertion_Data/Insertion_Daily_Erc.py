@@ -15,7 +15,7 @@ def insertion_day(day):
     insertion_data(getcollection_insertion('tmp_daily_aggregation'),data)
 
 def insertion_site_name(day):
-    query = "select sum(capillarite_erecharge) nb,sig_nom_site site_name from WORK.final_capillarite_erec_jour where tra_date = %s"
+    query = "select sig_nom_site site_name,count(sig_nom_site) nb from WORK.caller_daily_location_ofl ms LEFT JOIN DM_RF.rf_sig_cell_krill_new rf on ms.site_id = rf.sig_id where upd_dt = %s and msisdn IN (select distinct(concat('261',substr(tra_sndr_msisdn,2,9))) from DWH.zebra_rp2p_transaction where tra_date=%s and tra_channel='C2S' and tra_transfer_status=200 and tra_sndr_category in ('RETSA','RETMGR')) group by sig_nom_site"
     db = connexion_sql()
     cursor = db.cursor()
     value = (day)
