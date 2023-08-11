@@ -50,10 +50,9 @@ def comparaison_donne(global_daily_usage,daily_usage,liste,day,nom):
         elif liste[i] not in daily_usage and liste[i] not in global_daily_usage:
             pass
 
-    if nbr_erreur>0:
-        erreur['erreur_'+nom+'_cnt'] = nbr_erreur
-        erreur['erreur_'+nom] = data
-        insertion_database(day,erreur)
+    erreur['erreur_'+nom+'_cnt'] = nbr_erreur
+    erreur['erreur_'+nom] = data
+    insertion_database(day,erreur)
 
 def getcollection_for_insertion():
     client = connexion_base()

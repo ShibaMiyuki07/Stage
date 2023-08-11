@@ -14,6 +14,8 @@ def getdata_daily(day,nom):
             '$project' : {
                 '_id' : '$'+nom,
                 'nb' : 1,
+                'nb_mois':1,
+                'nb_semaine':1
             }
         }
     ]
@@ -39,6 +41,11 @@ def  getglobal_usage(day,nom):
             '_id': '$'+nom, 
              'nb': {
                 '$sum': '$nb'
+            },
+            'nb_semaine': {
+                '$sum': '$nb_semaine'
+            },'nb_mois': {
+                '$sum': '$nb_mois'
             },
         }
     }
