@@ -20,7 +20,7 @@ if __name__ == "__main__":
     donne['billing_type'] = getListe_Billing_type()
     donne['pp_name'] = getliste_pp()
     donne['site_name'] = getall_site()
-    donne['network'] = get_all_network()
+    donne['network_name'] = get_all_network()
     donne['segment'] = ["ZERO","SUPER LOW VALUE","LOW VALUE","MEDIUM","HIGH","SUPER HIGH VALUE","NEW","RETURN","CHURN","null"]
 
     for i in range(len(liste_verification)):
