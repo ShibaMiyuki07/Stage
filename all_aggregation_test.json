@@ -1,0 +1,597 @@
+[{
+  "_id": {
+    "$oid": "64ca3f9ca91f647380df27a5"
+  },
+  "rec_cnt": 525435,
+  "usage_type": "topup",
+  "type_aggregation": "day",
+  "day": {
+    "$date": "2023-01-11T00:00:00.000Z"
+  },
+  "rec_amnt": 641906076
+},
+{
+  "_id": {
+    "$oid": "64ca47e06732b314488c78e3"
+  },
+  "type_aggregation": "day",
+  "usage_type": "topup",
+  "day": {
+    "$date": "2023-01-12T00:00:00.000Z"
+  },
+  "rec_amnt": 661547258,
+  "rec_cnt": 547788
+},
+{
+  "_id": {
+    "$oid": "64ca4f1a4397dadf7d417290"
+  },
+  "type_aggregation": "day",
+  "usage_type": "bundle",
+  "bndle_cnt": 719159,
+  "day": {
+    "$date": "2023-01-11T00:00:00.000Z"
+  },
+  "bndle_amnt": 565189460
+},
+{
+  "_id": {
+    "$oid": "64ca4f75883d198b07b6116d"
+  },
+  "type_aggregation": "day",
+  "rec_cnt": 540756,
+  "usage_type": "topup",
+  "rec_amnt": 661306504,
+  "day": {
+    "$date": "2023-01-13T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "64ca51390a7fd718e4498c7f"
+  },
+  "day": {
+    "$date": "2023-01-12T00:00:00.000Z"
+  },
+  "type_aggregation": "day",
+  "bndle_cnt": 742628,
+  "usage_type": "bundle",
+  "bndle_amnt": 580049960
+},
+{
+  "_id": {
+    "$oid": "64ca535bb11d81733a4b29c8"
+  },
+  "usage_type": "bundle",
+  "bndle_cnt": 739025,
+  "type_aggregation": "day",
+  "day": {
+    "$date": "2023-01-13T00:00:00.000Z"
+  },
+  "bndle_amnt": 580386660
+},
+{
+  "_id": {
+    "$oid": "64ca548224f29406265ca60e"
+  },
+  "type_aggregation": "day",
+  "usage_type": "topup",
+  "day": {
+    "$date": "2023-01-14T00:00:00.000Z"
+  },
+  "rec_amnt": 630584027,
+  "rec_cnt": 531671
+},
+{
+  "_id": {
+    "$oid": "64ca54cace58fb3fbe2bfd92"
+  },
+  "type_aggregation": "day",
+  "bndle_amnt": 559836670,
+  "day": {
+    "$date": "2023-01-14T00:00:00.000Z"
+  },
+  "usage_type": "bundle",
+  "bndle_cnt": 734087
+},
+{
+  "_id": {
+    "$oid": "64ca560673da5b7cfd7dbb28"
+  },
+  "usage_type": "bundle",
+  "day": {
+    "$date": "2023-01-15T00:00:00.000Z"
+  },
+  "bndle_cnt": 687468,
+  "type_aggregation": "day",
+  "bndle_amnt": 498806260
+},
+{
+  "_id": {
+    "$oid": "64ca576c96bd8e0b9a7b82a8"
+  },
+  "bndle_amnt": 597142000,
+  "bndle_cnt": 736957,
+  "usage_type": "bundle",
+  "type_aggregation": "day",
+  "day": {
+    "$date": "2023-01-16T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "64ca582b6dbd58490ffb49ef"
+  },
+  "bndle_cnt": 730158,
+  "usage_type": "bundle",
+  "bndle_amnt": 573731560,
+  "type_aggregation": "day",
+  "day": {
+    "$date": "2023-01-17T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "64ca585c151bc1a8818d646b"
+  },
+  "type_aggregation": "day",
+  "rec_amnt": 531662589,
+  "usage_type": "topup",
+  "day": {
+    "$date": "2023-01-15T00:00:00.000Z"
+  },
+  "rec_cnt": 469435
+},
+{
+  "_id": {
+    "$oid": "64ca5a4a9bf93a8ec59368b6"
+  },
+  "bndle_amnt": 581848780,
+  "day": {
+    "$date": "2023-01-18T00:00:00.000Z"
+  },
+  "type_aggregation": "day",
+  "bndle_cnt": 742202,
+  "usage_type": "bundle"
+},
+{
+  "_id": {
+    "$oid": "64ca5ace3d5d0c656b2e8ebc"
+  },
+  "usage_type": "topup",
+  "type_aggregation": "day",
+  "day": {
+    "$date": "2023-01-16T00:00:00.000Z"
+  },
+  "rec_amnt": 686488626,
+  "rec_cnt": 541476
+},
+{
+  "_id": {
+    "$oid": "64ca5c17f8ac634e0de8998a"
+  },
+  "day": {
+    "$date": "2023-01-17T00:00:00.000Z"
+  },
+  "usage_type": "topup",
+  "type_aggregation": "day",
+  "rec_cnt": 533693,
+  "rec_amnt": 647969516
+},
+{
+  "_id": {
+    "$oid": "64ca5e0cbeca969f76cd9b5a"
+  },
+  "rec_amnt": 656046918,
+  "rec_cnt": 540470,
+  "type_aggregation": "day",
+  "usage_type": "topup",
+  "day": {
+    "$date": "2023-01-18T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "64cd044c7dc32178111b45e2"
+  },
+  "usage_type": "om",
+  "om_amnt": 116424212.25,
+  "om_cnt": 367141,
+  "day": {
+    "$date": "2023-01-11T00:00:00.000Z"
+  },
+  "om_tr_amnt": 38067813114.51,
+  "type_aggregation": "day"
+},
+{
+  "_id": {
+    "$oid": "64d07fe5950daa8820b25e86"
+  },
+  "type_aggregation": "day",
+  "om_tr_amnt": 36940055726.92,
+  "usage_type": "om",
+  "day": {
+    "$date": "2023-01-12T00:00:00.000Z"
+  },
+  "om_amnt": 122950068.13,
+  "om_cnt": 368044
+},
+{
+  "_id": {
+    "$oid": "64d08335006215bc7782ed9b"
+  },
+  "type_aggregation": "day",
+  "om_cnt": 370459,
+  "usage_type": "om",
+  "om_tr_amnt": 37657058998.07,
+  "om_amnt": 113118952.87,
+  "day": {
+    "$date": "2023-01-13T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "64d08e1556b27ef280d9442d"
+  },
+  "ec_payback": 64717700,
+  "type_aggregation": "day",
+  "ec_loan": 66139000,
+  "usage_type": "ec",
+  "day": {
+    "$date": "2023-01-11T00:00:00.000Z"
+  },
+  "ca_reactivation": 276000,
+  "ec_fees": 10897600,
+  "ec_qty": 68910
+},
+{
+  "_id": {
+    "$oid": "64d094c98b2d60dca16b09e3"
+  },
+  "ec_payback": 67023800,
+  "ec_qty": 70293,
+  "usage_type": "ec",
+  "type_aggregation": "day",
+  "ca_reactivation": 282600,
+  "ec_fees": 11318200,
+  "day": {
+    "$date": "2023-01-12T00:00:00.000Z"
+  },
+  "ec_loan": 67222000
+},
+{
+  "_id": {
+    "$oid": "64d09e195671541fadff153a"
+  },
+  "day": {
+    "$date": "2023-01-13T00:00:00.000Z"
+  },
+  "ec_qty": 71166,
+  "ec_loan": 68506500,
+  "usage_type": "ec",
+  "type_aggregation": "day",
+  "ec_fees": 11263500,
+  "ca_reactivation": 289100,
+  "ec_payback": 66764000
+},
+{
+  "_id": {
+    "$oid": "64d0a2f8bf7ba6b3f5172b07"
+  },
+  "voice_o_amnt": 75198516.94014107,
+  "voice_vas_main_vol": 581702,
+  "sms_o_amnt": 7278319.756516266,
+  "usage_2G": {
+    "$numberLong": "1321183008332"
+  },
+  "usage_3G": {
+    "$numberLong": "46390941724326"
+  },
+  "usage_type": "usage",
+  "voice_o_main_vol": 16351853,
+  "sms_o_main_cnt": 74740,
+  "voice_o_bndl_vol": 246537047,
+  "usage_4G_FDD": {
+    "$numberLong": "112896780809517"
+  },
+  "day": {
+    "$date": "2023-01-11T00:00:00.000Z"
+  },
+  "data_main_vol": {
+    "$numberLong": "55566874437"
+  },
+  "voice_vas_cnt": 13264,
+  "sms_o_bndl_cnt": 14059425,
+  "voice_o_cnt": 4692472,
+  "data_amnt": 790052.7750813097,
+  "voice_i_amnt": 0,
+  "sms_vas_amnt": 700,
+  "voice_i_cnt": 756289,
+  "voice_vas_bndl_vol": 987402,
+  "sms_vas_bndl_cnt": 21690,
+  "type_aggregation": "day",
+  "sms_vas_cnt": 7,
+  "data_bndl_vol": {
+    "$numberLong": "201220042875508"
+  },
+  "voice_i_vol": 41452772,
+  "usage_4G_TDD": {
+    "$numberLong": "26363175180018"
+  },
+  "sms_i_cnt": 2376622,
+  "voice_vas_amnt": 139855
+},
+{
+  "_id": {
+    "$oid": "64d0adc44250526ce8da1777"
+  },
+  "day": {
+    "$date": "2023-01-12T00:00:00.000Z"
+  },
+  "usage_3G": {
+    "$numberLong": "46623572461944"
+  },
+  "voice_vas_cnt": 13097,
+  "usage_4G_FDD": {
+    "$numberLong": "107332901105260"
+  },
+  "sms_o_main_cnt": 78267,
+  "sms_vas_bndl_cnt": 21475,
+  "data_main_vol": {
+    "$numberLong": "60585906298"
+  },
+  "sms_o_bndl_cnt": 14210241,
+  "usage_2G": {
+    "$numberLong": "1402305968368"
+  },
+  "data_amnt": 860601.1390821545,
+  "sms_vas_cnt": 7,
+  "voice_i_vol": 42553958,
+  "voice_o_amnt": 77221986.51503722,
+  "usage_4G_TDD": {
+    "$numberLong": "23923396978459"
+  },
+  "voice_i_cnt": 777216,
+  "type_aggregation": "day",
+  "voice_o_bndl_vol": 239691307,
+  "usage_type": "usage",
+  "data_bndl_vol": {
+    "$numberLong": "192862755943908"
+  },
+  "voice_i_amnt": 0,
+  "voice_o_main_vol": 16666595,
+  "sms_i_cnt": 2361934,
+  "voice_vas_amnt": 134256,
+  "voice_vas_main_vol": 604215,
+  "sms_o_amnt": 7304452.625552368,
+  "voice_o_cnt": 4639784,
+  "sms_vas_amnt": 1148,
+  "voice_vas_bndl_vol": 929066
+},
+{
+  "_id": {
+    "$oid": "64d0d7273b6ba20584cb7a8b"
+  },
+  "usage_4G_TDD": {
+    "$numberLong": "27551326624374"
+  },
+  "voice_i_amnt": 0,
+  "data_main_vol": {
+    "$numberLong": "68522289929"
+  },
+  "usage_type": "usage",
+  "sms_vas_bndl_cnt": 21164,
+  "sms_vas_cnt": 7,
+  "sms_o_amnt": 7633723.593963623,
+  "usage_3G": {
+    "$numberLong": "45252928535180"
+  },
+  "data_amnt": 973610.754856104,
+  "usage_2G": {
+    "$numberLong": "1280819076531"
+  },
+  "voice_vas_amnt": 131040,
+  "voice_i_vol": 41873289,
+  "sms_o_main_cnt": 78841,
+  "voice_o_main_vol": 16469882,
+  "voice_vas_bndl_vol": 844524,
+  "voice_i_cnt": 781489,
+  "day": {
+    "$date": "2023-01-13T00:00:00.000Z"
+  },
+  "sms_o_bndl_cnt": 14107145,
+  "sms_vas_amnt": 700,
+  "type_aggregation": "day",
+  "voice_vas_cnt": 13180,
+  "data_bndl_vol": {
+    "$numberLong": "198410690006307"
+  },
+  "voice_vas_main_vol": 595451,
+  "sms_i_cnt": 2365377,
+  "voice_o_cnt": 4592341,
+  "voice_o_bndl_vol": 231844288,
+  "usage_4G_FDD": {
+    "$numberLong": "109708384483072"
+  },
+  "voice_o_amnt": 75722270.31489421
+},
+{
+  "_id": {
+    "$oid": "64d0e53cc2e6efe15d472394"
+  },
+  "day": {
+    "$date": "2023-01-14T00:00:00.000Z"
+  },
+  "usage_type": "usage",
+  "usage_3G": {
+    "$numberLong": "46233847447045"
+  },
+  "data_main_vol": {
+    "$numberLong": "76369295617"
+  },
+  "type_aggregation": "day",
+  "sms_o_bndl_cnt": 14008169,
+  "usage_4G_FDD": {
+    "$numberLong": "112283224192772"
+  },
+  "voice_i_amnt": 0,
+  "sms_vas_amnt": 500,
+  "voice_vas_amnt": 130381,
+  "sms_o_main_cnt": 63674,
+  "voice_i_vol": 35478661,
+  "voice_i_cnt": 705712,
+  "usage_4G_TDD": {
+    "$numberLong": "30012065949691"
+  },
+  "voice_vas_cnt": 11029,
+  "sms_o_amnt": 6760309.816895294,
+  "sms_vas_cnt": 5,
+  "sms_i_cnt": 1832503,
+  "voice_o_main_vol": 12505946,
+  "voice_vas_bndl_vol": 1095135,
+  "sms_vas_bndl_cnt": 21972,
+  "voice_o_amnt": 61089185.19331445,
+  "voice_o_cnt": 4429825,
+  "voice_o_bndl_vol": 209525320,
+  "data_bndl_vol": {
+    "$numberLong": "204920319158548"
+  },
+  "usage_2G": {
+    "$numberLong": "1284692599286"
+  },
+  "data_amnt": 1083562.4247675308,
+  "voice_vas_main_vol": 474707
+},
+{
+  "_id": {
+    "$oid": "64d3254a57fa4da7b700d4af"
+  },
+  "sms_i_cnt": 1501503,
+  "voice_vas_main_vol": 315162,
+  "data_main_vol": {
+    "$numberLong": "77937456442"
+  },
+  "voice_vas_cnt": 8106,
+  "usage_2G": {
+    "$numberLong": "1299029950127"
+  },
+  "voice_o_bndl_vol": 196004340,
+  "sms_o_amnt": 5649000.42020874,
+  "usage_4G_TDD": {
+    "$numberLong": "28971842731098"
+  },
+  "sms_vas_amnt": 200,
+  "data_amnt": 1106468.543515818,
+  "voice_vas_bndl_vol": 339517,
+  "sms_o_bndl_cnt": 14021722,
+  "type_aggregation": "day",
+  "voice_o_main_vol": 9843891,
+  "day": {
+    "$date": "2023-01-15T00:00:00.000Z"
+  },
+  "usage_type": "usage",
+  "sms_vas_bndl_cnt": 20161,
+  "data_bndl_vol": {
+    "$numberLong": "208354143083884"
+  },
+  "voice_i_cnt": 518674,
+  "sms_vas_cnt": 2,
+  "voice_i_amnt": 0,
+  "voice_o_cnt": 3725360,
+  "voice_i_vol": 27477936,
+  "usage_3G": {
+    "$numberLong": "48003936373905"
+  },
+  "voice_o_amnt": 50333737.462932155,
+  "usage_4G_FDD": {
+    "$numberLong": "114315676066989"
+  },
+  "voice_vas_amnt": 59699,
+  "sms_o_main_cnt": 49706
+},
+{
+  "_id": {
+    "$oid": "64d32a8482c4f36c2473afc4"
+  },
+  "data_bndl_vol": {
+    "$numberLong": "198593755081069"
+  },
+  "voice_vas_cnt": 16377,
+  "data_main_vol": {
+    "$numberLong": "77264399429"
+  },
+  "type_aggregation": "day",
+  "usage_4G_TDD": {
+    "$numberLong": "27966135944115"
+  },
+  "voice_o_cnt": 4334380,
+  "voice_i_amnt": 0,
+  "voice_vas_bndl_vol": 1012228,
+  "sms_o_bndl_cnt": 14320950,
+  "voice_i_cnt": 748813,
+  "voice_vas_amnt": 163189,
+  "data_amnt": 1096527.4692698952,
+  "sms_vas_bndl_cnt": 22184,
+  "usage_2G": {
+    "$numberLong": "1240531182488"
+  },
+  "sms_vas_cnt": 2,
+  "voice_i_vol": 40384852,
+  "voice_vas_main_vol": 760164,
+  "usage_type": "usage",
+  "sms_o_main_cnt": 77864,
+  "voice_o_bndl_vol": 226637684,
+  "usage_4G_FDD": {
+    "$numberLong": "109556946882190"
+  },
+  "voice_o_main_vol": 16811952,
+  "voice_o_amnt": 75136282.93339351,
+  "sms_vas_amnt": 200,
+  "usage_3G": {
+    "$numberLong": "44982620395728"
+  },
+  "sms_o_amnt": 7314679.2531456,
+  "sms_i_cnt": 2551182,
+  "day": {
+    "$date": "2023-01-16T00:00:00.000Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "64d6237ebfb61f138db772a3"
+  },
+  "nb_mois": 16648,
+  "day": {
+    "$date": "2023-06-06T00:00:00.000Z"
+  },
+  "type_aggregation": "day",
+  "nb": 13437,
+  "usage_type": "e-rc",
+  "nb_semaine": 14863
+},
+{
+  "_id": {
+    "$oid": "64d6287de4898146d01d6879"
+  },
+  "usage_type": "e-rc",
+  "type_aggregation": "day",
+  "day": {
+    "$date": "2023-06-07T00:00:00.000Z"
+  },
+  "nb_semaine": 15638,
+  "nb": 13501,
+  "nb_mois": 16939
+},
+{
+  "_id": {
+    "$oid": "64d629877dd1a50a33152567"
+  },
+  "day": {
+    "$date": "2023-06-08T00:00:00.000Z"
+  },
+  "nb_semaine": 16160,
+  "type_aggregation": "day",
+  "nb": 13633,
+  "usage_type": "e-rc",
+  "nb_mois": 17214
+}]
