@@ -1,4 +1,4 @@
-<div>
+<div id="bundle">
     <h1>Bundle</h1>
     <table border="1">
         <tr>
@@ -10,16 +10,15 @@
                 <button>Retraitement</button>
             </td>
             <td *ngIf="bundle.validation == 1">
-                Voir details
+                <a [routerLink]="['/details_bundle']" [queryParams]="{day : bundle.day | date : 'YYYY-MM-dd'}"><button>details</button></a>
             </td>
             <td *ngIf="bundle.validation == 0">
                 OK
             </td>
         </tr>
-        
     </table>
 </div>
-<div>
+<div id="topup">
     <h1>Topup</h1>
     <table border="1">
         <tr>
@@ -31,7 +30,7 @@
                 <button>Retraitement</button>
             </td>
             <td *ngIf="topup.validation == 1">
-                Voir details
+                <a [routerLink]="['/details_topup']" [queryParams]="{day : topup.day | date : 'YYYY-MM-dd'}"><button>details</button></a>
             </td>
             <td *ngIf="topup.validation == 0">
                 OK
@@ -40,7 +39,7 @@
         
     </table>
 </div>
-<div>
+<div id="om">
     <h1>Orange Money</h1>
     <table border="1">
         <tr>
@@ -52,7 +51,7 @@
                 <button>Retraitement</button>
             </td>
             <td *ngIf="om.validation == 1">
-                Voir details
+                <a [routerLink]="['/details_om']" [queryParams]="{day : om.day | date : 'YYYY-MM-dd'}"><button>details</button></a>
             </td>
             <td *ngIf="om.validation == 0">
                 OK
@@ -61,7 +60,7 @@
         
     </table>
 </div>
-<div>
+<div id="usage">
     <h1>Usage</h1>
     <table border="1">
         <tr>
@@ -83,8 +82,8 @@
     </table>
 </div>
 
-<div>
-    <h1>Ec</h1>
+<div id="ec">
+    <h1>Lany credit</h1>
     <table border="1">
         <tr>
             <td>Date</td>
@@ -95,9 +94,31 @@
                 <button>Retraitement</button>
             </td>
             <td *ngIf="ec.validation == 1">
-                Voir details
+                <a [routerLink]="['/details_ec']" [queryParams]="{day : ec.day | date : 'YYYY-MM-dd'}"><button>details</button></a>
             </td>
             <td *ngIf="ec.validation == 0">
+                OK
+            </td>
+        </tr>
+        
+    </table>
+</div>
+
+<div id="e-rc">
+    <h1>E-Recharge</h1>
+    <table border="1">
+        <tr>
+            <td>Date</td>
+        </tr>
+        <tr *ngFor="let erc of e_rclist">
+            <td> {{ erc.day | date : "dd-MM-YYYY" }}</td>
+            <td *ngIf="erc.validation == 1">
+                <button>Retraitement</button>
+            </td>
+            <td *ngIf="erc.validation == 1">
+                Voir details
+            </td>
+            <td *ngIf="erc.validation == 0">
                 OK
             </td>
         </tr>
