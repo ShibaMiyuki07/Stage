@@ -44,3 +44,16 @@ async def verification_ec():
     collection = getverification_collection()
     resultat = collection.find({"usage_type" : 'ec'})
     return [Verification.insertion_data(r) for r in resultat]
+
+@app.get('/e-rc')
+async def verification_e_rc():
+    collection = getverification_collection()
+    resultat = collection.find({"usage_type" : 'e-rc'})
+    return [Verification.insertion_data(r) for r in resultat]
+
+@app.post('/bundle_details')
+async def verification_bundle(date:str):
+    collection = getverification_collection()
+    day = Verification.remplacement_date(date)
+    resultat = collection.find({"usage_type" : 'bundle','day' : day})
+    return [Verification.insertion_data(r) for r in resultat]

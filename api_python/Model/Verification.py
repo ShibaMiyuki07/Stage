@@ -14,3 +14,8 @@ class Verification:
                     erreur = 1
         data['validation'] = erreur 
         return data
+    
+    def remplacement_date(date):
+        date_time = datetime.strptime(date,'%Y-%m-%d')
+        day = datetime(date_time.year,date_time.month,date_time.day)
+        return day
