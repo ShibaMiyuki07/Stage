@@ -12,6 +12,7 @@ export class ListComponent implements OnInit{
   omlist : any[] | undefined;
   usagelist : any[] |undefined;
   eclist : any[] | undefined;
+  e_rclist : any[] | undefined;
   constructor (private apiservice : ApiService){}
   ngOnInit() {
     this.apiservice.getBundle().toPromise().then((data : any) => this.bundlelist = data) 
@@ -19,5 +20,6 @@ export class ListComponent implements OnInit{
     this.apiservice.getOm().toPromise().then((data : any) => this.omlist = data) 
     this.apiservice.getUsage().toPromise().then((data : any) => this.usagelist = data) 
     this.apiservice.getEc().toPromise().then((data : any) => this.eclist = data) 
+    this.apiservice.getE_rc().toPromise().then((data : any) => this.e_rclist = data) 
   }
 }

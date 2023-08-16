@@ -51,9 +51,30 @@ async def verification_e_rc():
     resultat = collection.find({"usage_type" : 'e-rc'})
     return [Verification.insertion_data(r) for r in resultat]
 
-@app.post('/bundle_details')
-async def verification_bundle(date:str):
+@app.get('/bundle_details/{date}')
+async def verification_bundle_details(date:str):
     collection = getverification_collection()
     day = Verification.remplacement_date(date)
     resultat = collection.find({"usage_type" : 'bundle','day' : day})
+    return [Verification.insertion_data(r) for r in resultat]
+
+@app.get('/topup_details/{date}')
+async def verification_topup_details(date:str):
+    collection = getverification_collection()
+    day = Verification.remplacement_date(date)
+    resultat = collection.find({"usage_type" : 'topup','day' : day})
+    return [Verification.insertion_data(r) for r in resultat]
+
+@app.get('/om_details/{date}')
+async def verification_om_details(date:str):
+    collection = getverification_collection()
+    day = Verification.remplacement_date(date)
+    resultat = collection.find({"usage_type" : 'om','day' : day})
+    return [Verification.insertion_data(r) for r in resultat]
+
+@app.get('/ec_details/{date}')
+async def verification_om_details(date:str):
+    collection = getverification_collection()
+    day = Verification.remplacement_date(date)
+    resultat = collection.find({"usage_type" : 'ec','day' : day})
     return [Verification.insertion_data(r) for r in resultat]

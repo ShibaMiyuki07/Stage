@@ -1,0 +1,46 @@
+<div *ngFor="let details of topupdetails">
+    <div *ngIf="details.erreur_site_name_cnt != 0">
+        <h1>Liste des lieux avec erreur</h1>
+        <div *ngFor="let details_site of details.erreur_site_name ">
+            <hr>
+            <div>{{ details_site.site_name }}</div>
+            <div *ngIf="details_site.description == 1">
+                <em style="color: blue;">Donne inexistante dans global daily usage</em>
+                <div><strong style="color: red;">rec_cnt </strong>: {{ details_site.data.rec_cnt }} </div>
+                <div><strong style="color: red;">rec_amnt </strong>: {{ details_site.data.rec_amnt }} </div>
+            </div>
+            <div *ngIf="details_site.description == -1"><em style="color: green;">Donne inexistante dans daily usage</em>
+                <div><strong style="color: red;">rec_cnt </strong>: {{ details_site.data.rec_cnt }} </div>
+                <div><strong style="color: red;">rec_amnt </strong>: {{ details_site.data.rec_amnt }} </div>
+            </div>
+            <div *ngIf="details_site.description == 0">
+                <em style="color:rgb(28, 206, 67)">Donne non egale dans daily usage et global daily usage</em>
+                <div *ngFor="let data of details_site.data">
+                    <strong style="color: red;">{{ data.nom }} </strong>: {{ data.ecart }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="details.erreur_segment_cnt != 0">
+        <h1>Liste des Segment avec erreur</h1>
+        <div *ngFor="let details_segment of details.erreur_segment ">
+            <hr>
+            <div>{{ details_segment.segment }}</div>
+            <div *ngIf="details_segment.description == 1">
+                <em style="color: blue;">Donne inexistante dans global daily usage</em>
+                <div><strong style="color: red;">rec_cnt </strong>: {{ details_segment.data.rec_cnt }} </div>
+                <div><strong style="color: red;">rec_amnt </strong>: {{ details_segment.data.rec_amnt }} </div>
+            </div>
+            <div *ngIf="details_segment.description == -1"><em style="color: green;">Donne inexistante dans daily usage</em>
+                <div><strong style="color: red;">rec_cnt </strong>: {{ details_segment.data.rec_cnt }} </div>
+                <div><strong style="color: red;">rec_amnt </strong>: {{ details_segment.data.rec_amnt }} </div>
+            </div>
+            <div *ngIf="details_segment.description == 0">
+                <em style="color:rgb(28, 206, 67)">Donne non egale dans daily usage et global daily usage</em>
+                <div *ngFor="let data of details_segment.data">
+                    <strong style="color: red;">{{ data.nom }} </strong>: {{ data.ecart }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

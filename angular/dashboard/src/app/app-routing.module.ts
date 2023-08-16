@@ -1,10 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ListComponent } from './list/list.component';
+import { DetailsBundleComponent } from './details-bundle/details-bundle.component';
+import { DetailsTopupComponent } from './details-topup/details-topup.component';
+import { DetailsOmComponent } from './details-om/details-om.component';
+import { DetailsEcComponent } from './details-ec/details-ec.component';
 
 
 const routes: Routes = [{
   path : 'liste_retraitement',component : ListComponent
+},
+{
+  path : 'details_bundle',component : DetailsBundleComponent
+},
+{
+  path : 'details_topup',component : DetailsTopupComponent
+},
+{
+  path : 'details_om',component : DetailsOmComponent
+},
+{
+  path : 'details_ec',component : DetailsEcComponent
 }];
 
 @NgModule({
