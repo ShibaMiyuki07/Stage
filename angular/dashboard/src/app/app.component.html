@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html>
-  <nav>
-    <ul>
-      <li><a [routerLink]="['liste_retraitement']">Liste pour Retraitement</a></li>
-      <li><a href="">Dashboard</a> </li>
-    </ul>
-  </nav>
+  <body>
+    <input type="checkbox" id="active">
+    <label for="active" class="menu-btn"><span></span></label>
+    <label for="active" class="close"></label>
+    <div class="wrapper">
+  <ul>
+<li><a [routerLink]="['/liste_retraitement']">Retraitement</a></li>
+<li><a href="#">Deshboard</a></li>
+<li><a href="#">Services</a></li>
+<li><a href="#">Gallery</a></li>
+<li><a href="#">Feedback</a></li>
+</ul>
+</div>
+</body>
   <router-outlet></router-outlet>
 </html>

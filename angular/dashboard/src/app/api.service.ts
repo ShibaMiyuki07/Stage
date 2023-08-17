@@ -59,5 +59,15 @@ export class ApiService{
     {
         return this.HttpClient.get('http://127.0.0.1:8000/e-rc')
     }
+
+    public getRoaming()
+    {
+        return this.HttpClient.get('http://127.0.0.1:8000/roaming')
+    }
+
+    public getRoaming_details(day :string)
+    {
+        return this.HttpClient.get('http://127.0.0.1:8000/roaming_details/'+day)
+    }
 }
 

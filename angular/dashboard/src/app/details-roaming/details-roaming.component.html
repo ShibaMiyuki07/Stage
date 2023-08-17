@@ -1,5 +1,5 @@
-<div *ngFor="let details of ecdetails">
-    <div>Details des erreur de lany credit du {{ details.day }}</div>
+<div *ngFor="let details of roamingdetails">
+    <div>Details des erreurs de roaming du {{ details.day  | date :"YYYY-MM-dd"}}</div>
     <div *ngIf="details.erreur_site_name_cnt != 0">
         <h3>Liste des lieux avec erreur</h3>
         <div *ngFor="let details_site of details.erreur_site_name ">
@@ -7,16 +7,28 @@
             <div>{{ details_site.site_name }}</div>
             <div *ngIf="details_site.description == 1">
                 <em style="color: blue;">Donne inexistante dans global daily usage</em>
-                <div><strong style="color: red;">ec_qty </strong>: {{ details_site.data.ec_qty }} </div>
-                <div><strong style="color: red;">ec_loan </strong>: {{ details_site.data.ec_loan }} </div>
-                <div><strong style="color: red;">ec_fees </strong>: {{ details_site.data.ec_fees }} </div>
-                <div><strong style="color: red;">ca_reactivation </strong>: {{ details_site.data.ca_reactivation }} </div>
+                <div><strong style="color: red;">data_main_vol </strong>: {{ details_site.data.data_main_vol }} </div>
+                <div><strong style="color: red;">voice_o_main_vol </strong>: {{ details_site.data.voice_o_main_vol }} </div>
+                <div><strong style="color: red;">data_amnt </strong>: {{ details_site.data.data_amnt }} </div>
+                <div><strong style="color: red;">sms_o_main_cnt </strong>: {{ details_site.data.sms_o_main_cnt }} </div>
+                <div><strong style="color: red;">voice_o_cnt </strong>: {{ details_site.data.voice_o_cnt }} </div>
+                <div><strong style="color: red;">voice_o_bndl_vol </strong>: {{ details_site.data.voice_o_bndl_vol }} </div>
+                <div><strong style="color: red;">data_bndl_vol </strong>: {{ details_site.data.data_bndl_vol }} </div>
+                <div><strong style="color: red;">sms_o_amnt </strong>: {{ details_site.data.sms_o_amnt }} </div>
+                <div><strong style="color: red;">sms_o_bndl_cnt </strong>: {{ details_site.data.sms_o_bndl_cnt }} </div>
+                <div><strong style="color: red;">voice_o_amnt </strong>: {{ details_site.data.voice_o_amnt }} </div>
             </div>
             <div *ngIf="details_site.description == -1"><em style="color: green;">Donne inexistante dans daily usage</em>
-                <div><strong style="color: red;">ec_qty </strong>: {{ details_site.data.ec_qty }} </div>
-                <div><strong style="color: red;">ec_loan </strong>: {{ details_site.data.ec_loan }} </div>
-                <div><strong style="color: red;">ec_fees </strong>: {{ details_site.data.ec_fees }} </div>
-                <div><strong style="color: red;">ca_reactivation </strong>: {{ details_site.data.ca_reactivation }} </div>
+                <div><strong style="color: red;">data_main_vol </strong>: {{ details_site.data.data_main_vol }} </div>
+                <div><strong style="color: red;">voice_o_main_vol </strong>: {{ details_site.data.voice_o_main_vol }} </div>
+                <div><strong style="color: red;">data_amnt </strong>: {{ details_site.data.data_amnt }} </div>
+                <div><strong style="color: red;">sms_o_main_cnt </strong>: {{ details_site.data.sms_o_main_cnt }} </div>
+                <div><strong style="color: red;">voice_o_cnt </strong>: {{ details_site.data.voice_o_cnt }} </div>
+                <div><strong style="color: red;">voice_o_bndl_vol </strong>: {{ details_site.data.voice_o_bndl_vol }} </div>
+                <div><strong style="color: red;">data_bndl_vol </strong>: {{ details_site.data.data_bndl_vol }} </div>
+                <div><strong style="color: red;">sms_o_amnt </strong>: {{ details_site.data.sms_o_amnt }} </div>
+                <div><strong style="color: red;">sms_o_bndl_cnt </strong>: {{ details_site.data.sms_o_bndl_cnt }} </div>
+                <div><strong style="color: red;">voice_o_amnt </strong>: {{ details_site.data.voice_o_amnt }} </div>
             </div>
             <div *ngIf="details_site.description == 0">
                 <em style="color:rgb(28, 206, 67)">Donne non egale dans daily usage et global daily usage</em>
@@ -27,7 +39,7 @@
         </div>
     </div>
     <div *ngIf="details.erreur_segment_cnt != 0">
-        <h3>Liste des segments avec erreur</h3>
+        <h1>Liste des segments avec erreur</h1>
         <div *ngFor="let details_segment of details.erreur_segment ">
             <hr>
             <div>{{ details_segment.segment }}</div>

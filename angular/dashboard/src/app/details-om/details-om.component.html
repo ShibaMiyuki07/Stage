@@ -1,7 +1,34 @@
 <div *ngFor="let details of omdetails">
+    <div>Details des erreurs de Orange money du {{ details.day  | date :"YYYY-MM-dd"}}</div>
     <div *ngIf="details.erreur_site_name_cnt != 0">
+        <h3>Liste des lieux avec erreur</h3>
         <div *ngFor="let details_site of details.erreur_site_name ">
-            <div>Site avec erreur : <strong>{{ details_site.site_name }}</strong></div>
+            <hr>
+            <div>{{ details_site.site_name }}</div>
+            <div *ngIf="details_site.description == 1">
+                <em style="color: blue;">Donne inexistante dans global daily usage</em>
+                <div><strong style="color: red;">om_cnt </strong>: {{ details_site.data.om_cnt }} </div>
+                <div><strong style="color: red;">om_amnt </strong>: {{ details_site.data.om_amnt }} </div>
+                <div><strong style="color: red;">om_tr_amnt </strong>: {{ details_site.data.om_tr_amnt }} </div>
+            </div>
+            <div *ngIf="details_site.description == -1"><em style="color: green;">Donne inexistante dans daily usage</em>
+                <div><strong style="color: red;">om_cnt </strong>: {{ details_site.data.om_cnt }} </div>
+                <div><strong style="color: red;">om_amnt </strong>: {{ details_site.data.om_amnt }} </div>
+                <div><strong style="color: red;">om_tr_amnt </strong>: {{ details_site.data.om_tr_amnt }} </div>
+            </div>
+            <div *ngIf="details_site.description == 0">
+                <em style="color:rgb(28, 206, 67)">Donne non egale dans daily usage et global daily usage</em>
+                <div *ngFor="let data of details_site.data">
+                    <strong style="color: red;">{{ data.nom }} </strong>: {{ data.ecart }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="details.erreur_segment_cnt != 0">
+        <h3>Liste des segment avec erreur</h3>
+        <div *ngFor="let details_site of details.erreur_segment ">
+            <hr>
+            <div>{{ details_site.segment }}</div>
             <div *ngIf="details_site.description == 1">
                 <em style="color: blue;">Donne inexistante dans global daily usage</em>
                 <div><strong style="color: red;">om_cnt </strong>: {{ details_site.data.om_cnt }} </div>

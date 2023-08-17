@@ -1,6 +1,7 @@
 <div *ngFor="let details of bundleDetails">
+    <div>Details des erreur des offres du {{ details.day }}</div>
     <div *ngIf="details.erreur_site_name_cnt != 0">
-        <h1>Liste des lieux avec erreur</h1>
+        <h3>Liste des lieux avec erreur</h3>
         <div *ngFor="let details_site of details.erreur_site_name ">
             <hr>
             <div>{{ details_site.site_name }}</div>

@@ -8,7 +8,8 @@ import { ListComponent } from './list/list.component';
 import { DetailsBundleComponent } from './details-bundle/details-bundle.component';
 import { DetailsTopupComponent } from './details-topup/details-topup.component';
 import { DetailsOmComponent } from './details-om/details-om.component';
-import { DetailsEcComponent } from './details-ec/details-ec.component'
+import { DetailsEcComponent } from './details-ec/details-ec.component';
+import { DetailsRoamingComponent } from './details-roaming/details-roaming.component'
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { DetailsEcComponent } from './details-ec/details-ec.component'
     DetailsBundleComponent,
     DetailsTopupComponent,
     DetailsOmComponent,
-    DetailsEcComponent
+    DetailsEcComponent,
+    DetailsRoamingComponent
   ],
   imports: [
     BrowserModule,

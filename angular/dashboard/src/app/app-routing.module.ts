@@ -5,6 +5,7 @@ import { DetailsBundleComponent } from './details-bundle/details-bundle.componen
 import { DetailsTopupComponent } from './details-topup/details-topup.component';
 import { DetailsOmComponent } from './details-om/details-om.component';
 import { DetailsEcComponent } from './details-ec/details-ec.component';
+import { DetailsRoamingComponent } from './details-roaming/details-roaming.component';
 
 
 const routes: Routes = [{
@@ -21,6 +22,9 @@ const routes: Routes = [{
 },
 {
   path : 'details_ec',component : DetailsEcComponent
+},
+{
+  path : 'details_roaming',component : DetailsRoamingComponent
 }];
 
 @NgModule({
