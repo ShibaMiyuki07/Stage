@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html>
   <body>
+    <div class="header"><img src="/assets/image/orange.png"></div>
     <input type="checkbox" id="active">
     <label for="active" class="menu-btn"><span></span></label>
     <label for="active" class="close"></label>
     <div class="wrapper">
-  <ul>
-<li><a [routerLink]="['/liste_retraitement']">Retraitement</a></li>
-<li><a href="#">Deshboard</a></li>
-<li><a href="#">Services</a></li>
-<li><a href="#">Gallery</a></li>
-<li><a href="#">Feedback</a></li>
-</ul>
-</div>
+      <ul>
+        <li><a [routerLink]="['/liste_retraitement']">Retraitement</a></li>
+        <li><a href="#">Deshboard</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Gallery</a></li>
+        <li><a href="#">Feedback</a></li>
+      </ul>
+    </div>
+<router-outlet></router-outlet>
 </body>
-  <router-outlet></router-outlet>
+
 </html>
