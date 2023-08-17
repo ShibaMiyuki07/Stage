@@ -11,7 +11,7 @@ export class DetailsBundleComponent implements OnInit{
   bundleDetails : any;
   constructor(private ApiService:ApiService,private route : ActivatedRoute){}
   ngOnInit() {
-    this.route.queryParams.subscribe(params => this.ApiService.getBundle_Details(params['day']).toPromise().then((data) => this.bundleDetails = data))
+    this.route.queryParams.subscribe(params => this.ApiService.getdetails(params['day'],params['type']).toPromise().then((data) => this.bundleDetails = data))
   }
 
 }

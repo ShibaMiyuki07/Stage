@@ -6,22 +6,12 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ListComponent } from './list/list.component';
 import { DetailsBundleComponent } from './details-bundle/details-bundle.component';
-import { DetailsTopupComponent } from './details-topup/details-topup.component';
-import { DetailsOmComponent } from './details-om/details-om.component';
-import { DetailsEcComponent } from './details-ec/details-ec.component';
-import { DetailsRoamingComponent } from './details-roaming/details-roaming.component';
-import { DetailsUsageComponent } from './details-usage/details-usage.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     ListComponent,
-    DetailsBundleComponent,
-    DetailsTopupComponent,
-    DetailsOmComponent,
-    DetailsEcComponent,
-    DetailsRoamingComponent,
-    DetailsUsageComponent
+    DetailsBundleComponent
   ],
   imports: [
     BrowserModule,

@@ -100,3 +100,26 @@ async def verification_om_details(date:str):
     day = Verification.remplacement_date(date)
     resultat = collection.find({"usage_type" : 'usage','day' : day})
     return [Verification.insertion_data(r) for r in resultat]
+
+
+@app.get('/details/{date}/{type}')
+async def verification_details(date:str,type:int):
+    collection = getverification_collection()
+    day = Verification.remplacement_date(date)
+    usage_type = None
+    if type == 1:
+        usage_type = "usage"
+    if type == 2:
+        usage_type ="bundle"
+    if type == 3:
+        usage_type = "topup"
+    if type == 4:
+        usage_type = "om"
+    if type == 5:
+        usage_type = "ec"
+    if type == 6:
+        usage_type = 'e-rc'
+    if type == 7:
+        usage_type = 'roaming'
+    resultat = collection.find({"usage_type" : usage_type,'day' : day})
+    return [Verification.insertion_data(r) for r in resultat]

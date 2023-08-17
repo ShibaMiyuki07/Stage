@@ -15,7 +15,7 @@
                     <button>Retraitement</button>
                 </td>
                 <td *ngIf="bundle.validation == 1">
-                    <a [routerLink]="['/details_bundle']" [queryParams]="{day : bundle.day | date : 'YYYY-MM-dd'}"><button>details</button></a>
+                    <a [routerLink]="['/details']" [queryParams]="{day : bundle.day | date : 'YYYY-MM-dd',type:2}"><button>details</button></a>
                 </td>
                 <td *ngIf="bundle.validation == 0">
                     OK
@@ -39,7 +39,7 @@
                     <button>Retraitement</button>
                 </td>
                 <td *ngIf="topup.validation == 1">
-                    <a [routerLink]="['/details_topup']" [queryParams]="{day : topup.day | date : 'YYYY-MM-dd'}"><button>details</button></a>
+                    <a [routerLink]="['/details']" [queryParams]="{day : topup.day | date : 'YYYY-MM-dd',type : 3}"><button>details</button></a>
                 </td>
                 <td *ngIf="topup.validation == 0">
                     OK
@@ -64,7 +64,7 @@
                     <button>Retraitement</button>
                 </td>
                 <td *ngIf="om.validation == 1">
-                    <a [routerLink]="['/details_om']" [queryParams]="{day : om.day | date : 'YYYY-MM-dd'}"><button>details</button></a>
+                    <a [routerLink]="['/details']" [queryParams]="{day : om.day | date : 'YYYY-MM-dd',type : 4}"><button>details</button></a>
                 </td>
                 <td *ngIf="om.validation == 0">
                     OK
@@ -89,7 +89,7 @@
                     <button>Retraitement</button>
                 </td>
                 <td *ngIf="usage.validation == 1">
-                    <a [routerLink]="['/details_usage']" [queryParams]="{day : usage.day | date : 'YYYY-MM-dd'}"><button>details</button></a>
+                    <a [routerLink]="['/details']" [queryParams]="{day : usage.day | date : 'YYYY-MM-dd', type : 1}"><button>details</button></a>
                 </td>
                 <td *ngIf="usage.validation == 0">
                     OK
@@ -115,7 +115,7 @@
                     <button>Retraitement</button>
                 </td>
                 <td *ngIf="ec.validation == 1">
-                    <a [routerLink]="['/details_ec']" [queryParams]="{day : ec.day | date : 'YYYY-MM-dd'}"><button>details</button></a>
+                    <a [routerLink]="['/details']" [queryParams]="{day : ec.day | date : 'YYYY-MM-dd',type : 5}"><button>details</button></a>
                 </td>
                 <td *ngIf="ec.validation == 0">
                     OK
@@ -141,7 +141,7 @@
                     <button>Retraitement</button>
                 </td>
                 <td *ngIf="erc.validation == 1">
-                    Voir details
+                    <a [routerLink]="['/details']" [queryParams]="{day : erc.day | date : 'YYYY-MM-dd',type : 6}"><button>details</button></a>
                 </td>
                 <td style="color: green;" *ngIf="erc.validation == 0">
                     OK
@@ -166,7 +166,7 @@
                     <button style="background-color: blue; color : white;">Retraitement</button>
                 </td>
                 <td *ngIf="roaming.validation == 1">
-                    <a [routerLink]="['/details_roaming']" [queryParams]="{day : roaming.day | date : 'YYYY-MM-dd'}"><button>details</button></a>
+                    <a [routerLink]="['/details']" [queryParams]="{day : roaming.day | date : 'YYYY-MM-dd',type : 7}"><button>details</button></a>
                 </td>
                 <td style="color: green;" *ngIf="roaming.validation == 0">
                     OK

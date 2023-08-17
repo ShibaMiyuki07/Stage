@@ -18,11 +18,6 @@ export class ApiService{
         return this.HttpClient.get('http://127.0.0.1:8000/bundle')
     }
 
-    public getBundle_Details(day : string)
-    {
-        return this.HttpClient.get('http://127.0.0.1:8000/bundle_details/'+day)
-    }
-
 
     /**
      * Liste des topups et details
@@ -30,11 +25,6 @@ export class ApiService{
     public getTopup()
     {
         return this.HttpClient.get('http://127.0.0.1:8000/topup')
-    }
-
-    public getTopup_details(day:string)
-    {
-        return this.HttpClient.get('http://127.0.0.1:8000/topup_details/'+day)
     }
 
 
@@ -46,11 +36,6 @@ export class ApiService{
         return this.HttpClient.get('http://127.0.0.1:8000/om')
     }
 
-    public getOm_details(day :string)
-    {
-        return this.HttpClient.get('http://127.0.0.1:8000/om_details/'+day)
-    }
-
 
     /**
      * Liste usage et details
@@ -60,19 +45,9 @@ export class ApiService{
         return this.HttpClient.get('http://127.0.0.1:8000/usage')
     }
 
-    public getUsage_details(day : string)
-    {
-        return this.HttpClient.get('http://127.0.0.1:8000/usage_details/'+day)
-    }
-
     public getEc()
     {
         return this.HttpClient.get('http://127.0.0.1:8000/ec')
-    }
-
-    public getEc_details(day : string)
-    {
-        return this.HttpClient.get('http://127.0.0.1:8000/ec_details/'+day)
     }
 
     public getE_rc()
@@ -85,9 +60,9 @@ export class ApiService{
         return this.HttpClient.get('http://127.0.0.1:8000/roaming')
     }
 
-    public getRoaming_details(day :string)
+    public getdetails(day :string,type : Int16Array)
     {
-        return this.HttpClient.get('http://127.0.0.1:8000/roaming_details/'+day)
+        return this.HttpClient.get('http://127.0.0.1:8000/details/'+day+'/'+type)
     }
 }
 
