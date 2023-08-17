@@ -10,6 +10,9 @@ export class ApiService{
     constructor(private HttpClient : HttpClient){}
 
 
+    /**
+     * Liste Bundle et details
+     */
     public getBundle()
     {
         return this.HttpClient.get('http://127.0.0.1:8000/bundle')
@@ -20,6 +23,10 @@ export class ApiService{
         return this.HttpClient.get('http://127.0.0.1:8000/bundle_details/'+day)
     }
 
+
+    /**
+     * Liste des topups et details
+     */
     public getTopup()
     {
         return this.HttpClient.get('http://127.0.0.1:8000/topup')
@@ -30,6 +37,10 @@ export class ApiService{
         return this.HttpClient.get('http://127.0.0.1:8000/topup_details/'+day)
     }
 
+
+    /**
+     * Liste orange money et details
+     */
     public getOm()
     {
         return this.HttpClient.get('http://127.0.0.1:8000/om')
@@ -40,9 +51,18 @@ export class ApiService{
         return this.HttpClient.get('http://127.0.0.1:8000/om_details/'+day)
     }
 
+
+    /**
+     * Liste usage et details
+     */
     public getUsage()
     {
         return this.HttpClient.get('http://127.0.0.1:8000/usage')
+    }
+
+    public getUsage_details(day : string)
+    {
+        return this.HttpClient.get('http://127.0.0.1:8000/usage_details/'+day)
     }
 
     public getEc()

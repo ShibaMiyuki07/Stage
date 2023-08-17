@@ -6,6 +6,7 @@ import { DetailsTopupComponent } from './details-topup/details-topup.component';
 import { DetailsOmComponent } from './details-om/details-om.component';
 import { DetailsEcComponent } from './details-ec/details-ec.component';
 import { DetailsRoamingComponent } from './details-roaming/details-roaming.component';
+import { DetailsUsageComponent } from './details-usage/details-usage.component';
 
 
 const routes: Routes = [{
@@ -25,6 +26,9 @@ const routes: Routes = [{
 },
 {
   path : 'details_roaming',component : DetailsRoamingComponent
+},
+{
+  path : 'details_usage',component : DetailsUsageComponent
 }];
 
 @NgModule({

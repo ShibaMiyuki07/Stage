@@ -89,7 +89,7 @@
                     <button>Retraitement</button>
                 </td>
                 <td *ngIf="usage.validation == 1">
-                    Voir details
+                    <a [routerLink]="['/details_usage']" [queryParams]="{day : usage.day | date : 'YYYY-MM-dd'}"><button>details</button></a>
                 </td>
                 <td *ngIf="usage.validation == 0">
                     OK

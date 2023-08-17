@@ -79,7 +79,7 @@ async def verification_om_details(date:str):
     return [Verification.insertion_data(r) for r in resultat]
 
 @app.get('/ec_details/{date}')
-async def verification_om_details(date:str):
+async def verification_om_details(date:str):    
     collection = getverification_collection()
     day = Verification.remplacement_date(date)
     resultat = collection.find({"usage_type" : 'ec','day' : day})
@@ -91,4 +91,12 @@ async def verification_om_details(date:str):
     collection = getverification_collection()
     day = Verification.remplacement_date(date)
     resultat = collection.find({"usage_type" : 'roaming','day' : day})
+    return [Verification.insertion_data(r) for r in resultat]
+
+
+@app.get('/usage_details/{date}')
+async def verification_om_details(date:str):
+    collection = getverification_collection()
+    day = Verification.remplacement_date(date)
+    resultat = collection.find({"usage_type" : 'usage','day' : day})
     return [Verification.insertion_data(r) for r in resultat]

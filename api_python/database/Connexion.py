@@ -2,12 +2,12 @@ import pymongo
 
 
 def connexion_base():
-    try:
+    '''try:
         client = pymongo.MongoClient("mongodb://192.168.56.102:27017")
         return client
-    except:
-        client = pymongo.MongoClient("mongodb://127.0.0.1:27017")
-        return client
+    except:'''
+    client = pymongo.MongoClient("mongodb://127.0.0.1:27017")
+    return client
 
         
         
