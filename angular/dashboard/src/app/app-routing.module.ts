@@ -4,7 +4,8 @@ import { ListComponent } from './list/list.component';
 import { DetailsBundleComponent } from './details-bundle/details-bundle.component';
 
 
-const routes: Routes = [{
+const routes: Routes = [
+{
   path : 'liste_retraitement',component : ListComponent
 },
 {

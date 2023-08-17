@@ -10,54 +10,39 @@ export class ApiService{
     constructor(private HttpClient : HttpClient){}
 
 
-    /**
-     * Liste Bundle et details
-     */
-    public getBundle()
+    public getBundle(page : number)
     {
-        return this.HttpClient.get('http://127.0.0.1:8000/bundle')
+        return this.HttpClient.get('http://127.0.0.1:8000/bundle/'+page)
     }
 
-
-    /**
-     * Liste des topups et details
-     */
-    public getTopup()
+    public getTopup(page : number)
     {
-        return this.HttpClient.get('http://127.0.0.1:8000/topup')
+        return this.HttpClient.get('http://127.0.0.1:8000/topup/'+page)
     }
 
-
-    /**
-     * Liste orange money et details
-     */
-    public getOm()
+    public getOm(page : number)
     {
-        return this.HttpClient.get('http://127.0.0.1:8000/om')
+        return this.HttpClient.get('http://127.0.0.1:8000/om/'+page)
     }
 
-
-    /**
-     * Liste usage et details
-     */
-    public getUsage()
+    public getUsage(page : number)
     {
-        return this.HttpClient.get('http://127.0.0.1:8000/usage')
+        return this.HttpClient.get('http://127.0.0.1:8000/usage/'+page)
     }
 
-    public getEc()
+    public getEc(page : number)
     {
-        return this.HttpClient.get('http://127.0.0.1:8000/ec')
+        return this.HttpClient.get('http://127.0.0.1:8000/ec/'+page)
     }
 
-    public getE_rc()
+    public getE_rc(page : number)
     {
-        return this.HttpClient.get('http://127.0.0.1:8000/e-rc')
+        return this.HttpClient.get('http://127.0.0.1:8000/e-rc/'+page)
     }
 
-    public getRoaming()
+    public getRoaming(page : number)
     {
-        return this.HttpClient.get('http://127.0.0.1:8000/roaming')
+        return this.HttpClient.get('http://127.0.0.1:8000/roaming/'+page)
     }
 
     public getdetails(day :string,type : Int16Array)

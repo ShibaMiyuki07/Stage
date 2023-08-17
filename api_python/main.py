@@ -14,47 +14,47 @@ app.add_middleware(CORSMiddleware,
                    allow_headers = ['*'])
 
 
-@app.get('/bundle')
-async def verification_bundle():
+@app.get('/bundle/{page}')
+async def verification_bundle(page : int):
     collection = getverification_collection()
-    resultat = collection.find({"usage_type" : 'bundle'})
+    resultat = collection.find({"usage_type" : 'bundle'}).skip(page*5).limit(5)
     return [Verification.insertion_data(r) for r in resultat]
 
 
-@app.get('/topup')
-async def verification_topup():
+@app.get('/topup/{page}')
+async def verification_topup(page : int):
     collection = getverification_collection()
-    resultat = collection.find({"usage_type" : 'topup'})
+    resultat = collection.find({"usage_type" : 'topup'}).skip(page*5).limit(5)
     return [Verification.insertion_data(r) for r in resultat]
 
-@app.get('/om')
-async def verification_om():
+@app.get('/om/{page}')
+async def verification_om(page : int):
     collection = getverification_collection()
-    resultat = collection.find({"usage_type" : 'om'})
+    resultat = collection.find({"usage_type" : 'om'}).skip(page*5).limit(5)
     return [Verification.insertion_data(r) for r in resultat]
 
-@app.get('/usage')
-async def verification_usage():
+@app.get('/usage/{page}')
+async def verification_usage(page : int):
     collection = getverification_collection()
-    resultat = collection.find({"usage_type" : 'usage'})
+    resultat = collection.find({"usage_type" : 'usage'}).skip(page*5).limit(5)
     return [Verification.insertion_data(r) for r in resultat]
 
-@app.get('/ec')
-async def verification_ec():
+@app.get('/ec/{page}')
+async def verification_ec(page : int):
     collection = getverification_collection()
-    resultat = collection.find({"usage_type" : 'ec'})
+    resultat = collection.find({"usage_type" : 'ec'}).skip(page*5).limit(5)
     return [Verification.insertion_data(r) for r in resultat]
 
-@app.get('/e-rc')
-async def verification_e_rc():
+@app.get('/e-rc/{page}')
+async def verification_e_rc(page : int):
     collection = getverification_collection()
-    resultat = collection.find({"usage_type" : 'e-rc'})
+    resultat = collection.find({"usage_type" : 'e-rc'}).skip(page*5).limit(5)
     return [Verification.insertion_data(r) for r in resultat]
 
-@app.get('/roaming')
-async def verification_roaming():
+@app.get('/roaming/{page}')
+async def verification_roaming(page : int):
     collection = getverification_collection()
-    resultat = collection.find({"usage_type" : 'roaming'})
+    resultat = collection.find({"usage_type" : 'roaming'}).skip(page*5).limit(5)
     return [Verification.insertion_data(r) for r in resultat]
 
 

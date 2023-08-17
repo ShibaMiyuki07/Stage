@@ -1,32 +1,33 @@
-<div *ngFor="let details of bundleDetails">
-    <div>Details des erreur des offres du {{ details.day }}</div>
+<div *ngFor="let details of bundleDetails" style="color : white;">
+    <div align="center">Details des erreur des offres du {{ details.day }}</div>
     <div *ngFor="let data of details | keyvalue">
         <div *ngIf='(data.key+"").includes("_cnt")'>
-            <div *ngIf="details[data.key+''] != 0">
-                <h3>Liste des {{ (data.key+'').replace('_cnt','').replace('erreur_','') }} avec erreur</h3>
-                <div *ngFor="let liste of details[(data.key+'').replace('_cnt','')]">
-                    <hr>
-                    {{ liste[(data.key+'').replace('_cnt','').replace('erreur_','')]  }}
-                    <div *ngIf="liste.description == 0">
-                        <em style="color:rgb(28, 206, 67)">Donne non egale dans daily usage et global daily usage</em>
-                        <div *ngFor="let data of liste.data">
-                            <strong style="color: red;">{{ data.nom }} </strong>: {{ data.ecart }}
+            <details *ngIf="details[data.key+''] != 0">
+                <summary>Liste des {{ (data.key+'').replace('_cnt','').replace('erreur_','') }} avec erreur</summary>
+                <ul>
+                    <li *ngFor="let liste of details[(data.key+'').replace('_cnt','')]">
+                        {{ liste[(data.key+'').replace('_cnt','').replace('erreur_','')]  }}
+                        <div *ngIf="liste.description == 0">
+                            <em style="color:rgb(28, 206, 67)">Donne non egale dans daily usage et global daily usage</em>
+                            <div *ngFor="let data of liste.data">
+                                <strong style="color: red;">{{ data.nom }} </strong>: {{ data.ecart }}
+                            </div>
                         </div>
-                    </div>
-                    <div *ngIf="liste.description == 1">
-                        <em style="color:rgb(28, 206, 67)">Donne inexistante dans global daily usage</em>
-                        <div *ngFor="let key of liste.data | keyvalue">
-                            <strong style="color: red;">{{ key.key }}</strong>: {{ liste.data[key.key+""] }} 
+                        <div *ngIf="liste.description == 1">
+                            <em style="color:rgb(28, 206, 67)">Donne inexistante dans global daily usage</em>
+                            <div *ngFor="let key of liste.data | keyvalue">
+                                <strong style="color: red;">{{ key.key }}</strong>: {{ liste.data[key.key+""] }} 
+                            </div>
                         </div>
-                    </div>
-                    <div *ngIf="liste.description == -1">
-                        <em style="color:blue">Donne inexistante dans daily usage</em>
-                        <div *ngFor="let key of liste.data | keyvalue">
-                            <strong style="color: red;">{{ key.key }}</strong>: {{ liste.data[key.key+""] }} 
+                        <div *ngIf="liste.description == -1">
+                            <em style="color:blue">Donne inexistante dans daily usage</em>
+                            <div *ngFor="let key of liste.data | keyvalue">
+                                <strong style="color: red;">{{ key.key }}</strong>: {{ liste.data[key.key+""] }} 
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </li>
+                </ul>
+            </details>
         </div>
     </div>
 </div>
