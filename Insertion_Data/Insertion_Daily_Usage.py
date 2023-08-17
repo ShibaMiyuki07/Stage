@@ -829,7 +829,7 @@ def Insertion_Segment(day):
     {
         '$match': {
             'day': day, 
-            'topup': {
+            'usage': {
                 '$exists': True
             }
         }
