@@ -1,0 +1,88 @@
+[
+    {
+        '$match': {
+            'day': datetime(2023, 6, 20, 0, 0, 0, tzinfo=timezone.utc)
+        }
+    }, {
+        '$group': {
+            '_id': '$day', 
+            'parc_FT': {
+                '$sum': {
+                    '$cond': {
+                        'if': {
+                            '$or': [
+                                {
+                                    '$eq': [
+                                        '$orange_base_status', 'active'
+                                    ]
+                                }, {
+                                    '$eq': [
+                                        '$orange_base_status', 'reactivated'
+                                    ]
+                                }, {
+                                    '$eq': [
+                                        '$orange_base_status', 'new'
+                                    ]
+                                }
+                            ]
+                        }, 
+                        'then': 1, 
+                        'else': 0
+                    }
+                }
+            }, 
+            'activation': {
+                '$sum': {
+                    '$cond': {
+                        'if': {
+                            '$gte': [
+                                '$first_event_date', '$day'
+                            ]
+                        }, 
+                        'then': 1, 
+                        'else': 0
+                    }
+                }
+            }, 
+            'reconnexion': {
+                '$sum': {
+                    '$cond': {
+                        'if': {
+                            '$eq': [
+                                '$orange_base_status', 'reactivated'
+                            ]
+                        }, 
+                        'then': 1, 
+                        'else': 0
+                    }
+                }
+            }, 
+            'deconnexion': {
+                '$sum': {
+                    '$cond': {
+                        'if': {
+                            '$eq': [
+                                '$orange_base_status', 'churn'
+                            ]
+                        }, 
+                        'then': 1, 
+                        'else': 0
+                    }
+                }
+            }, 
+            'parc_rec_1j': {
+                '$sum': {
+                    '$cond': {
+                        'if': {
+                            '$gte': [
+                                '$last_topup_date', '$day'
+                            ]
+                        }, 
+                        'then': 1, 
+                        'else': 0
+                    }
+                }
+            }
+        }
+    }
+]
