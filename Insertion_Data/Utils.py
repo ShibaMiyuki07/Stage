@@ -39,3 +39,9 @@ def getall_site():
     for(sig_id,site_name) in cursor:
         all_site[sig_id] = {'site_name' : site_name}
     return all_site
+
+def getcollection_contract():
+    client = connexion_base()
+    db = client['cbm']
+    collection = db['contracts']
+    return collection
