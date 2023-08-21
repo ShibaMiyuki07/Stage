@@ -206,7 +206,7 @@ def Insertion_pp_name(day):
         }
     }, {
         '$group': {
-            '_id': '$pp_name', 
+            '_id': '$price_plan', 
             'parc_FT': {
                 '$sum': {
                     '$cond': {
