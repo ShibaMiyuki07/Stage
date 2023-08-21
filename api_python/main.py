@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from database.Connexion import getverification_collection
+from Utils import getusage_type
+from database.Connexion import get_aggregation, getverification_collection
 from Model.Verification import Verification
 import uvicorn
 
@@ -63,23 +64,26 @@ async def verification_roaming(page : int):
 async def verification_details(date:str,type:int):
     collection = getverification_collection()
     day = Verification.remplacement_date(date)
-    usage_type = None
-    if type == 1:
-        usage_type = "usage"
-    if type == 2:
-        usage_type ="bundle"
-    if type == 3:
-        usage_type = "topup"
-    if type == 4:
-        usage_type = "om"
-    if type == 5:
-        usage_type = "ec"
-    if type == 6:
-        usage_type = 'e-rc'
-    if type == 7:
-        usage_type = 'roaming'
+    usage_type = getusage_type(type)
     resultat = collection.find({"usage_type" : usage_type,'day' : day})
     return [Verification.insertion_data(r) for r in resultat]
+
+
+@app.get('/dashboard/{type}/{date_debut}/{date_fin}')
+async def dashboard_bundle(type:int,date_debut : str,date_fin : str):
+    collection = get_aggregation()
+    usage_type = getusage_type(type)
+    date_debut = Verification.remplacement_date(date_debut)
+    date_fin = Verification.remplacement_date(date_fin)
+    resultat = collection.find({'usage_type' : usage_type,'day' :  { '$and ' : [{{'$gte' : date_debut},{'$lte' : date_fin}}]}})
+    return [Verification.insertion_data(r) for r in resultat]
+
+@app.get('/dashboard/{type}')
+async def dashboard_bundle(type : int):
+    collection = get_aggregation()
+    usage_type = getusage_type(type)
+    resultats = collection.find({'usage_type' : usage_type}).sort('day',1).limit(8)
+    return {'data' : [Verification.insertion_data(r) for r in resultats]}
 
 if __name__ == "__main__":
      uvicorn.run("main:app", host="0.0.0.0", port=5000, log_level="info")

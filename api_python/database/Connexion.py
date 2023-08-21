@@ -16,3 +16,9 @@ def getverification_collection():
     db = client['cbm']
     collection = db['daily_usage_verification']
     return collection
+
+def get_aggregation():
+    client = connexion_base()
+    db = client['cbm']
+    collection = db['daily_aggregation']
+    return collection
