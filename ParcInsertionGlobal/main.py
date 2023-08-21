@@ -59,12 +59,14 @@ def insertion_data(day,site,segment):
         if r['orange_base_status'] == 'churn':
             insertion['deconnexion'] = 1
         if r['last_topup_date'] != None and day == datetime(r['last_topup_date'].year,r['last_topup_date'].month,r['last_topup_date'].day):
-            insertion['parc_recharge_1j'] = 1
-        if r['last_topup_date'] != None and calcul_date(day,r['last_topup_date']).days<30:
-            insertion['parc_recharge_30j'] = 1
+            insertion['parc_rec_1j'] = 1
+        if r['last_topup_date'] != None and calcul_date(day,r['last_topup_date']).days<=30:
+            insertion['parc_rec_30j'] = 1
 
         day_29_j = r['day'] - timedelta(29)
-        if (r['last_event_o_date'] != None and r['last_event_o_date'] <day and r['last_event_o_date']>day_29_j) or (r['last_data_date'] != None and r['last_data_date'] <day and r['last_data_date'] > day_29_j) or (r['last_om_transaction_date'] != None and r['last_om_transaction_date']<day and r['last_om_transaction_date']>day_29_j):
+        if ((r['last_event_o_date'] != None and datetime(r['last_event_o_date'].year,r['last_event_o_date'].month,r['last_event_o_date'].day) <=day and datetime(r['last_event_o_date'].year,r['last_event_o_date'].month,r['last_event_o_date'].day)>=day_29_j)
+            or (r['last_data_date'] != None and datetime(r['last_data_date'].year,r['last_data_date'].month,r['last_data_date'].day) <=day and datetime(r['last_data_date'].year,r['last_data_date'].month,r['last_data_date'].day) >= day_29_j)
+            or (r['last_om_transaction_date'] != None and datetime(r['last_om_transaction_date'].year,r['last_om_transaction_date'].month,r['last_om_transaction_date'].day)<=day and datetime(r['last_om_transaction_date'].year,r['last_om_transaction_date'].month,r['last_om_transaction_date'].day)>=day_29_j)):
             insertion['charged_base'] = 1
 
         data.append(insertion)
