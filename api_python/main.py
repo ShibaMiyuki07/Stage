@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from database.Connexion import getverification_collection
 from Model.Verification import Verification
+import uvicorn
 
 origins = ['*']
 
@@ -79,3 +80,6 @@ async def verification_details(date:str,type:int):
         usage_type = 'roaming'
     resultat = collection.find({"usage_type" : usage_type,'day' : day})
     return [Verification.insertion_data(r) for r in resultat]
+
+if __name__ == "__main__":
+     uvicorn.run("main:app", host="0.0.0.0", port=5000, log_level="info")
