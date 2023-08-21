@@ -19,44 +19,44 @@ app.add_middleware(CORSMiddleware,
 @app.get('/bundle/{page}')
 async def verification_bundle(page : int):
     collection = getverification_collection()
-    resultat = collection.find({"usage_type" : 'bundle'}).skip(page*5).limit(5)
+    resultat = collection.find({"usage_type" : 'bundle'}).skip(page*5).limit(5).sort('day',-1)
     return [Verification.insertion_data(r) for r in resultat]
 
 
 @app.get('/topup/{page}')
 async def verification_topup(page : int):
     collection = getverification_collection()
-    resultat = collection.find({"usage_type" : 'topup'}).skip(page*5).limit(5)
+    resultat = collection.find({"usage_type" : 'topup'}).skip(page*5).limit(5).sort('day',-1)
     return [Verification.insertion_data(r) for r in resultat]
 
 @app.get('/om/{page}')
 async def verification_om(page : int):
     collection = getverification_collection()
-    resultat = collection.find({"usage_type" : 'om'}).skip(page*5).limit(5)
+    resultat = collection.find({"usage_type" : 'om'}).skip(page*5).limit(5).sort('day',-1)
     return [Verification.insertion_data(r) for r in resultat]
 
 @app.get('/usage/{page}')
 async def verification_usage(page : int):
     collection = getverification_collection()
-    resultat = collection.find({"usage_type" : 'usage'}).skip(page*5).limit(5)
+    resultat = collection.find({"usage_type" : 'usage'}).skip(page*5).limit(5).sort('day',-1)
     return [Verification.insertion_data(r) for r in resultat]
 
 @app.get('/ec/{page}')
 async def verification_ec(page : int):
     collection = getverification_collection()
-    resultat = collection.find({"usage_type" : 'ec'}).skip(page*5).limit(5)
+    resultat = collection.find({"usage_type" : 'ec'}).skip(page*5).limit(5).sort('day',-1)
     return [Verification.insertion_data(r) for r in resultat]
 
 @app.get('/e-rc/{page}')
 async def verification_e_rc(page : int):
     collection = getverification_collection()
-    resultat = collection.find({"usage_type" : 'e-rc'}).skip(page*5).limit(5)
+    resultat = collection.find({"usage_type" : 'e-rc'}).skip(page*5).limit(5).sort('day',-1)
     return [Verification.insertion_data(r) for r in resultat]
 
 @app.get('/roaming/{page}')
 async def verification_roaming(page : int):
     collection = getverification_collection()
-    resultat = collection.find({"usage_type" : 'roaming'}).skip(page*5).limit(5)
+    resultat = collection.find({"usage_type" : 'roaming'}).skip(page*5).limit(5).sort('day',-1)
     return [Verification.insertion_data(r) for r in resultat]
 
 
@@ -75,14 +75,14 @@ async def dashboard_bundle(type:int,date_debut : str,date_fin : str):
     usage_type = getusage_type(type)
     date_debut = Verification.remplacement_date(date_debut)
     date_fin = Verification.remplacement_date(date_fin)
-    resultat = collection.find({'usage_type' : usage_type,'day' :  { '$and ' : [{{'$gte' : date_debut},{'$lte' : date_fin}}]}})
+    resultat = collection.find({'usage_type' : usage_type,'day' :  { '$and ' : [{{'$gte' : date_debut},{'$lte' : date_fin}}]}}).sort('day',1)
     return [Verification.insertion_data(r) for r in resultat]
 
 @app.get('/dashboard/{type}')
 async def dashboard_bundle(type : int):
     collection = get_aggregation()
     usage_type = getusage_type(type)
-    resultats = collection.find({'usage_type' : usage_type}).sort('day',-1).limit(8).sort('day',1)
+    resultats = collection.find({'usage_type' : usage_type,'type_aggregation' : 'day'}).sort('day',-1).limit(8).sort('day',1)
     return {'data' : [Verification.insertion_data(r) for r in resultats]}
 
 if __name__ == "__main__":
