@@ -10,7 +10,7 @@ def connexion_base():
 def getcollection_daily_usage():
     client = connexion_base()
     db = client['cbm']
-    collection = db['daily_usage']
+    collection = db['contracts']
     return collection
 
 def getcollection_segment():
@@ -24,7 +24,8 @@ def connexion_sql():
     return connexion
 
 def getall_site():
-    cursor = connexion_sql().cursor() 
+    connexion = connexion_sql()
+    cursor = connexion.cursor()
     query = "select max(sig_code_site) site,sig_nom_site nom_site,sig_secteur_name_v3 secteur from DM_RF.rf_sig_cell_krill_v3 sig group by sig_nom_site"
     cursor.execute(query)
     all_site = {}
