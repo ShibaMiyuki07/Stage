@@ -82,7 +82,7 @@ async def dashboard_bundle(type:int,date_debut : str,date_fin : str):
 async def dashboard_bundle(type : int):
     collection = get_aggregation()
     usage_type = getusage_type(type)
-    resultats = collection.find({'usage_type' : usage_type}).sort('day',1).limit(8)
+    resultats = collection.find({'usage_type' : usage_type}).sort('day',-1).limit(8).sort('day',1)
     return {'data' : [Verification.insertion_data(r) for r in resultats]}
 
 if __name__ == "__main__":
