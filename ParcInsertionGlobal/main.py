@@ -22,16 +22,18 @@ def insertion_data(day,site,segment):
           insertion['site_code'] = site[r['last_location_name']]['code']
           insertion['secteur'] = site[r['last_location_name']]['secteur']
         
-        difference_anciennete = calcul_date(day,r['first_event_date']).days
+        difference_anciennete = None
         anciennete = None
-        if difference_anciennete<90:
-            anciennete = "[0-3 mois]"
-        elif 90<difference_anciennete and difference_anciennete<=180:
-            anciennete = "]3-6 mois]"
-        elif difference_anciennete<180 and difference_anciennete<=365:
-            anciennete = "]6-12 mois]"
-        elif difference_anciennete>365:
-            anciennete = "]+12 mois]"
+        if r['first_event_date'] != None:
+          difference_anciennete= calcul_date(day,r['first_event_date']).days
+          if difference_anciennete<90:
+              anciennete = "[0-3 mois]"
+          elif 90<difference_anciennete and difference_anciennete<=180:
+              anciennete = "]3-6 mois]"
+          elif difference_anciennete<180 and difference_anciennete<=365:
+              anciennete = "]6-12 mois]"
+          elif difference_anciennete>365:
+              anciennete = "]+12 mois]"
         insertion['anciennete'] = anciennete
 
         age = None
@@ -52,7 +54,7 @@ def insertion_data(day,site,segment):
 
         if r['orange_base_status'] == 'active' or r['orange_base_status'] == 'reactivated' or r['orange_base_status'] == 'new':
             insertion['parc_FT'] = 1
-        if day == datetime(r['first_event_date'].year,r['first_event_date'].month,r['first_event_date'].day):
+        if r['first_event_date'] != None and  day == datetime(r['first_event_date'].year,r['first_event_date'].month,r['first_event_date'].day):
             insertion['activation'] = 1
         if r['orange_base_status'] == 'reactivated':
             insertion['reconnexion'] =1
