@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 from datetime import datetime
+=======
+from datetime import datetime,timedelta
+>>>>>>> Stashed changes
 import sys
 from Utils import getcollection_contract, getcollection_insertion, insertion_data
 
@@ -11,6 +15,25 @@ def Insertion_day(day):
             'day': day
         }
     }, {
+<<<<<<< Updated upstream
+=======
+        '$project': {
+            '_id': 0, 
+            'last_location_name': 1, 
+            'day': 1, 
+            'last_topup_date': 1, 
+            'market_id': 1, 
+            'billing_type': 1, 
+            'orange_base_status': 1, 
+            'party_id': 1, 
+            'date_ch': {
+                '$max': [
+                    '$last_event_o_date', '$last_om_transaction_date', '$last_data_date'
+                ]
+            }
+        }
+    }, {
+>>>>>>> Stashed changes
         '$group': {
             '_id': '$day', 
             'parc_FT': {
@@ -42,8 +65,13 @@ def Insertion_day(day):
                 '$sum': {
                     '$cond': {
                         'if': {
+<<<<<<< Updated upstream
                             '$gte': [
                                 '$first_event_date', '$day'
+=======
+                            '$eq': [
+                                '$orange_base_status', 'new'
+>>>>>>> Stashed changes
                             ]
                         }, 
                         'then': 1, 
@@ -81,7 +109,11 @@ def Insertion_day(day):
                 '$sum': {
                     '$cond': {
                         'if': {
+<<<<<<< Updated upstream
                             '$gte': [
+=======
+                            '$gt': [
+>>>>>>> Stashed changes
                                 '$last_topup_date', '$day'
                             ]
                         }, 
@@ -89,6 +121,35 @@ def Insertion_day(day):
                         'else': 0
                     }
                 }
+<<<<<<< Updated upstream
+=======
+            }, 
+            'parc_rec_30j': {
+                '$sum': {
+                    '$cond': {
+                        'if': {
+                            '$gt': [
+                                '$last_topup_date', day - timedelta(30)
+                            ]
+                        }, 
+                        'then': 1, 
+                        'else': 0
+                    }
+                }
+            }, 
+            'charged_base': {
+                '$sum': {
+                    '$cond': {
+                        'if': {
+                            '$gte': [
+                                '$date_ch', day - timedelta(29)
+                            ]
+                        }, 
+                        'then': 1, 
+                        'else': 0
+                    }
+                }
+>>>>>>> Stashed changes
             }
         }
     }
@@ -96,7 +157,11 @@ def Insertion_day(day):
     collection = getcollection_contract()
     resultat = collection.aggregate(pipeline)
     for r in resultat:
+<<<<<<< Updated upstream
         data.append({ 'day': day,'usage_type' : 'parc','type_aggregation' : 'day','parc_FT' : r['parc_FT'],'activation' : r['activation'],'reconnexion' : r['reconnexion'],'deconnexion' : r['deconnexion'],'parc_rec_1j' : r['parc_rec_1j'] })
+=======
+        data.append({ 'day': day,'usage_type' : 'parc','type_aggregation' : 'day','parc_FT' : r['parc_FT'],'activation' : r['activation'],'reconnexion' : r['reconnexion'],'deconnexion' : r['deconnexion'],'parc_rec_1j' : r['parc_rec_1j'],'parc_rec_30j' : r['parc_rec_30j'],'charged_base' : r['charged_base'] })
+>>>>>>> Stashed changes
     
     insertion_data(getcollection_insertion('tmp_daily_aggregation'),data)
 
@@ -205,6 +270,26 @@ def Insertion_pp_name(day):
             'day': day
         }
     }, {
+<<<<<<< Updated upstream
+=======
+        '$project': {
+            '_id': 0, 
+            'last_location_name': 1, 
+            'day': 1, 
+            'last_topup_date': 1, 
+            'market_id': 1, 
+            'billing_type': 1, 
+            'orange_base_status': 1, 
+            'party_id': 1, 
+            'price_plan' : 1,
+            'date_ch': {
+                '$max': [
+                    '$last_event_o_date', '$last_om_transaction_date', '$last_data_date'
+                ]
+            }
+        }
+    }, {
+>>>>>>> Stashed changes
         '$group': {
             '_id': '$price_plan', 
             'parc_FT': {
@@ -236,8 +321,13 @@ def Insertion_pp_name(day):
                 '$sum': {
                     '$cond': {
                         'if': {
+<<<<<<< Updated upstream
                             '$gte': [
                                 '$first_event_date', '$day'
+=======
+                            '$eq': [
+                                '$orange_base_status', 'new'
+>>>>>>> Stashed changes
                             ]
                         }, 
                         'then': 1, 
@@ -275,7 +365,11 @@ def Insertion_pp_name(day):
                 '$sum': {
                     '$cond': {
                         'if': {
+<<<<<<< Updated upstream
                             '$gte': [
+=======
+                            '$gt': [
+>>>>>>> Stashed changes
                                 '$last_topup_date', '$day'
                             ]
                         }, 
@@ -283,6 +377,35 @@ def Insertion_pp_name(day):
                         'else': 0
                     }
                 }
+<<<<<<< Updated upstream
+=======
+            }, 
+            'parc_rec_30j': {
+                '$sum': {
+                    '$cond': {
+                        'if': {
+                            '$gt': [
+                                '$last_topup_date', day - timedelta(30)
+                            ]
+                        }, 
+                        'then': 1, 
+                        'else': 0
+                    }
+                }
+            }, 
+            'charged_base': {
+                '$sum': {
+                    '$cond': {
+                        'if': {
+                            '$gte': [
+                                '$date_ch', day - timedelta(29)
+                            ]
+                        }, 
+                        'then': 1, 
+                        'else': 0
+                    }
+                }
+>>>>>>> Stashed changes
             }
         }
     }
@@ -290,7 +413,11 @@ def Insertion_pp_name(day):
     collection = getcollection_contract()
     resultat = collection.aggregate(pipeline)
     for r in resultat:
+<<<<<<< Updated upstream
         data.append({ 'day': day,'usage_type' : 'parc','type_aggregation' : 'pp_name','pp_name' : r['_id'],'parc_FT' : r['parc_FT'],'activation' : r['activation'],'reconnexion' : r['reconnexion'],'deconnexion' : r['deconnexion'],'parc_rec_1j' : r['parc_rec_1j'] })
+=======
+        data.append({ 'day': day,'usage_type' : 'parc','type_aggregation' : 'pp_name','pp_name' : r['_id'],'parc_FT' : r['parc_FT'],'activation' : r['activation'],'reconnexion' : r['reconnexion'],'deconnexion' : r['deconnexion'],'parc_rec_1j' : r['parc_rec_1j'],'parc_rec_30j' : r['parc_rec_30j'],'charged_base' : r['charged_base'] })
+>>>>>>> Stashed changes
     
     insertion_data(getcollection_insertion('tmp_daily_aggregation'),data)
 
@@ -302,8 +429,28 @@ def Insertion_market(day):
             'day': day
         }
     }, {
+<<<<<<< Updated upstream
         '$group': {
             '_id': '$market', 
+=======
+        '$project': {
+            '_id': 0, 
+            'last_location_name': 1, 
+            'day': 1, 
+            'billing_type': 1, 
+            'orange_base_status': 1, 
+            'party_id': 1, 
+            'market_id' : 1,
+            'date_ch': {
+                '$max': [
+                    '$last_event_o_date', '$last_om_transaction_date', '$last_data_date'
+                ]
+            }
+        }
+    }, {
+        '$group': {
+            '_id': '$market_id', 
+>>>>>>> Stashed changes
             'parc_FT': {
                 '$sum': {
                     '$cond': {
@@ -333,8 +480,13 @@ def Insertion_market(day):
                 '$sum': {
                     '$cond': {
                         'if': {
+<<<<<<< Updated upstream
                             '$gte': [
                                 '$first_event_date', '$day'
+=======
+                            '$eq': [
+                                '$orange_base_status', 'new'
+>>>>>>> Stashed changes
                             ]
                         }, 
                         'then': 1, 
@@ -372,7 +524,11 @@ def Insertion_market(day):
                 '$sum': {
                     '$cond': {
                         'if': {
+<<<<<<< Updated upstream
                             '$gte': [
+=======
+                            '$gt': [
+>>>>>>> Stashed changes
                                 '$last_topup_date', '$day'
                             ]
                         }, 
@@ -380,6 +536,35 @@ def Insertion_market(day):
                         'else': 0
                     }
                 }
+<<<<<<< Updated upstream
+=======
+            }, 
+            'parc_rec_30j': {
+                '$sum': {
+                    '$cond': {
+                        'if': {
+                            '$gt': [
+                                '$last_topup_date', day - timedelta(30)
+                            ]
+                        }, 
+                        'then': 1, 
+                        'else': 0
+                    }
+                }
+            }, 
+            'charged_base': {
+                '$sum': {
+                    '$cond': {
+                        'if': {
+                            '$gte': [
+                                '$date_ch', day - timedelta(29)
+                            ]
+                        }, 
+                        'then': 1, 
+                        'else': 0
+                    }
+                }
+>>>>>>> Stashed changes
             }
         }
     }
@@ -387,7 +572,11 @@ def Insertion_market(day):
     collection = getcollection_contract()
     resultat = collection.aggregate(pipeline)
     for r in resultat:
+<<<<<<< Updated upstream
         data.append({ 'day': day,'usage_type' : 'parc','type_aggregation' : 'market','market' : r['_id'],'parc_FT' : r['parc_FT'],'activation' : r['activation'],'reconnexion' : r['reconnexion'],'deconnexion' : r['deconnexion'],'parc_rec_1j' : r['parc_rec_1j'] })
+=======
+        data.append({ 'day': day,'usage_type' : 'parc','type_aggregation' : 'market','market' : r['_id'],'parc_FT' : r['parc_FT'],'activation' : r['activation'],'reconnexion' : r['reconnexion'],'deconnexion' : r['deconnexion'],'parc_rec_1j' : r['parc_rec_1j'],'parc_rec_30j' : r['parc_rec_30j'],'charged_base' : r['charged_base'] })
+>>>>>>> Stashed changes
     
     insertion_data(getcollection_insertion('tmp_daily_aggregation'),data)
 
@@ -399,6 +588,26 @@ def Insertion_billing_type(day):
             'day': day
         }
     }, {
+<<<<<<< Updated upstream
+=======
+        '$project': {
+            '_id': 0, 
+            'last_location_name': 1, 
+            'day': 1, 
+            'last_topup_date': 1, 
+            'market_id': 1, 
+            'billing_type': 1, 
+            'orange_base_status': 1, 
+            'party_id': 1, 
+            'price_plan' : 1,
+            'date_ch': {
+                '$max': [
+                    '$last_event_o_date', '$last_om_transaction_date', '$last_data_date'
+                ]
+            }
+        }
+    }, {
+>>>>>>> Stashed changes
         '$group': {
             '_id': '$billing_type', 
             'parc_FT': {
@@ -430,8 +639,13 @@ def Insertion_billing_type(day):
                 '$sum': {
                     '$cond': {
                         'if': {
+<<<<<<< Updated upstream
                             '$gte': [
                                 '$first_event_date', '$day'
+=======
+                            '$eq': [
+                                '$orange_base_status', 'new'
+>>>>>>> Stashed changes
                             ]
                         }, 
                         'then': 1, 
@@ -469,7 +683,11 @@ def Insertion_billing_type(day):
                 '$sum': {
                     '$cond': {
                         'if': {
+<<<<<<< Updated upstream
                             '$gte': [
+=======
+                            '$gt': [
+>>>>>>> Stashed changes
                                 '$last_topup_date', '$day'
                             ]
                         }, 
@@ -477,6 +695,35 @@ def Insertion_billing_type(day):
                         'else': 0
                     }
                 }
+<<<<<<< Updated upstream
+=======
+            }, 
+            'parc_rec_30j': {
+                '$sum': {
+                    '$cond': {
+                        'if': {
+                            '$gt': [
+                                '$last_topup_date', day - timedelta(30)
+                            ]
+                        }, 
+                        'then': 1, 
+                        'else': 0
+                    }
+                }
+            }, 
+            'charged_base': {
+                '$sum': {
+                    '$cond': {
+                        'if': {
+                            '$gte': [
+                                '$date_ch', day - timedelta(29)
+                            ]
+                        }, 
+                        'then': 1, 
+                        'else': 0
+                    }
+                }
+>>>>>>> Stashed changes
             }
         }
     }
@@ -484,7 +731,11 @@ def Insertion_billing_type(day):
     collection = getcollection_contract()
     resultat = collection.aggregate(pipeline)
     for r in resultat:
+<<<<<<< Updated upstream
         data.append({ 'day': day,'usage_type' : 'parc','type_aggregation' : 'billing_type','billing_type' : r['_id'],'parc_FT' : r['parc_FT'],'activation' : r['activation'],'reconnexion' : r['reconnexion'],'deconnexion' : r['deconnexion'],'parc_rec_1j' : r['parc_rec_1j'] })
+=======
+        data.append({ 'day': day,'usage_type' : 'parc','type_aggregation' : 'billing_type','billing_type' : r['_id'],'parc_FT' : r['parc_FT'],'activation' : r['activation'],'reconnexion' : r['reconnexion'],'deconnexion' : r['deconnexion'],'parc_rec_1j' : r['parc_rec_1j'],'parc_rec_30j' : r['parc_rec_30j'],'charged_base' : r['charged_base'] })
+>>>>>>> Stashed changes
     
     insertion_data(getcollection_insertion('tmp_daily_aggregation'),data)
 
@@ -505,6 +756,25 @@ def insertion_segment(day):
             'day': day
         }
     }, {
+<<<<<<< Updated upstream
+=======
+        '$project': {
+            '_id': 0, 
+            'last_location_name': 1, 
+            'day': 1, 
+            'last_topup_date': 1, 
+            'market_id': 1, 
+            'billing_type': 1, 
+            'orange_base_status': 1, 
+            'party_id': 1, 
+            'date_ch': {
+                '$max': [
+                    '$last_event_o_date', '$last_om_transaction_date', '$last_data_date'
+                ]
+            }
+        }
+    }, {
+>>>>>>> Stashed changes
         '$lookup': {
             'from': 'segment', 
             'let': {
@@ -513,7 +783,11 @@ def insertion_segment(day):
             'pipeline': [
                 {
                     '$match': {
+<<<<<<< Updated upstream
                         'day': last_month
+=======
+                        'day': '202307'
+>>>>>>> Stashed changes
                     }
                 }, {
                     '$match': {
@@ -531,7 +805,11 @@ def insertion_segment(day):
         '$unwind': {
             'path': '$segment', 
             'includeArrayIndex': 's', 
+<<<<<<< Updated upstream
             'preserveNullAndEmptyArrays': True
+=======
+            'preserveNullAndEmptyArrays': False
+>>>>>>> Stashed changes
         }
     }, {
         '$group': {
@@ -565,8 +843,13 @@ def insertion_segment(day):
                 '$sum': {
                     '$cond': {
                         'if': {
+<<<<<<< Updated upstream
                             '$gte': [
                                 '$first_event_date', '$day'
+=======
+                            '$eq': [
+                                '$orange_base_status', 'new'
+>>>>>>> Stashed changes
                             ]
                         }, 
                         'then': 1, 
@@ -604,7 +887,11 @@ def insertion_segment(day):
                 '$sum': {
                     '$cond': {
                         'if': {
+<<<<<<< Updated upstream
                             '$gte': [
+=======
+                            '$gt': [
+>>>>>>> Stashed changes
                                 '$last_topup_date', '$day'
                             ]
                         }, 
@@ -612,15 +899,51 @@ def insertion_segment(day):
                         'else': 0
                     }
                 }
+<<<<<<< Updated upstream
+=======
+            }, 
+            'parc_rec_30j': {
+                '$sum': {
+                    '$cond': {
+                        'if': {
+                            '$gt': [
+                                '$last_topup_date', day - timedelta(30)
+                            ]
+                        }, 
+                        'then': 1, 
+                        'else': 0
+                    }
+                }
+            }, 
+            'charged_base': {
+                '$sum': {
+                    '$cond': {
+                        'if': {
+                            '$gte': [
+                                '$date_ch', day - timedelta(29)
+                            ]
+                        }, 
+                        'then': 1, 
+                        'else': 0
+                    }
+                }
+>>>>>>> Stashed changes
             }
         }
     }
 ]
+<<<<<<< Updated upstream
     
     collection = getcollection_contract()
     resultat = collection.aggregate(pipeline)
     for r in resultat:
         data.append({ 'day': day,'usage_type' : 'parc','type_aggregation' : 'segment','segment' : r['_id'],'parc_FT' : r['parc_FT'],'activation' : r['activation'],'reconnexion' : r['reconnexion'],'deconnexion' : r['deconnexion'],'parc_rec_1j' : r['parc_rec_1j'] })
+=======
+    collection = getcollection_contract()
+    resultat = collection.aggregate(pipeline)
+    for r in resultat:
+        data.append({ 'day': day,'usage_type' : 'parc','type_aggregation' : 'segment','segment' : r['_id'],'parc_FT' : r['parc_FT'],'activation' : r['activation'],'reconnexion' : r['reconnexion'],'deconnexion' : r['deconnexion'],'parc_rec_1j' : r['parc_rec_1j'],'parc_rec_30j' : r['parc_rec_30j'],'charged_base' : r['charged_base'] })
+>>>>>>> Stashed changes
     
     insertion_data(getcollection_insertion('tmp_daily_aggregation'),data)
 
