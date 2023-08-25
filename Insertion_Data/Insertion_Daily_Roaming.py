@@ -702,6 +702,7 @@ if __name__=="__main__":
     date = sys.argv[1]
     date_time = datetime.strptime(date,'%Y-%m-%d')
     day = datetime(date_time.year,date_time.month,date_time.day)
+    getcollection_insertion('tmp_daily_aggregation').delete_many({"usage_type" : "roaming",'day' : day})
     Insertion_day(day)
     Insertion_mcc(day)
     Insertion_op_code(day)

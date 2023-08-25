@@ -88,6 +88,7 @@ if __name__ == "__main__":
     date_time = datetime.strptime(date,'%Y-%m-%d')
     day = datetime(date_time.year,date_time.month,date_time.day)
     date_normal = day.year.__str__() + "-"+day.month.__str__()+"-"+day.day.__str__()
+    getcollection_insertion('tmp_daily_aggregation').delete_many({"usage_type" : "e-rc",'day' : day})
     insertion_day(date_normal,day)
     insertion_site_name(date_normal,day)
     
