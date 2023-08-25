@@ -72,12 +72,24 @@ async def retraitement(date : str,type : int):
 
 @app.get('/fichier_log/{date}/{type}')
 async def fichier_log(date:str,type:int):
+    collection = get_aggregation()
     day = Verification.remplacement_date(date)
     usage_type = getusage_type(type)
+    resultats = collection.find({'day' : day,'usage_type' : usage_type,'type_aggregation' : 'day'})
+    count = 0
+    for r in resultats:
+        count +=1
     log = "Impossible de lancer le retraitement car les données n'existe pas"
-    fichier =usage_type+"_"+day.year.__str__()+""+day.month.__str__()+""+day.day.__str__()+".log"
-    f= open(fichier)
-    return {'log' :  [i for i in f]}
+    if count !=0:
+        try:
+            fichier =usage_type+"_"+day.year.__str__()+""+day.month.__str__()+""+day.day.__str__()+".log"
+            f= open(fichier)
+            return {'log' :  [i for i in f]}
+        except:
+            return {'log' : [log]}
+    
+    
+
 
 
 if __name__ == "__main__":
