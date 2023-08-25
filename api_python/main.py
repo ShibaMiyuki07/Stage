@@ -49,28 +49,34 @@ async def dashboard_bundle(type : int):
     collection = get_aggregation()
     usage_type = getusage_type(type)
     resultats = collection.find({'usage_type' : usage_type,'type_aggregation' : 'day'}).sort('day',-1).limit(8).sort('day',1)
-    return {'data' : [Verification.insertion_data(r) for r in resultats]}
+    return {'usage_type' : usage_type,'data' : [Verification.insertion_data(r) for r in resultats]}
 
 
 @app.get('/retraitement/{date}/{type}')
 async def retraitement(date : str,type : int):
-    day = Verification.remplacement_date(date)
     collection = get_aggregation()
     usage_type = getusage_type(type)
-    count = 0
+    day = Verification.remplacement_date(date)
     resultats = collection.find({'day' : day,'usage_type' : usage_type,'type_aggregation' : 'day'})
     for r in resultats:
         count +=1
-    log = "Impossible de lancer le retraitement car les données n'existe pas"
-    '''if count != 0:
-        cmd = ""
-        os.system(cmd)
-        directory = ""
-        fichier_a_lancer = directory+"/"+usage_type+"/main.py"
-        cmd_reverification = "python "+fichier_a_lancer+" "+date
-        os.system(cmd_reverification)'''
-    return log
+    cmd = "python -u "
+    directory = " "
+    commande_a_lancer = cmd+directory+date+" | tee "+usage_type+"_"+day.year.__str__()+""+day.month.__str__()+""+day.day.__str__()+".log"
+    os.system(commande_a_lancer)
+    return 0
+    
+   
+    
 
+@app.get('/fichier_log/{date}/{type}')
+async def fichier_log(date:str,type:int):
+    day = Verification.remplacement_date(date)
+    usage_type = getusage_type(type)
+    log = "Impossible de lancer le retraitement car les données n'existe pas"
+    fichier =usage_type+"_"+day.year.__str__()+""+day.month.__str__()+""+day.day.__str__()+".log"
+    f= open(fichier)
+    return {'log' :  [i for i in f]}
 
 
 if __name__ == "__main__":
