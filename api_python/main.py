@@ -58,6 +58,7 @@ async def retraitement(date : str,type : int):
     usage_type = getusage_type(type)
     day = Verification.remplacement_date(date)
     resultats = collection.find({'day' : day,'usage_type' : usage_type,'type_aggregation' : 'day'})
+    count = 0
     for r in resultats:
         count +=1
     cmd = "python -u "
