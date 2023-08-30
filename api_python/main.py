@@ -22,7 +22,7 @@ async def liste(type : int,page : int):
     collection = getverification_collection()
     usage_type = getusage_type(type)
     nbr_doc = collection.count_documents({"usage_type" : usage_type})
-    resultat = collection.find({"usage_type" : usage_type}).skip((page-1)*5).limit(5).sort('day',-1)
+    resultat = collection.find({"usage_type" : usage_type}).skip((page-1)*7).limit(7).sort('day',-1)
     return {'usage_type' : usage_type,'nbr_doc' : nbr_doc,'data' : [Verification.insertion_data(r) for r in resultat]}
 
 
