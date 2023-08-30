@@ -32,7 +32,7 @@ async def verification_details(date:str,type:int):
     day = Verification.remplacement_date(date)
     usage_type = getusage_type(type)
     resultat = collection.find({"usage_type" : usage_type,'day' : day})
-    return [Verification.insertion_data(r) for r in resultat]
+    return { "usage_type" : usage_type,"day" : day,"data" : [Verification.insertion_data(r) for r in resultat]}
 
 
 @app.get('/dashboard/{type}/{date_debut}/{date_fin}')
@@ -63,30 +63,34 @@ async def retraitement(date : str,type : int):
         count +=1
     cmd = "python -u "
     directory = " "
-    commande_a_lancer = cmd+directory+date+" | tee "+usage_type+"_"+day.year.__str__()+""+day.month.__str__()+""+day.day.__str__()+".log"
-    os.system(commande_a_lancer)
-    return 0
+    try:
+        commande_a_lancer = cmd+directory+date+" | tee "+usage_type+"_"+day.year.__str__()+""+day.month.__str__()+""+day.day.__str__()+".log"
+        os.system(commande_a_lancer)
+        return {"retour" : "Retraitement terminé avec succès veuillez revoir le tableau pour voir le resultat "}
+    except:
+        return {"retour" : "Erreur dans le traitement "}
     
    
     
 
 @app.get('/fichier_log/{date}/{type}')
 async def fichier_log(date:str,type:int):
-    collection = get_aggregation()
+    '''collection = get_aggregation()
     day = Verification.remplacement_date(date)
     usage_type = getusage_type(type)
     resultats = collection.find({'day' : day,'usage_type' : usage_type,'type_aggregation' : 'day'})
     count = 0
     for r in resultats:
-        count +=1
+        count +=1'''
     log = "Impossible de lancer le retraitement car les données n'existe pas"
-    if count !=0:
-        try:
-            fichier =usage_type+"_"+day.year.__str__()+""+day.month.__str__()+""+day.day.__str__()+".log"
-            f= open(fichier)
-            return {'log' :  [i for i in f]}
-        except:
-            return {'log' : [log]}
+    #if count !=0:
+    try:
+        #fichier =usage_type+"_"+day.year.__str__()+""+day.month.__str__()+""+day.day.__str__()+".log"
+        fichier ='log/rattra_daily_20230814.log'
+        f= open(fichier)
+        return {'log' :  [i for i in f]}
+    except:
+        return {'log' : [log]}
     
     
 
