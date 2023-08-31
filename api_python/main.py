@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from Utils import getusage_type
+from Utils import getfichier_log, getusage_type
 from database.Connexion import get_aggregation, getverification_collection
 from Model.Verification import Verification
 import uvicorn
@@ -64,7 +64,7 @@ async def retraitement(date : str,type : int):
     cmd = "python -u "
     directory = " "
     try:
-        commande_a_lancer = cmd+directory+date+" | tee "+usage_type+"_"+day.year.__str__()+""+day.month.__str__()+""+day.day.__str__()+".log"
+        commande_a_lancer = cmd+directory+date+" | tee retraitement_"+getfichier_log(day,usage_type)
         os.system(commande_a_lancer)
         return {"retour" : "Retraitement terminé avec succès veuillez revoir le tableau pour voir le resultat "}
     except:
@@ -93,7 +93,21 @@ async def fichier_log(date:str,type:int):
         return {'log' : [log]}
     
     
+@app.get('/verification/{date}/{type}')
+async def verification(date:str,type : int):
+    day = Verification.remplacement_date(date)
+    usage_type = getusage_type(type)
+    directory_insertion="/Insertion_Data/"
+    cmd_insertion = "python -u "+directory_insertion+"Insertion_daily_"+usage_type+" "+date + "| tee log/verification_"+getfichier_log(day,usage_type)
+    os.system(cmd_insertion)
 
+    directory_verification="/verification/"+usage_type+"/main.py"
+    cmd_verification="python -u "+directory_verification+" "+date+" | cat log/verification_"+getfichier_log(day,usage_type)
+    os.system(cmd_verification)
+
+    fichier ='log/verification_"+getfichier_log(day,usage_type)'
+    f= open(fichier)
+    return {'log' :  [i for i in f]}
 
 
 if __name__ == "__main__":

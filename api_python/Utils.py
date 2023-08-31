@@ -16,3 +16,8 @@ def getusage_type(type):
         usage_type = 'roaming'
 
     return usage_type
+
+
+def getfichier_log(day,usage_type):
+    nom_fichier = usage_type+"_"+day.year.__str__()+""+day.month.__str__()+""+day.day.__str__()+".log"
+    return nom_fichier
