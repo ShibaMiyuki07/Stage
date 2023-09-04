@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from Utils import getfichier_log, getusage_type
+from Utils import getfichier_log, getlocation_verification, getusage_type
 from database.Connexion import get_aggregation, getverification_collection
 from Model.Verification import Verification
 import uvicorn
@@ -61,11 +61,29 @@ async def retraitement(date : str,type : int):
     count = 0
     for r in resultats:
         count +=1
-    cmd = "python -u "
-    directory = " "
+    cmd = "sh "
+    directory = ""
+    a_lancer = ""
+    usage_global =  ['bundle','topup','ec','usage','roaming']
+    if usage_type in usage_global:
+        a_lancer = "usage_restant.sh "
+    elif(usage_type == "e-rc"):
+        a_lancer = "launch_global_erc.sh "
+    else : 
+        a_lancer = "launch_global_"+usage_type+".sh "
+
+    a_lancer = cmd+directory+a_lancer+date
     try:
-        commande_a_lancer = cmd+directory+date+" | tee retraitement_"+getfichier_log(day,usage_type)
+        commande_a_lancer = a_lancer+" | tee retraitement_"+getfichier_log(day,usage_type)
         os.system(commande_a_lancer)
+        a_lancer_verification = ""
+        if(usage_type in usage_global):
+            for i in usage_global:
+                a_lancer_verification = getlocation_verification(i,date)
+                os.system(a_lancer_verification)
+        else : 
+            a_lancer_verification = getlocation_verification(usage_type,date)
+            os.system(a_lancer_verification)
         return {"retour" : "Retraitement terminé avec succès veuillez revoir le tableau pour voir le resultat "}
     except:
         return {"retour" : "Erreur dans le traitement "}
@@ -75,22 +93,21 @@ async def retraitement(date : str,type : int):
 
 @app.get('/fichier_log/{date}/{type}')
 async def fichier_log(date:str,type:int):
-    '''collection = get_aggregation()
+    collection = get_aggregation()
     day = Verification.remplacement_date(date)
     usage_type = getusage_type(type)
     resultats = collection.find({'day' : day,'usage_type' : usage_type,'type_aggregation' : 'day'})
     count = 0
     for r in resultats:
-        count +=1'''
+        count +=1
     log = "Impossible de lancer le retraitement car les données n'existe pas"
-    #if count !=0:
-    try:
-        #fichier =usage_type+"_"+day.year.__str__()+""+day.month.__str__()+""+day.day.__str__()+".log"
-        fichier ='log/rattra_daily_20230814.log'
-        f= open(fichier)
-        return {'log' :  [i for i in f]}
-    except:
-        return {'log' : [log]}
+    if count !=0:
+        try:
+            fichier ="log/verification"+usage_type+"_"+day.year.__str__()+""+day.month.__str__()+""+day.day.__str__()+".log"
+            f= open(fichier)
+            return {'log' :  [i for i in f]}
+        except:
+            return {'log' : [log]}
     
     
 @app.get('/verification/{date}/{type}')
@@ -105,7 +122,7 @@ async def verification(date:str,type : int):
     cmd_verification="python -u "+directory_verification+" "+date+" | cat log/verification_"+getfichier_log(day,usage_type)
     os.system(cmd_verification)
 
-    fichier ='log/verification_"+getfichier_log(day,usage_type)'
+    fichier ='log/verification_'+getfichier_log(day,usage_type)
     f= open(fichier)
     return {'log' :  [i for i in f]}
 
