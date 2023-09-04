@@ -73,7 +73,7 @@ async def retraitement(date : str,type : int):
     else : 
         a_lancer = "launch_global_"+usage_type+".sh "
 
-    a_lancer = cmd+directory+a_lancer+date
+    a_lancer = cmd+directory+a_lancer+date+" "+date
     try:
         commande_a_lancer = a_lancer+" | tee retraitement_"+getfichier_log(day,usage_type)
         os.system(commande_a_lancer)
