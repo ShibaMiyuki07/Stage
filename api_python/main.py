@@ -1,3 +1,4 @@
+from datetime import timedelta
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from Utils import getfichier_log, getlocation_verification, getusage_type
@@ -110,21 +111,31 @@ async def fichier_log(date:str,type:int):
             return {'log' : [log]}
     
     
-@app.get('/verification/{date}/{type}')
-async def verification(date:str,type : int):
-    day = Verification.remplacement_date(date)
-    usage_type = getusage_type(type)
-    directory_insertion="/Insertion_Data/"
-    cmd_insertion = "python -u "+directory_insertion+"Insertion_daily_"+usage_type+" "+date + "| tee log/verification_"+getfichier_log(day,usage_type)
-    os.system(cmd_insertion)
+@app.get('/verification/{date_debut}/{date_fin}/{type}')
+async def verification(date_debut:str,date_fin : str,type : int):
+    day_debut = Verification.remplacement_date(date_debut)
+    day_fin = day_debut
+    if date_fin != None:
+        day_fin = Verification.remplacement_date(date_fin)
+    day_actuelle = day_debut
+    while True:
+        usage_type = getusage_type(type)
+        directory_insertion="/Insertion_Data/"
+        date = day_actuelle.strftime("%Y-%m-%d")
+        cmd_insertion = "python -u "+directory_insertion+"Insertion_daily_"+usage_type+" "+date + "| tee log/verification_"+getfichier_log(day_actuelle,usage_type)
+        os.system(cmd_insertion)
 
-    directory_verification="/verification/"+usage_type+"/main.py"
-    cmd_verification="python -u "+directory_verification+" "+date+" | cat log/verification_"+getfichier_log(day,usage_type)
-    os.system(cmd_verification)
+        directory_verification="/verification/"+usage_type+"/main.py"
+        cmd_verification="python -u "+directory_verification+" "+date+" | cat log/verification_"+getfichier_log(day_actuelle,usage_type)
+        os.system(cmd_verification)
+        if(day_actuelle == day_fin):
+            break
+        day_actuelle = day_actuelle + timedelta(1)
 
-    fichier ='log/verification_'+getfichier_log(day,usage_type)
-    f= open(fichier)
-    return {'log' :  [i for i in f]}
+    if day_debut != day_fin:
+        return {'log' :  'verification de '+date_debut+" a "+date_fin+' termine'}
+    else:
+        return {'log' : "verification de "+date_debut+'termine'}
 
 
 if __name__ == "__main__":
