@@ -1,10 +1,14 @@
+import asyncio
 from datetime import timedelta
-from fastapi import FastAPI
+from fastapi import Body, FastAPI, Response, requests
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from Model.Utilisateur import Utilisateur
 from Utils import getfichier_log, getlocation_verification, getusage_type
-from database.Connexion import get_aggregation, getverification_collection
+from database.Connexion import test_login, get_aggregation, getverification_collection
 from Model.Verification import Verification
 import uvicorn
+import subprocess
 import os
 
 origins = ['*']
@@ -94,7 +98,7 @@ async def retraitement(date : str,type : int):
 
 @app.get('/fichier_log/{date}/{type}')
 async def fichier_log(date:str,type:int):
-    collection = get_aggregation()
+    '''collection = get_aggregation()
     day = Verification.remplacement_date(date)
     usage_type = getusage_type(type)
     resultats = collection.find({'day' : day,'usage_type' : usage_type,'type_aggregation' : 'day'})
@@ -108,7 +112,28 @@ async def fichier_log(date:str,type:int):
             f= open(fichier)
             return {'log' :  [i for i in f]}
         except:
-            return {'log' : [log]}
+            return {'log' : [log]}'''
+     #log_file = 'D:/ITU/test/test.txt'
+    #return FileResponse(log_file)
+    cmd = "python D:/ITU/test/main.py "
+    process = await asyncio.create_subprocess_shell(
+        cmd,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=False
+    )
+
+    while True:
+        stdout_line = await process.stdout.readline()
+        stderr_line = await process.stderr.readline()
+
+        if stdout_line:
+            yield {"data" : stdout_line.split()}
+        if stderr_line:
+            yield {"erreur" : stderr_line.split()}
+
+        if not stdout_line and not stderr_line:
+            break
     
     
 @app.get('/verification/{date_debut}/{date_fin}/{type}')
@@ -136,6 +161,33 @@ async def verification(date_debut:str,date_fin : str,type : int):
         return {'log' :  'verification de '+date_debut+" a "+date_fin+' termine'}
     else:
         return {'log' : "verification de "+date_debut+'termine'}
+
+@app.get('/retraitement_manuel/{date_debut}/{date_fin}/{type}')
+async def retraitement_manuel(date_debut : str,date_fin : str,tpe : int):
+    fichier_a_lancer = ""
+    usage_type = getusage_type(type)
+    day_debut = Verification.remplacement_date(date_debut)
+    day_fin = day_debut
+    if date_fin != None:
+        day_fin = Verification.remplacement_date(date_fin)
+    day_actuelle = day_debut
+    fichier_a_lancer = "/launch_global_"+usage_type+".sh "
+    cmd_retraitement = "sh "+fichier_a_lancer+day_debut+" "+day_fin+" | tee log/retraitement_"+getfichier_log(day_debut,usage_type)+"_"+getfichier_log(day_fin,usage_type)
+    os.system(cmd_retraitement)
+
+@app.get('/log_retraitement/{date_debut}/{date_fin}/{type}')
+async def log_retraitement(date_debut : str,date_fin : str,type : int):
+    day_debut = Verification.remplacement_date(date_debut)
+    usage_type = getusage_type(type)
+    day_fin = Verification.remplacement_date(date_fin)
+    fichier_a_ouvrir = "log/retraitement_"+getfichier_log(day_debut,usage_type)+"_"+getfichier_log(day_fin,usage_type)
+    f= open(fichier_a_ouvrir)
+    return {'log' :  [i for i in f]}
+
+@app.post('/login')
+async def login(user : Utilisateur):
+    existe = test_login(user)
+    return existe
 
 
 if __name__ == "__main__":

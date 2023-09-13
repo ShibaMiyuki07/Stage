@@ -1,4 +1,7 @@
 import pymongo
+import mysql.connector
+
+from Model.Utilisateur import Utilisateur
 
 
 def connexion_base():
@@ -22,3 +25,17 @@ def get_aggregation():
     db = client['cbm']
     collection = db['daily_aggregation']
     return collection
+
+def connexion_sql():
+    connexion = mysql.connector.connect(user='root',password='Manitra',host='127.0.0.1',database="dashboard")
+    return connexion
+
+def test_login(user : Utilisateur):
+    query = "SELECT id FROM utilisateur WHERE username=%s AND PASSWORD =SHA1(%s)"
+    connection = connexion_sql()
+    cursor = connection.cursor()
+    cursor.execute(query,(user.username,user.password))
+    cnt = 0
+    for (id) in cursor:
+        cnt += 1
+    return cnt
