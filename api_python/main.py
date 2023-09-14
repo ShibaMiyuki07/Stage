@@ -1,8 +1,9 @@
 import asyncio
 from datetime import timedelta
-from fastapi import Body, FastAPI, Response, requests
+from typing import Generator
+from fastapi import Body, FastAPI, HTTPException, Response, requests,status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from Model.Utilisateur import Utilisateur
 from Utils import getfichier_log, getlocation_verification, getusage_type
 from database.Connexion import test_login, get_aggregation, getverification_collection
@@ -80,18 +81,18 @@ async def retraitement(date : str,type : int):
     a_lancer = cmd+directory+a_lancer+date+" "+date
     try:
         commande_a_lancer = a_lancer+" | tee retraitement_"+getfichier_log(day,usage_type)
-        os.system(commande_a_lancer)
+        subprocess.Popen(commande_a_lancer)
         a_lancer_verification = ""
         if(usage_type in usage_global):
             for i in usage_global:
                 a_lancer_verification = getlocation_verification(i,date)
-                os.system(a_lancer_verification)
+                subprocess.Popen(a_lancer_verification)
         else : 
             a_lancer_verification = getlocation_verification(usage_type,date)
-            os.system(a_lancer_verification)
-        return {"retour" : "Retraitement terminé avec succès veuillez revoir le tableau pour voir le resultat "}
+            subprocess.Popen(a_lancer_verification)
+        return "Retraitement terminé avec succès veuillez revoir le tableau pour voir le resultat "
     except:
-        return {"retour" : "Erreur dans le traitement "}
+        return "Erreur dans le traitement "
     
    
     
@@ -115,25 +116,22 @@ async def fichier_log(date:str,type:int):
             return {'log' : [log]}'''
      #log_file = 'D:/ITU/test/test.txt'
     #return FileResponse(log_file)
-    cmd = "python D:/ITU/test/main.py "
-    process = await asyncio.create_subprocess_shell(
-        cmd,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=False
-    )
+    fichier = "D:/ITU/Stage/api_python/log/rattra_daily_20230814.log"
+    try:
+        file_contents = get_data_from_file(file_path=fichier)
+        response = StreamingResponse(
+            content=file_contents,
+            status_code=status.HTTP_200_OK,
+            media_type="text/html",
+        )
+        return response
+    except FileNotFoundError:
+        raise HTTPException(detail="File not found.", status_code=status.HTTP_404_NOT_FOUND)
 
-    while True:
-        stdout_line = await process.stdout.readline()
-        stderr_line = await process.stderr.readline()
 
-        if stdout_line:
-            yield {"data" : stdout_line.split()}
-        if stderr_line:
-            yield {"erreur" : stderr_line.split()}
-
-        if not stdout_line and not stderr_line:
-            break
+def get_data_from_file(file_path: str) -> Generator:
+    with open(file=file_path, mode="rb") as file_like:
+        yield file_like.read()
     
     
 @app.get('/verification/{date_debut}/{date_fin}/{type}')
@@ -148,11 +146,11 @@ async def verification(date_debut:str,date_fin : str,type : int):
         directory_insertion="/Insertion_Data/"
         date = day_actuelle.strftime("%Y-%m-%d")
         cmd_insertion = "python -u "+directory_insertion+"Insertion_daily_"+usage_type+" "+date + "| tee log/verification_"+getfichier_log(day_actuelle,usage_type)
-        os.system(cmd_insertion)
+        subprocess.Popen(cmd_insertion)
 
         directory_verification="/verification/"+usage_type+"/main.py"
         cmd_verification="python -u "+directory_verification+" "+date+" | cat log/verification_"+getfichier_log(day_actuelle,usage_type)
-        os.system(cmd_verification)
+        subprocess.Popen(cmd_verification)
         if(day_actuelle == day_fin):
             break
         day_actuelle = day_actuelle + timedelta(1)
@@ -163,17 +161,16 @@ async def verification(date_debut:str,date_fin : str,type : int):
         return {'log' : "verification de "+date_debut+'termine'}
 
 @app.get('/retraitement_manuel/{date_debut}/{date_fin}/{type}')
-async def retraitement_manuel(date_debut : str,date_fin : str,tpe : int):
+async def retraitement_manuel(date_debut : str,date_fin : str,type : int):
     fichier_a_lancer = ""
     usage_type = getusage_type(type)
     day_debut = Verification.remplacement_date(date_debut)
     day_fin = day_debut
     if date_fin != None:
         day_fin = Verification.remplacement_date(date_fin)
-    day_actuelle = day_debut
     fichier_a_lancer = "/launch_global_"+usage_type+".sh "
     cmd_retraitement = "sh "+fichier_a_lancer+day_debut+" "+day_fin+" | tee log/retraitement_"+getfichier_log(day_debut,usage_type)+"_"+getfichier_log(day_fin,usage_type)
-    os.system(cmd_retraitement)
+    subprocess.Popen(cmd_retraitement)
 
 @app.get('/log_retraitement/{date_debut}/{date_fin}/{type}')
 async def log_retraitement(date_debut : str,date_fin : str,type : int):
@@ -181,8 +178,16 @@ async def log_retraitement(date_debut : str,date_fin : str,type : int):
     usage_type = getusage_type(type)
     day_fin = Verification.remplacement_date(date_fin)
     fichier_a_ouvrir = "log/retraitement_"+getfichier_log(day_debut,usage_type)+"_"+getfichier_log(day_fin,usage_type)
-    f= open(fichier_a_ouvrir)
-    return {'log' :  [i for i in f]}
+    try:
+        file_contents = get_data_from_file(file_path=fichier_a_ouvrir)
+        response = StreamingResponse(
+            content=file_contents,
+            status_code=status.HTTP_200_OK,
+            media_type="text/html",
+        )
+        return response
+    except FileNotFoundError:
+        raise HTTPException(detail="File not found.", status_code=status.HTTP_404_NOT_FOUND)
 
 @app.post('/login')
 async def login(user : Utilisateur):

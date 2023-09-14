@@ -23,7 +23,7 @@ def getverification_collection():
 def get_aggregation():
     client = connexion_base()
     db = client['cbm']
-    collection = db['daily_aggregation']
+    collection = db['daily_usage_aggregation']
     return collection
 
 def connexion_sql():
