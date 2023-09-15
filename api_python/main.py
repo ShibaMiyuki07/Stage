@@ -1,16 +1,15 @@
-import asyncio
 from datetime import timedelta
 from typing import Generator
-from fastapi import Body, FastAPI, HTTPException, Response, requests,status
+from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.responses import StreamingResponse
 from Model.Utilisateur import Utilisateur
 from Utils import getfichier_log, getlocation_verification, getusage_type
 from database.Connexion import test_login, get_aggregation, getverification_collection
 from Model.Verification import Verification
 import uvicorn
 import subprocess
-import os
+import datetime
 
 origins = ['*']
 
@@ -23,6 +22,9 @@ app.add_middleware(CORSMiddleware,
                    allow_headers = ['*'])
 
 
+'''
+    Lien pour la liste
+'''
 @app.get('/liste/{type}/{page}')
 async def liste(type : int,page : int):
     collection = getverification_collection()
@@ -32,6 +34,9 @@ async def liste(type : int,page : int):
     return {'usage_type' : usage_type,'nbr_doc' : nbr_doc,'data' : [Verification.insertion_data(r) for r in resultat]}
 
 
+'''
+    Lien pour les détails
+'''
 @app.get('/details/{date}/{type}')
 async def verification_details(date:str,type:int):
     collection = getverification_collection()
@@ -40,6 +45,10 @@ async def verification_details(date:str,type:int):
     resultat = collection.find({"usage_type" : usage_type,'day' : day})
     return { "usage_type" : usage_type,"day" : day,"data" : [Verification.insertion_data(r) for r in resultat]}
 
+
+'''
+    Lien pour le dashboard à une date donnée
+'''
 
 @app.get('/dashboard/{type}/{date_debut}/{date_fin}')
 async def dashboard_bundle(type:int,date_debut : str,date_fin : str):
@@ -50,6 +59,10 @@ async def dashboard_bundle(type:int,date_debut : str,date_fin : str):
     resultat = collection.find({'usage_type' : usage_type,'day' :  { '$and ' : [{{'$gte' : date_debut},{'$lte' : date_fin}}]}}).sort('day',1)
     return [Verification.insertion_data(r) for r in resultat]
 
+
+'''
+    Lien pour le dashboard
+'''
 @app.get('/dashboard/{type}')
 async def dashboard_bundle(type : int):
     collection = get_aggregation()
@@ -58,6 +71,10 @@ async def dashboard_bundle(type : int):
     return {'usage_type' : usage_type,'data' : [Verification.insertion_data(r) for r in resultats]}
 
 
+
+'''
+    Lien pour le retraitement à partir du tableau
+'''
 @app.get('/retraitement/{date}/{type}')
 async def retraitement(date : str,type : int):
     collection = get_aggregation()
@@ -80,49 +97,43 @@ async def retraitement(date : str,type : int):
 
     a_lancer = cmd+directory+a_lancer+date+" "+date
     try:
-        commande_a_lancer = a_lancer+" | tee retraitement_"+getfichier_log(day,usage_type)
-        subprocess.Popen(commande_a_lancer)
+        commande_a_lancer = a_lancer+" > retraitement_"+getfichier_log(day,usage_type)
+        subprocess.run([commande_a_lancer])
         a_lancer_verification = ""
         if(usage_type in usage_global):
             for i in usage_global:
                 a_lancer_verification = getlocation_verification(i,date)
-                subprocess.Popen(a_lancer_verification)
+                subprocess.run([a_lancer_verification])
         else : 
             a_lancer_verification = getlocation_verification(usage_type,date)
-            subprocess.Popen(a_lancer_verification)
+            subprocess.run([a_lancer_verification])
         return "Retraitement terminé avec succès veuillez revoir le tableau pour voir le resultat "
     except:
         return "Erreur dans le traitement "
     
    
     
-
+'''
+    Lien pour le log du retraitement à partir du tableau
+'''
 @app.get('/fichier_log/{date}/{type}')
 async def fichier_log(date:str,type:int):
-    '''collection = get_aggregation()
+    collection = get_aggregation()
     day = Verification.remplacement_date(date)
     usage_type = getusage_type(type)
     resultats = collection.find({'day' : day,'usage_type' : usage_type,'type_aggregation' : 'day'})
     count = 0
     for r in resultats:
         count +=1
-    log = "Impossible de lancer le retraitement car les données n'existe pas"
-    if count !=0:
-        try:
-            fichier ="log/verification"+usage_type+"_"+day.year.__str__()+""+day.month.__str__()+""+day.day.__str__()+".log"
-            f= open(fichier)
-            return {'log' :  [i for i in f]}
-        except:
-            return {'log' : [log]}'''
-     #log_file = 'D:/ITU/test/test.txt'
-    #return FileResponse(log_file)
-    fichier = "D:/ITU/Stage/api_python/log/rattra_daily_20230814.log"
+    if count == 0:
+        raise HTTPException(detail="Data not found.", status_code=status.HTTP_404_NOT_FOUND)
+    fichier = "retraitement_"+getfichier_log(day,usage_type)
     try:
         file_contents = get_data_from_file(file_path=fichier)
         response = StreamingResponse(
             content=file_contents,
             status_code=status.HTTP_200_OK,
-            media_type="text/html",
+            media_type="text/plain",
         )
         return response
     except FileNotFoundError:
@@ -134,50 +145,85 @@ def get_data_from_file(file_path: str) -> Generator:
         yield file_like.read()
     
     
+'''
+    Lien pour la verification manuel
+'''
 @app.get('/verification/{date_debut}/{date_fin}/{type}')
 async def verification(date_debut:str,date_fin : str,type : int):
     day_debut = Verification.remplacement_date(date_debut)
-    day_fin = day_debut
-    if date_fin != None:
-        day_fin = Verification.remplacement_date(date_fin)
+    day_fin = Verification.remplacement_date(date_fin)
+
+    if day_fin < day_debut:
+        day_inter = day_debut
+        day_debut = day_fin
+        day_fin = day_inter
     day_actuelle = day_debut
-    while True:
+    if ((day_debut.day == datetime.datetime.today().day and day_debut.month == datetime.datetime.today().month and day_debut.year== datetime.datetime.today().year ) 
+        or (day_fin.day == datetime.datetime.today().day and day_fin.month == datetime.datetime.today().month and day_fin.year== datetime.datetime.today().year )):
+        return {"error" : "Les données durant cette periode ne sont pas encore initialisés"}
+    
+
+    #boucle pour lancer la vérification durant la periode donnee
+    '''while True:
         usage_type = getusage_type(type)
         directory_insertion="/Insertion_Data/"
         date = day_actuelle.strftime("%Y-%m-%d")
-        cmd_insertion = "python -u "+directory_insertion+"Insertion_daily_"+usage_type+" "+date + "| tee log/verification_"+getfichier_log(day_actuelle,usage_type)
-        subprocess.Popen(cmd_insertion)
+        cmd_insertion = "python -u "+directory_insertion+"Insertion_daily_"+usage_type+" "+date + "> log/verification_"+getfichier_log(day_actuelle,usage_type)
+        subprocess.run([cmd_insertion])
 
         directory_verification="/verification/"+usage_type+"/main.py"
-        cmd_verification="python -u "+directory_verification+" "+date+" | cat log/verification_"+getfichier_log(day_actuelle,usage_type)
-        subprocess.Popen(cmd_verification)
+        cmd_verification="python -u "+directory_verification+" "+date+" >> log/verification_"+getfichier_log(day_actuelle,usage_type)
+        subprocess.run([cmd_verification])
         if(day_actuelle == day_fin):
             break
-        day_actuelle = day_actuelle + timedelta(1)
+        day_actuelle = day_actuelle + timedelta(1)'''
 
     if day_debut != day_fin:
-        return {'log' :  'verification de '+date_debut+" a "+date_fin+' termine'}
+        return {'log' :  'Vérification de '+date_debut+" à "+date_fin+' términé'}
     else:
-        return {'log' : "verification de "+date_debut+'termine'}
+        return {'log' : "Vérification de "+date_debut+' términé'}
 
+
+'''
+    Lien pour le retraitement manuel
+'''
 @app.get('/retraitement_manuel/{date_debut}/{date_fin}/{type}')
 async def retraitement_manuel(date_debut : str,date_fin : str,type : int):
     fichier_a_lancer = ""
     usage_type = getusage_type(type)
-    day_debut = Verification.remplacement_date(date_debut)
-    day_fin = day_debut
-    if date_fin != None:
-        day_fin = Verification.remplacement_date(date_fin)
-    fichier_a_lancer = "/launch_global_"+usage_type+".sh "
-    cmd_retraitement = "sh "+fichier_a_lancer+day_debut+" "+day_fin+" | tee log/retraitement_"+getfichier_log(day_debut,usage_type)+"_"+getfichier_log(day_fin,usage_type)
-    subprocess.Popen(cmd_retraitement)
 
+    #Remplacement des dates en datetime
+    day_debut = Verification.remplacement_date(date_debut)
+    day_fin = Verification.remplacement_date(date_fin)
+    if ((day_debut.day == datetime.datetime.today().day and day_debut.month == datetime.datetime.today().month and day_debut.year== datetime.datetime.today().year ) 
+        or (day_fin.day == datetime.datetime.today().day and day_fin.month == datetime.datetime.today().month and day_fin.year== datetime.datetime.today().year )):
+        return {"error" : "Les données durant cette periode ne sont pas encore initialisés"}
+
+    #Recherche des scripts shell à lancer 
+    usage_global =  ['bundle','topup','ec','usage','roaming']
+    if usage_type in usage_global:
+        a_lancer = "usage_restant.sh "
+    elif(usage_type == "e-rc"):
+        a_lancer = "launch_global_erc.sh "
+    else : 
+        a_lancer = "launch_global_"+usage_type+".sh "
+    fichier_a_lancer = "/"+a_lancer
+    cmd_retraitement = "sh "+fichier_a_lancer+day_debut+" "+day_fin+" > log/retraitement_"+getfichier_log(day_debut,usage_type)+"_"+getfichier_log(day_fin,usage_type)
+    subprocess.run([cmd_retraitement])
+    return {'log' : 'Les données de '+date_debut+" a "+date_fin+" ont été retraités et vérifiés"}
+
+
+''''
+    Lien pour le log du retraitement manuel
+'''
 @app.get('/log_retraitement/{date_debut}/{date_fin}/{type}')
 async def log_retraitement(date_debut : str,date_fin : str,type : int):
     day_debut = Verification.remplacement_date(date_debut)
     usage_type = getusage_type(type)
     day_fin = Verification.remplacement_date(date_fin)
     fichier_a_ouvrir = "log/retraitement_"+getfichier_log(day_debut,usage_type)+"_"+getfichier_log(day_fin,usage_type)
+    
+    #Ouverture du fichier et envoi de celui-ci à l'utilisateur
     try:
         file_contents = get_data_from_file(file_path=fichier_a_ouvrir)
         response = StreamingResponse(
@@ -189,6 +235,10 @@ async def log_retraitement(date_debut : str,date_fin : str,type : int):
     except FileNotFoundError:
         raise HTTPException(detail="File not found.", status_code=status.HTTP_404_NOT_FOUND)
 
+
+'''
+    Lien pour la connexion de l'utilisateur
+'''
 @app.post('/login')
 async def login(user : Utilisateur):
     existe = test_login(user)
