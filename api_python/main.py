@@ -158,8 +158,8 @@ async def verification(date_debut:str,date_fin : str,type : int):
         day_debut = day_fin
         day_fin = day_inter
     day_actuelle = day_debut
-    if ((day_debut.day == datetime.datetime.today().day and day_debut.month == datetime.datetime.today().month and day_debut.year== datetime.datetime.today().year ) 
-        or (day_fin.day == datetime.datetime.today().day and day_fin.month == datetime.datetime.today().month and day_fin.year== datetime.datetime.today().year )):
+    if ((day_debut.day >= datetime.datetime.today().day and day_debut.month >= datetime.datetime.today().month and day_debut.year>= datetime.datetime.today().year ) 
+        or (day_fin.day >= datetime.datetime.today().day and day_fin.month >= datetime.datetime.today().month and day_fin.year>= datetime.datetime.today().year )):
         return {"error" : "Les données durant cette periode ne sont pas encore initialisés"}
     
 
