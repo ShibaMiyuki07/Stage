@@ -21,6 +21,19 @@ app.add_middleware(CORSMiddleware,
                    allow_methods=['*'],
                    allow_headers = ['*'])
 
+liste_retraitement_en_cours = {}
+liste_retraitement_en_cours['roaming'] = {}
+liste_retraitement_en_cours['usage'] = {}
+liste_retraitement_en_cours['topup'] = {}
+liste_retraitement_en_cours['bundle'] = {}
+liste_retraitement_en_cours['e-rc'] = {}
+liste_retraitement_en_cours['ec'] = {}
+liste_retraitement_en_cours['nomad'] = {}
+liste_retraitement_en_cours['parc'] = {}
+liste_retraitement_en_cours['om'] = {}
+
+liste_retraitement_en_cours['roaming'][datetime.datetime(2023,1,11)] = 1
+
 
 '''
     Lien pour la liste
@@ -31,7 +44,7 @@ async def liste(type : int,page : int):
     usage_type = getusage_type(type)
     nbr_doc = collection.count_documents({"usage_type" : usage_type})
     resultat = collection.find({"usage_type" : usage_type}).skip((page-1)*7).limit(7).sort('day',-1)
-    return {'usage_type' : usage_type,'nbr_doc' : nbr_doc,'data' : [Verification.insertion_data(r) for r in resultat]}
+    return {'usage_type' : usage_type,'nbr_doc' : nbr_doc,'data' : [Verification.insertion_data(r,liste_retraitement_en_cours) for r in resultat]}
 
 
 '''
@@ -43,7 +56,7 @@ async def verification_details(date:str,type:int):
     day = Verification.remplacement_date(date)
     usage_type = getusage_type(type)
     resultat = collection.find({"usage_type" : usage_type,'day' : day})
-    return { "usage_type" : usage_type,"day" : day,"data" : [Verification.insertion_data(r) for r in resultat]}
+    return { "usage_type" : usage_type,"day" : day,"data" : [Verification.insertion_data(r,liste_retraitement_en_cours) for r in resultat]}
 
 
 '''
@@ -68,7 +81,7 @@ async def dashboard_bundle(type : int):
     collection = get_aggregation()
     usage_type = getusage_type(type)
     resultats = collection.find({'usage_type' : usage_type,'type_aggregation' : 'day'}).sort('day',-1).limit(8).sort('day',1)
-    return {'usage_type' : usage_type,'data' : [Verification.insertion_data(r) for r in resultats]}
+    return {'usage_type' : usage_type,'data' : [Verification.insertion_data(r,liste_retraitement_en_cours) for r in resultats]}
 
 
 
@@ -84,6 +97,8 @@ async def retraitement(date : str,type : int):
     count = 0
     for r in resultats:
         count +=1
+    if count == 0:
+        return "Erreur données pas encore vérifiés"
     cmd = "sh "
     directory = ""
     a_lancer = ""
@@ -97,6 +112,7 @@ async def retraitement(date : str,type : int):
 
     a_lancer = cmd+directory+a_lancer+date+" "+date
     try:
+        liste_retraitement_en_cours[usage_type][day] = 1
         commande_a_lancer = a_lancer+" > retraitement_"+getfichier_log(day,usage_type)
         subprocess.run([commande_a_lancer])
         a_lancer_verification = ""
@@ -107,6 +123,7 @@ async def retraitement(date : str,type : int):
         else : 
             a_lancer_verification = getlocation_verification(usage_type,date)
             subprocess.run([a_lancer_verification])
+        del liste_retraitement_en_cours[usage_type][day]
         return "Retraitement terminé avec succès veuillez revoir le tableau pour voir le resultat "
     except:
         return "Erreur dans le traitement "
