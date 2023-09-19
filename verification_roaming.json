@@ -1,0 +1,387 @@
+[{
+  "_id": {
+    "$oid": "64dc7115b77aa9a33d003bce"
+  },
+  "erreur_day_cnt": 0,
+  "day": {
+    "$date": "2023-01-11T00:00:00.000Z"
+  },
+  "usage_type": "roaming",
+  "erreur_day": [],
+  "erreur_roaming_mcc": [],
+  "erreur_roaming_mcc_cnt": 0,
+  "erreur_op_code": [],
+  "erreur_op_code_cnt": 0,
+  "erreur_market_cnt": 0,
+  "erreur_market": [],
+  "erreur_billing_type": [],
+  "erreur_billing_type_cnt": 0,
+  "erreur_pp_name_cnt": 0,
+  "erreur_pp_name": [],
+  "erreur_site_name": [
+    {
+      "data": {
+        "voice_o_main_vol": 46,
+        "data_main_vol": 0,
+        "voice_o_cnt": 6,
+        "data_amnt": 0,
+        "sms_o_main_cnt": 0,
+        "data_bndl_vol": 0,
+        "sms_o_amnt": 0,
+        "voice_o_bndl_vol": 414,
+        "sms_o_bndl_cnt": 8,
+        "voice_o_amnt": 8800
+      },
+      "description": -1,
+      "site_name": "Vondrozo"
+    },
+    {
+      "data": {
+        "voice_o_main_vol": 46,
+        "data_main_vol": 0,
+        "voice_o_cnt": 6,
+        "data_amnt": 0,
+        "sms_o_main_cnt": 0,
+        "data_bndl_vol": 0,
+        "sms_o_amnt": 0,
+        "voice_o_bndl_vol": 414,
+        "sms_o_bndl_cnt": 8,
+        "voice_o_amnt": 8800
+      },
+      "description": 1,
+      "site_name": "MahaboAnkilivalo"
+    }
+  ],
+  "erreur_site_name_cnt": 2,
+  "erreur_network_name": [],
+  "erreur_network_name_cnt": 0,
+  "erreur_segment": [],
+  "erreur_segment_cnt": 0
+},
+{
+  "_id": {
+    "$oid": "64dc7217ddf51c52613bd543"
+  },
+  "usage_type": "roaming",
+  "erreur_day_cnt": 0,
+  "erreur_day": [],
+  "day": {
+    "$date": "2023-01-12T00:00:00.000Z"
+  },
+  "erreur_roaming_mcc": [],
+  "erreur_roaming_mcc_cnt": 0,
+  "erreur_op_code_cnt": 0,
+  "erreur_op_code": [],
+  "erreur_market_cnt": 0,
+  "erreur_market": [],
+  "erreur_billing_type_cnt": 0,
+  "erreur_billing_type": [],
+  "erreur_pp_name": [],
+  "erreur_pp_name_cnt": 0,
+  "erreur_site_name": [
+    {
+      "description": -1,
+      "data": {
+        "voice_o_main_vol": 0,
+        "sms_o_bndl_cnt": 0,
+        "data_amnt": 0,
+        "sms_o_main_cnt": 1,
+        "data_bndl_vol": 0,
+        "sms_o_amnt": 1000,
+        "voice_o_cnt": 0,
+        "voice_o_bndl_vol": 0,
+        "data_main_vol": 0,
+        "voice_o_amnt": 0
+      },
+      "site_name": "Vondrozo"
+    },
+    {
+      "description": 1,
+      "data": {
+        "voice_o_main_vol": 0,
+        "sms_o_bndl_cnt": 0,
+        "data_amnt": 0,
+        "sms_o_main_cnt": 1,
+        "data_bndl_vol": 0,
+        "sms_o_amnt": 1000,
+        "voice_o_cnt": 0,
+        "voice_o_bndl_vol": 0,
+        "data_main_vol": 0,
+        "voice_o_amnt": 0
+      },
+      "site_name": "MahaboAnkilivalo"
+    }
+  ],
+  "erreur_site_name_cnt": 2,
+  "erreur_network_name": [],
+  "erreur_network_name_cnt": 0,
+  "erreur_segment": [],
+  "erreur_segment_cnt": 0
+},
+{
+  "_id": {
+    "$oid": "64dc72bcb5108053ecc2e5c6"
+  },
+  "usage_type": "roaming",
+  "day": {
+    "$date": "2023-01-13T00:00:00.000Z"
+  },
+  "erreur_day": [],
+  "erreur_day_cnt": 0,
+  "erreur_roaming_mcc": [],
+  "erreur_roaming_mcc_cnt": 0,
+  "erreur_op_code": [],
+  "erreur_op_code_cnt": 0,
+  "erreur_market": [],
+  "erreur_market_cnt": 0,
+  "erreur_billing_type": [],
+  "erreur_billing_type_cnt": 0,
+  "erreur_pp_name": [],
+  "erreur_pp_name_cnt": 0,
+  "erreur_site_name": [
+    {
+      "data": {
+        "voice_o_main_vol": 0,
+        "voice_o_cnt": 0,
+        "data_bndl_vol": 0,
+        "data_main_vol": 0,
+        "sms_o_amnt": 1000,
+        "sms_o_bndl_cnt": 0,
+        "voice_o_amnt": 0,
+        "sms_o_main_cnt": 1,
+        "data_amnt": 0,
+        "voice_o_bndl_vol": 0
+      },
+      "site_name": "Vondrozo",
+      "description": -1
+    },
+    {
+      "data": {
+        "data_main_vol": 0,
+        "voice_o_main_vol": 0,
+        "voice_o_cnt": 0,
+        "data_bndl_vol": 0,
+        "sms_o_amnt": 1000,
+        "voice_o_bndl_vol": 0,
+        "voice_o_amnt": 0,
+        "sms_o_main_cnt": 1,
+        "data_amnt": 0,
+        "sms_o_bndl_cnt": 0
+      },
+      "site_name": "MahaboAnkilivalo",
+      "description": 1
+    }
+  ],
+  "erreur_site_name_cnt": 2,
+  "erreur_network_name": [],
+  "erreur_network_name_cnt": 0,
+  "erreur_segment": [],
+  "erreur_segment_cnt": 0
+},
+{
+  "_id": {
+    "$oid": "64dc7858693fc84f8060a630"
+  },
+  "usage_type": "roaming",
+  "day": {
+    "$date": "2023-01-14T00:00:00.000Z"
+  },
+  "erreur_day": [],
+  "erreur_day_cnt": 0,
+  "erreur_roaming_mcc_cnt": 0,
+  "erreur_roaming_mcc": [],
+  "erreur_op_code": [],
+  "erreur_op_code_cnt": 0,
+  "erreur_market": [],
+  "erreur_market_cnt": 0,
+  "erreur_billing_type_cnt": 0,
+  "erreur_billing_type": [],
+  "erreur_pp_name": [],
+  "erreur_pp_name_cnt": 0,
+  "erreur_site_name": [
+    {
+      "data": {
+        "data_main_vol": 0,
+        "voice_o_main_vol": 70,
+        "data_amnt": 0,
+        "sms_o_main_cnt": 0,
+        "voice_o_cnt": 2,
+        "voice_o_bndl_vol": 0,
+        "data_bndl_vol": 0,
+        "sms_o_amnt": 0,
+        "sms_o_bndl_cnt": 0,
+        "voice_o_amnt": 9384.64001464844
+      },
+      "description": -1,
+      "site_name": "Vondrozo"
+    },
+    {
+      "data": {
+        "data_main_vol": 0,
+        "voice_o_bndl_vol": 0,
+        "sms_o_main_cnt": 0,
+        "data_amnt": 0,
+        "voice_o_cnt": 2,
+        "voice_o_main_vol": 70,
+        "sms_o_amnt": 0,
+        "data_bndl_vol": 0,
+        "sms_o_bndl_cnt": 0,
+        "voice_o_amnt": 9384.640014648438
+      },
+      "description": 1,
+      "site_name": "MahaboAnkilivalo"
+    }
+  ],
+  "erreur_site_name_cnt": 2,
+  "erreur_network_name": [],
+  "erreur_network_name_cnt": 0,
+  "erreur_segment_cnt": 0,
+  "erreur_segment": []
+},
+{
+  "_id": {
+    "$oid": "64dc79765efa9d83ef4afcbb"
+  },
+  "erreur_day_cnt": 0,
+  "day": {
+    "$date": "2023-01-15T00:00:00.000Z"
+  },
+  "erreur_day": [],
+  "usage_type": "roaming",
+  "erreur_roaming_mcc_cnt": 0,
+  "erreur_roaming_mcc": [],
+  "erreur_op_code_cnt": 0,
+  "erreur_op_code": [],
+  "erreur_market_cnt": 0,
+  "erreur_market": [],
+  "erreur_billing_type_cnt": 0,
+  "erreur_billing_type": [],
+  "erreur_pp_name": [],
+  "erreur_pp_name_cnt": 0,
+  "erreur_site_name": [],
+  "erreur_site_name_cnt": 0,
+  "erreur_network_name_cnt": 0,
+  "erreur_network_name": [],
+  "erreur_segment_cnt": 0,
+  "erreur_segment": []
+},
+{
+  "_id": {
+    "$oid": "64dc7a139e6c760ecb502e97"
+  },
+  "day": {
+    "$date": "2023-01-16T00:00:00.000Z"
+  },
+  "usage_type": "roaming",
+  "erreur_day_cnt": 0,
+  "erreur_day": [],
+  "erreur_roaming_mcc_cnt": 0,
+  "erreur_roaming_mcc": [],
+  "erreur_op_code": [],
+  "erreur_op_code_cnt": 0,
+  "erreur_market": [],
+  "erreur_market_cnt": 0,
+  "erreur_billing_type_cnt": 0,
+  "erreur_billing_type": [],
+  "erreur_pp_name_cnt": 0,
+  "erreur_pp_name": [],
+  "erreur_site_name_cnt": 2,
+  "erreur_site_name": [
+    {
+      "site_name": "TanaAndrohibeCM",
+      "data": {
+        "voice_o_cnt": 3,
+        "sms_o_amnt": 5000,
+        "sms_o_bndl_cnt": 0,
+        "data_bndl_vol": 0,
+        "voice_o_amnt": 34414.11999511719,
+        "sms_o_main_cnt": 5,
+        "data_amnt": 0,
+        "voice_o_main_vol": 236,
+        "voice_o_bndl_vol": 0,
+        "data_main_vol": 0
+      },
+      "description": -1
+    },
+    {
+      "site_name": "MahaboAnkilivalo",
+      "data": {
+        "voice_o_cnt": 3,
+        "sms_o_amnt": 5000,
+        "sms_o_bndl_cnt": 0,
+        "data_bndl_vol": 0,
+        "voice_o_amnt": 34414.11999511719,
+        "sms_o_main_cnt": 5,
+        "data_amnt": 0,
+        "voice_o_main_vol": 236,
+        "voice_o_bndl_vol": 0,
+        "data_main_vol": 0
+      },
+      "description": 1
+    }
+  ],
+  "erreur_network_name": [],
+  "erreur_network_name_cnt": 0,
+  "erreur_segment": [],
+  "erreur_segment_cnt": 0
+},
+{
+  "_id": {
+    "$oid": "64dc7da15623ec8857a121d3"
+  },
+  "usage_type": "roaming",
+  "day": {
+    "$date": "2023-01-17T00:00:00.000Z"
+  },
+  "erreur_day_cnt": 0,
+  "erreur_day": [],
+  "erreur_roaming_mcc_cnt": 0,
+  "erreur_roaming_mcc": [],
+  "erreur_op_code_cnt": 0,
+  "erreur_op_code": [],
+  "erreur_market": [],
+  "erreur_market_cnt": 0,
+  "erreur_billing_type_cnt": 0,
+  "erreur_billing_type": [],
+  "erreur_pp_name": [],
+  "erreur_pp_name_cnt": 0,
+  "erreur_site_name": [
+    {
+      "data": {
+        "data_bndl_vol": 0,
+        "data_main_vol": 0,
+        "voice_o_bndl_vol": 0,
+        "sms_o_bndl_cnt": 0,
+        "data_amnt": 0,
+        "voice_o_amnt": 35200,
+        "voice_o_main_vol": 195,
+        "sms_o_amnt": 1000,
+        "sms_o_main_cnt": 1,
+        "voice_o_cnt": 1
+      },
+      "description": -1,
+      "site_name": "TanaAndrohibeCM"
+    },
+    {
+      "data": {
+        "data_bndl_vol": 0,
+        "data_amnt": 0,
+        "voice_o_bndl_vol": 0,
+        "voice_o_main_vol": 195,
+        "data_main_vol": 0,
+        "voice_o_amnt": 35200,
+        "sms_o_bndl_cnt": 0,
+        "sms_o_amnt": 1000,
+        "sms_o_main_cnt": 1,
+        "voice_o_cnt": 1
+      },
+      "description": 1,
+      "site_name": "MahaboAnkilivalo"
+    }
+  ],
+  "erreur_site_name_cnt": 2,
+  "erreur_network_name": [],
+  "erreur_network_name_cnt": 0,
+  "erreur_segment_cnt": 0,
+  "erreur_segment": []
+}]

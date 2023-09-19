@@ -1,106 +1,72 @@
-<div>
-    <h1>Bundle</h1>
-    <table border="1">
-        <tr>
-            <td>Date</td>
-        </tr>
-        <tr *ngFor="let bundle of bundlelist">
-            <td> {{ bundle.day | date : "dd-MM-YYYY"}}</td>
-            <td *ngIf="bundle.validation == 1">
-                <button>Retraitement</button>
-            </td>
-            <td *ngIf="bundle.validation == 1">
-                Voir details
-            </td>
-            <td *ngIf="bundle.validation == 0">
-                OK
-            </td>
-        </tr>
-        
-    </table>
-</div>
-<div>
-    <h1>Topup</h1>
-    <table border="1">
-        <tr>
-            <td>Date</td>
-        </tr>
-        <tr *ngFor="let topup of topuplist">
-            <td> {{ topup.day | date : "dd-MM-YYYY"}}</td>
-            <td *ngIf="topup.validation == 1">
-                <button>Retraitement</button>
-            </td>
-            <td *ngIf="topup.validation == 1">
-                Voir details
-            </td>
-            <td *ngIf="topup.validation == 0">
-                OK
-            </td>
-        </tr>
-        
-    </table>
-</div>
-<div>
-    <h1>Orange Money</h1>
-    <table border="1">
-        <tr>
-            <td>Date</td>
-        </tr>
-        <tr *ngFor="let om of omlist">
-            <td> {{ om.day | date : "dd-MM-YYYY"}}</td>
-            <td *ngIf="om.validation == 1">
-                <button>Retraitement</button>
-            </td>
-            <td *ngIf="om.validation == 1">
-                Voir details
-            </td>
-            <td *ngIf="om.validation == 0">
-                OK
-            </td>
-        </tr>
-        
-    </table>
-</div>
-<div>
-    <h1>Usage</h1>
-    <table border="1">
-        <tr>
-            <td>Date</td>
-        </tr>
-        <tr *ngFor="let usage of usagelist">
-            <td> {{ usage.day | date : "dd-MM-YYYY" }}</td>
-            <td *ngIf="usage.validation == 1">
-                <button>Retraitement</button>
-            </td>
-            <td *ngIf="usage.validation == 1">
-                Voir details
-            </td>
-            <td *ngIf="usage.validation == 0">
-                OK
-            </td>
-        </tr>
-        
-    </table>
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="rounded h-100 p-4">
+                <h4 style="color: red;" align="center">{{ erreur }}</h4>
+                <h4 class="mb-4" style="text-transform: uppercase; text-align: center;">{{ liste.usage_type }}</h4>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr align="center">
+                                <th scope="col">Date</th>
+                                <th scope="col">Etat</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let list of liste.data" align="center">
+                                
+                                <td style="padding-top: 10px;" *ngIf="list.validation == 0"> {{ list.day | date : "dd-MM-YYYY"}}</td>
+                                <td style="padding-top: 10px;color: rgb(0, 34, 255);" *ngIf="list.validation == 0">OK</td>
+                                <td *ngIf="list.validation == 0"></td>
+                                <td *ngIf="list.validation == 0"></td>
+                                <td *ngIf="list.validation == 0"></td>
+
+
+                                <td style="padding-top: 25px;" *ngIf="list.validation == 1"> {{ list.day | date : "dd-MM-YYYY"}}</td>
+                                <td style="padding-top: 25px;color: red;" *ngIf="list.validation == 1 && list.execution != 1">NOK</td>
+                                <td *ngIf="list.validation == 1 && list.execution != 1"><a [routerLink]="['/retraitement']" [queryParams]="{day : list.day | date : 'YYYY-MM-dd',type:type}"><button type="button" class="btn btn-outline-danger m-2">Retraitement</button></a></td>
+                                <td *ngIf="list.validation == 1 && list.execution != 1"><a><button type="button" class="btn btn-outline-primary m-2" (click)="open(mymodal,list.day ,type)">Log</button></a></td>
+                                <td *ngIf="list.validation == 1&& list.execution != 1"><a [routerLink]="['/details']" [queryParams]="{day : list.day | date : 'YYYY-MM-dd',type:type}"><button type="button" class="btn btn-outline-warning m-2">Details</button></a></td> 
+
+                                <td style="padding-top: 25px;color: grey;" *ngIf="list.validation == 1 && list.execution == 1">En cours...</td>
+                                <td *ngIf="list.validation == 1 && list.execution == 1"><a><button type="button" class="btn btn-outline-secondary m-2" disabled>Retraitement en cours</button></a></td>
+                                <td *ngIf="list.validation == 1 && list.execution == 1"><a><button type="button" class="btn btn-outline-primary m-2" (click)="open(mymodal,list.day ,type)">Log</button></a></td>
+                                <td *ngIf="list.validation == 1 && list.execution == 1"><a [routerLink]="['/details']" [queryParams]="{day : list.day | date : 'YYYY-MM-dd'  ,type:type}"><button type="button" class="btn btn-outline-warning m-2">Details</button></a></td>                        
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div align="center" style="display: inline;">
+            <div>{{ page }}</div>
+            <div style="display: inline;" *ngIf="page != 1" (click) = "change_page(-1)"><button class="btn btn-outline-primary m-2" >Previous</button></div>
+            <div style="display: inline;" *ngIf="check_next() == 1"><button class="btn btn-outline-primary m-2" (click) = "change_page(1)">Next</button></div>
+        </div>
+    </div>
 </div>
 
-<div>
-    <h1>Ec</h1>
-    <table border="1">
-        <tr>
-            <td>Date</td>
-        </tr>
-        <tr *ngFor="let ec of eclist">
-            <td> {{ ec.day | date : "dd-MM-YYYY" }}</td>
-            <td *ngIf="ec.validation == 1">
-                <button>Retraitement</button>
-            </td>
-            <td *ngIf="ec.validation == 1">
-                Voir details
-            </td>
-            <td *ngIf="ec.validation == 0">
-                OK
-            </td>
-        </tr>
-        
-    </table>
-</div>
+<ng-template #mymodal let-modal>  
+    <div class="modal-header">  
+      <h4 class="modal-title" id="modal-basic-title">Bootstrap Modal</h4>  
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">  
+        <span aria-hidden="true">?</span>  
+      </button>  
+    </div>  
+    <div class="modal-body">  
+        <div class="log-window" *ngIf="erreur_log == ''">
+            <div class="log-message" >
+                <pre>{{log}}</pre>
+            </div>
+        </div> 
+        <div style="text-transform: uppercase;color: red;" *ngIf="erreur_log!=''" align="center">
+            {{erreur_log}}
+        </div>
+    </div>  
+    <div class="modal-footer">  
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>  
+    </div>  
+  </ng-template>  

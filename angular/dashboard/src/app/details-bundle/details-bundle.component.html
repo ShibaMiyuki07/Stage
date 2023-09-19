@@ -1,0 +1,42 @@
+<div style="background-color: #F3F6F9;">
+    <div  style="padding-top: 30px;" align="center">
+        <h3>Details de <strong style="text-transform: uppercase;color: red;">{{ bundleDetails.usage_type }} </strong>du {{ bundleDetails.day | date : "dd-MM-YYYY" }}</h3>
+    </div>
+    <div *ngFor="let details of bundleDetails.data" style="color : white;">
+        <div *ngFor="let data of details | keyvalue" >
+            <div *ngIf='(data.key+"").includes("_cnt")' >
+                <details *ngIf="details[data.key+''] != 0">
+                    <summary>Liste des {{ (data.key+'').replace('_cnt','').replace('erreur_','') }} avec erreur</summary>
+                    <ul style="padding-top: 5px;">
+                        <li *ngFor="let liste of details[(data.key+'').replace('_cnt','')]">
+                            <strong style="color: black;">{{ liste[(data.key+'').replace('_cnt','').replace('erreur_','')]  }}</strong>
+                            <div *ngIf="liste.description == 0">
+                                <em style="color:rgb(149, 163, 191)">Données non egales dans daily usage et global daily usage <strong style="color: red;">(global_daily_usage - daily_usage)</strong></em>
+                                <div *ngFor="let data of liste.data" style="margin-left: 20px;">
+                                    <strong>{{ data.nom }} </strong>: {{ (data.ecart | number:'1.3-3')?.replaceAll(',',' ') }}
+                                </div>
+                            </div>
+                            <div *ngIf="liste.description == 1">
+                                <em style="color:rgb(99, 105, 191)">Données inexistantes dans global daily usage</em>
+                                <div *ngFor="let key of liste.data | keyvalue" style="margin-left: 20px;">
+                                    &nbsp;<strong>{{ key.key }}</strong>: {{ (liste.data[key.key+""] | number:'1.3-3')?.replaceAll(',',' ') }} 
+                                </div>
+                            </div>
+                            <div *ngIf="liste.description == -1" style="margin-left: 20px;">
+                                <em style="color:rgb(242,5,116)">Données inexistantes dans daily usage</em>
+                                <div *ngFor="let key of liste.data | keyvalue">
+                                    &nbsp; <strong>  {{ key.key }}</strong>: {{ (liste.data[key.key+""] | number:'1.3-3')?.replaceAll(',',' ')}} 
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </details>
+            </div>
+        </div>
+    </div>
+    <div style="background-color: #F3F6F9;" align="center">
+        <a href="/liste_retraitement?type={{type}}">
+            <button class="btn btn-outline-primary m-2">Retour</button>
+        </a>
+    </div>
+</div>

@@ -1,3 +1,18 @@
-html {
-    text-align: center;
+header,body,footer,canvas{
+    background-color: #F3F6F9;
 }
+body{
+    width: 100%;
+    position: absolute;
+    box-shadow: 0 .1rem 1rem -.5rem rgba(0,0,0,.4);
+    background-color: #F3F6F9;
+}
+#footer {
+    position:unset;
+    padding: 10px 10px 0px 10px;
+    bottom: 0;
+    width: 100%;
+    /* Height of the footer*/
+    height: 5rem;
+    background-color: #F3F6F9;            /* Footer height */
+  }

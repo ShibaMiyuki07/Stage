@@ -2,7 +2,7 @@ from datetime import datetime
 import sys
 from Execution_Requete import getdata_daily, getglobal_usage
 
-from Utils import comparaison_donne, getListe_Billing_type, getall_subscription, getall_site, getliste_pp
+from Utils import comparaison_donne, getListe_Billing_type, getType_subscriptions, getall_subscription, getall_site, getliste_pp
 
 
 if __name__ == "__main__":
@@ -10,10 +10,11 @@ if __name__ == "__main__":
     date_time = datetime.strptime(date,'%Y-%m-%d')
     day = datetime(date_time.year,date_time.month,date_time.day)
     donne = {}
-    liste_verification = ['day','site_name','bndle_name','market','billing_type','pp_name','segment']
+    liste_verification = ['day','site_name','bndle_name','bndle_group','market','billing_type','pp_name','segment']
     donne['day'] = [day]
     donne['site_name'] = getall_site()
     donne['bndle_name'] = getall_subscription()
+    donne['bndle_group'] = getType_subscriptions()
     donne['market'] = ["B2B","B2C","null"]
     donne['billing_type'] = getListe_Billing_type()
     donne['pp_name'] = getliste_pp()

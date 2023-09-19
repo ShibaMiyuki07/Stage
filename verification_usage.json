@@ -1,0 +1,3913 @@
+[{
+  "_id": {
+    "$oid": "64dddccbfd967de0cf17077f"
+  },
+  "day": {
+    "$date": "2023-01-11T00:00:00.000Z"
+  },
+  "usage_type": "usage",
+  "erreur_day": [
+    {
+      "day": {
+        "$date": "2023-01-11T00:00:00.000Z"
+      },
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -250566,
+          "error": -49.546095392141545
+        }
+      ],
+      "description": 0
+    }
+  ],
+  "erreur_day_cnt": 1,
+  "erreur_op_code_cnt": 4,
+  "erreur_op_code": [
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -235030,
+          "error": -52.684315527560464
+        }
+      ],
+      "op_code": "Telma",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -14388,
+          "error": -38.09574242745181
+        }
+      ],
+      "op_code": "Airtel",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -420,
+          "error": -14.680181754631247
+        }
+      ],
+      "op_code": "Telma Fixe",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -728,
+          "error": -3.853482955748465
+        }
+      ],
+      "op_code": "International",
+      "description": 0
+    }
+  ],
+  "erreur_market_cnt": 3,
+  "erreur_market": [
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -56852,
+          "error": -106.11071708537085
+        }
+      ],
+      "market": "B2B",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -119600,
+          "error": -51.39510199521287
+        }
+      ],
+      "market": "B2C",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -74114,
+          "error": -33.7744602119961
+        }
+      ],
+      "market": "null",
+      "description": 0
+    }
+  ],
+  "erreur_billing_type": [
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -181172,
+          "error": -41.14627809371537
+        }
+      ],
+      "description": 0,
+      "billing_type": "Prepaid"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -49118,
+          "error": -112.01112859455884
+        }
+      ],
+      "description": 0,
+      "billing_type": "Postpaid"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -8740,
+          "error": -104.60801915020946
+        }
+      ],
+      "description": 0,
+      "billing_type": "Hybride"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -11536,
+          "error": -87.3608481635744
+        }
+      ],
+      "description": 0,
+      "billing_type": "Postpaid Controlle"
+    }
+  ],
+  "erreur_billing_type_cnt": 4,
+  "erreur_pp_name": [
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -17,
+          "error": -29.310344827586203
+        }
+      ],
+      "pp_name": "Business Internet Telephonie",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -276,
+          "error": -101.8450184501845
+        }
+      ],
+      "pp_name": "HONG",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -1680,
+          "error": -59.68028419182948
+        }
+      ],
+      "pp_name": "Forfait SMARTPHONE",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -5,
+          "error": -500
+        }
+      ],
+      "pp_name": "Forfait Tranquille",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -12,
+          "error": -400
+        }
+      ],
+      "pp_name": "Orange 60 mode classique",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -375,
+          "error": -65.78947368421053
+        }
+      ],
+      "pp_name": "Orange Max",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -261,
+          "error": -71.5068493150685
+        }
+      ],
+      "pp_name": "MITSITSY",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -5778,
+          "error": -114.25746490013842
+        }
+      ],
+      "pp_name": "CMO SMARTPHONE",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -46,
+          "error": -32.857142857142854
+        }
+      ],
+      "pp_name": "CMO Data",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -6437,
+          "error": -99.53610638626876
+        }
+      ],
+      "pp_name": "Corporate Administration",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -1033,
+          "error": -94.337899543379
+        }
+      ],
+      "pp_name": "Corporate Premium",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -3933,
+          "error": -124.85714285714286
+        }
+      ],
+      "pp_name": "Corporate VIP",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -1413,
+          "error": -133.93364928909952
+        }
+      ],
+      "pp_name": "Corporate Gold",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -934,
+          "error": -106.62100456621005
+        }
+      ],
+      "pp_name": "Corporate 250 SMS",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -22241,
+          "error": -104.32967445351346
+        }
+      ],
+      "pp_name": "Corporate +",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -346,
+          "error": -114.56953642384107
+        }
+      ],
+      "pp_name": "Corporate 255",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -15,
+          "error": -100
+        }
+      ],
+      "pp_name": "SMM 100",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -1551,
+          "error": -110.31294452347085
+        }
+      ],
+      "pp_name": "CMO SMM NEW",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -2699,
+          "error": -112.22453222453221
+        }
+      ],
+      "pp_name": "Corporate 100",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -21,
+          "error": -47.72727272727273
+        }
+      ],
+      "pp_name": "Corporate Zero",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -3,
+          "error": -15
+        }
+      ],
+      "pp_name": "CMO Premium 10",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -70,
+          "error": -205.88235294117646
+        }
+      ],
+      "pp_name": "Mitsitsy +",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -1348,
+          "error": -98.25072886297376
+        }
+      ],
+      "pp_name": "Corporate Equilibre",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -4801,
+          "error": -122.10071210579858
+        }
+      ],
+      "pp_name": "Corporate Intense",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -10,
+          "error": -58.82352941176471
+        }
+      ],
+      "pp_name": "Corporate Initial",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -1830,
+          "error": -144.89311163895485
+        }
+      ],
+      "pp_name": "Corporate Ultra",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -869,
+          "error": -78.64253393665159
+        }
+      ],
+      "pp_name": "Corporate START",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -6280,
+          "error": -104.4403791784467
+        }
+      ],
+      "pp_name": "Corporate IN",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -2607,
+          "error": -111.5055603079555
+        }
+      ],
+      "pp_name": "Corporate IN+",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -50,
+          "error": -45.45454545454545
+        }
+      ],
+      "pp_name": "Corporate Smart 2",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -1020,
+          "error": -125.61576354679802
+        }
+      ],
+      "pp_name": "SMART",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -513,
+          "error": -285
+        }
+      ],
+      "pp_name": "Corporate Smart 6",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -264,
+          "error": -71.35135135135135
+        }
+      ],
+      "pp_name": "Corporate Smart 12",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -156,
+          "error": -79.59183673469387
+        }
+      ],
+      "pp_name": "Corporate Smart 25",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -347,
+          "error": -166.0287081339713
+        }
+      ],
+      "pp_name": "Corporate Smart Ultra",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -177932,
+          "error": -41.12884025509626
+        }
+      ],
+      "pp_name": "IZY",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -258,
+          "error": -73.08781869688386
+        }
+      ],
+      "pp_name": "Taratra",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -30,
+          "error": -75
+        }
+      ],
+      "pp_name": "Taxi Phone",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -1347,
+          "error": -43.15924383210509
+        }
+      ],
+      "pp_name": "Orange d",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -941,
+          "error": -47.45335350479072
+        }
+      ],
+      "pp_name": "ALLOWA",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -127,
+          "error": -70.1657458563536
+        }
+      ],
+      "pp_name": "ALLOWA+",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -216,
+          "error": -49.54128440366973
+        }
+      ],
+      "pp_name": "Pro",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -60,
+          "error": -6.3559322033898304
+        }
+      ],
+      "pp_name": "Open",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -222,
+          "error": -51.1520737327189
+        }
+      ],
+      "pp_name": "PRO 2.0",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -1,
+          "error": -1.4285714285714286
+        }
+      ],
+      "pp_name": "Pro 3.0",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -33,
+          "error": -28.695652173913043
+        }
+      ],
+      "pp_name": "Koràna",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -3,
+          "error": -18.75
+        }
+      ],
+      "pp_name": "Freefiber",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -2,
+          "error": -40
+        }
+      ],
+      "pp_name": "Aônaaa",
+      "description": 0
+    }
+  ],
+  "erreur_pp_name_cnt": 48,
+  "erreur_segment": [
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -15531,
+          "error": -46.444377990430624
+        }
+      ],
+      "segment": "ZERO",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -8827,
+          "error": -15.395214176084835
+        }
+      ],
+      "segment": "SUPER LOW VALUE",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -11010,
+          "error": -19.797529354647295
+        }
+      ],
+      "segment": "LOW VALUE",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -25005,
+          "error": -30.006840191525363
+        }
+      ],
+      "segment": "MEDIUM",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -61921,
+          "error": -52.48832340151394
+        }
+      ],
+      "segment": "HIGH",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -125245,
+          "error": -82.39314777414495
+        }
+      ],
+      "segment": "SUPER HIGH VALUE",
+      "description": 0
+    },
+    {
+      "data": {
+        "voice_vas_main_vol": 0,
+        "data_bndl_vol": 0,
+        "sms_o_bndl_cnt": 0,
+        "sms_vas_cnt": 0,
+        "sms_i_cnt": 1,
+        "usage_4G_FDD": 0,
+        "voice_vas_amnt": 0,
+        "sms_o_main_cnt": 0,
+        "usage_2G": 0,
+        "usage_4G_TDD": 0,
+        "data_amnt": 0,
+        "voice_i_cnt": 0,
+        "sms_o_amnt": 0,
+        "voice_o_cnt": 0,
+        "voice_o_main_vol": 0,
+        "voice_i_vol": 0,
+        "voice_i_amnt": 0,
+        "data_main_vol": 0,
+        "voice_vas_cnt": 0,
+        "usage_3G": 0,
+        "voice_o_amnt": 0,
+        "usage_4G_4G+": 0,
+        "voice_o_bndl_vol": 0,
+        "voice_vas_bndl_vol": 0,
+        "sms_vas_amnt": 0,
+        "sms_vas_bndl_cnt": 0
+      },
+      "segment": "CHURN",
+      "description": -1
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -3027,
+          "error": -50.25734683712436
+        }
+      ],
+      "segment": "null",
+      "description": 0
+    }
+  ],
+  "erreur_segment_cnt": 8
+},
+{
+  "_id": {
+    "$oid": "64ddf129df1b05e53a5b9160"
+  },
+  "day": {
+    "$date": "2023-01-12T00:00:00.000Z"
+  },
+  "erreur_day_cnt": 1,
+  "usage_type": "usage",
+  "erreur_day": [
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -260116,
+          "error": -50.302842777025724
+        }
+      ],
+      "day": {
+        "$date": "2023-01-12T00:00:00.000Z"
+      },
+      "description": 0
+    }
+  ],
+  "erreur_op_code": [
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -243791,
+          "error": -53.196489513053045
+        }
+      ],
+      "description": 0,
+      "op_code": "Telma"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -15128,
+          "error": -40.84233261339093
+        }
+      ],
+      "description": 0,
+      "op_code": "Airtel"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -401,
+          "error": -16.046418567426972
+        }
+      ],
+      "description": 0,
+      "op_code": "Telma Fixe"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -13,
+          "error": -16.25
+        }
+      ],
+      "description": 0,
+      "op_code": "Blueline"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -783,
+          "error": -4.0787623066104075
+        }
+      ],
+      "description": 0,
+      "op_code": "International"
+    }
+  ],
+  "erreur_op_code_cnt": 5,
+  "erreur_market_cnt": 3,
+  "erreur_market": [
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -68182,
+          "error": -114.95481521445913
+        }
+      ],
+      "description": 0,
+      "market": "B2B"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -191924,
+          "error": -41.92540003276719
+        }
+      ],
+      "description": 0,
+      "market": "B2C"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -10,
+          "error": -76.92307692307693
+        }
+      ],
+      "description": 0,
+      "market": "null"
+    }
+  ],
+  "erreur_billing_type_cnt": 4,
+  "erreur_billing_type": [
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -188264,
+          "error": -41.56222611260373
+        }
+      ],
+      "description": 0,
+      "billing_type": "Prepaid"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -50264,
+          "error": -118.85271097869523
+        }
+      ],
+      "description": 0,
+      "billing_type": "Postpaid"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -8150,
+          "error": -98.33494208494209
+        }
+      ],
+      "description": 0,
+      "billing_type": "Hybride"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -13438,
+          "error": -99.15879574970484
+        }
+      ],
+      "description": 0,
+      "billing_type": "Postpaid Controlle"
+    }
+  ],
+  "erreur_pp_name_cnt": 47,
+  "erreur_pp_name": [
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -16,
+          "error": -32.6530612244898
+        }
+      ],
+      "description": 0,
+      "pp_name": "Business Internet Telephonie"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -544,
+          "error": -428.3464566929134
+        }
+      ],
+      "description": 0,
+      "pp_name": "HONG"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -1665,
+          "error": -50.07518796992482
+        }
+      ],
+      "description": 0,
+      "pp_name": "Forfait SMARTPHONE"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -7,
+          "error": -63.63636363636363
+        }
+      ],
+      "description": 0,
+      "pp_name": "Forfait Tranquille"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -393,
+          "error": -91.6083916083916
+        }
+      ],
+      "description": 0,
+      "pp_name": "Orange Max"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -368,
+          "error": -131.42857142857142
+        }
+      ],
+      "description": 0,
+      "pp_name": "MITSITSY"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -4696,
+          "error": -88.15468368687817
+        }
+      ],
+      "description": 0,
+      "pp_name": "CMO SMARTPHONE"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -29,
+          "error": -21.16788321167883
+        }
+      ],
+      "description": 0,
+      "pp_name": "CMO Data"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -6787,
+          "error": -117.1991020549128
+        }
+      ],
+      "description": 0,
+      "pp_name": "Corporate Administration"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -1052,
+          "error": -69.62276637988087
+        }
+      ],
+      "description": 0,
+      "pp_name": "Corporate Premium"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -3971,
+          "error": -123.8228874337387
+        }
+      ],
+      "description": 0,
+      "pp_name": "Corporate VIP"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -1527,
+          "error": -162.79317697228143
+        }
+      ],
+      "description": 0,
+      "pp_name": "Corporate Gold"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -890,
+          "error": -66.36838180462341
+        }
+      ],
+      "description": 0,
+      "pp_name": "Corporate 250 SMS"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -23061,
+          "error": -108.67577756833175
+        }
+      ],
+      "description": 0,
+      "pp_name": "Corporate +"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -446,
+          "error": -137.23076923076923
+        }
+      ],
+      "description": 0,
+      "pp_name": "Corporate 255"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -12,
+          "error": -57.14285714285714
+        }
+      ],
+      "description": 0,
+      "pp_name": "SMM 100"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -1945,
+          "error": -154.9800796812749
+        }
+      ],
+      "description": 0,
+      "pp_name": "CMO SMM NEW"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -2587,
+          "error": -103.60432519022827
+        }
+      ],
+      "description": 0,
+      "pp_name": "Corporate 100"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -26,
+          "error": -66.66666666666666
+        }
+      ],
+      "description": 0,
+      "pp_name": "Corporate Zero"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -30,
+          "error": -45.45454545454545
+        }
+      ],
+      "description": 0,
+      "pp_name": "CMO Premium 10"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -44,
+          "error": -129.41176470588235
+        }
+      ],
+      "description": 0,
+      "pp_name": "Mitsitsy +"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -1392,
+          "error": -115.42288557213931
+        }
+      ],
+      "description": 0,
+      "pp_name": "Corporate Equilibre"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -4791,
+          "error": -154.3492268041237
+        }
+      ],
+      "description": 0,
+      "pp_name": "Corporate Intense"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -73,
+          "error": -456.25
+        }
+      ],
+      "description": 0,
+      "pp_name": "Corporate Initial"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -2113,
+          "error": -155.8259587020649
+        }
+      ],
+      "description": 0,
+      "pp_name": "Corporate Ultra"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -910,
+          "error": -90.3674280039722
+        }
+      ],
+      "description": 0,
+      "pp_name": "Corporate START"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -7232,
+          "error": -138.67689357622243
+        }
+      ],
+      "description": 0,
+      "pp_name": "Corporate IN"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -2700,
+          "error": -143.54066985645932
+        }
+      ],
+      "description": 0,
+      "pp_name": "Corporate IN+"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -176,
+          "error": -332.07547169811323
+        }
+      ],
+      "description": 0,
+      "pp_name": "Corporate Smart 2"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -961,
+          "error": -107.25446428571428
+        }
+      ],
+      "description": 0,
+      "pp_name": "SMART"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -529,
+          "error": -200.37878787878788
+        }
+      ],
+      "description": 0,
+      "pp_name": "Corporate Smart 6"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -321,
+          "error": -61.969111969111964
+        }
+      ],
+      "description": 0,
+      "pp_name": "Corporate Smart 12"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -200,
+          "error": -94.7867298578199
+        }
+      ],
+      "description": 0,
+      "pp_name": "Corporate Smart 25"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -315,
+          "error": -72.58064516129032
+        }
+      ],
+      "description": 0,
+      "pp_name": "Corporate Smart Ultra"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -9,
+          "error": -900
+        }
+      ],
+      "description": 0,
+      "pp_name": "MTC Verts"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -184330,
+          "error": -41.38815229618586
+        }
+      ],
+      "description": 0,
+      "pp_name": "IZY"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -192,
+          "error": -55.172413793103445
+        }
+      ],
+      "description": 0,
+      "pp_name": "Taratra"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -25,
+          "error": -119.04761904761905
+        }
+      ],
+      "description": 0,
+      "pp_name": "Taxi Phone"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -1574,
+          "error": -47.58162031438936
+        }
+      ],
+      "description": 0,
+      "pp_name": "Orange d"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -1137,
+          "error": -61.49269875608437
+        }
+      ],
+      "description": 0,
+      "pp_name": "ALLOWA"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -118,
+          "error": -86.76470588235294
+        }
+      ],
+      "description": 0,
+      "pp_name": "ALLOWA+"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -344,
+          "error": -54.17322834645669
+        }
+      ],
+      "description": 0,
+      "pp_name": "Pro"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -164,
+          "error": -27.1523178807947
+        }
+      ],
+      "description": 0,
+      "pp_name": "Open"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -334,
+          "error": -69.15113871635612
+        }
+      ],
+      "description": 0,
+      "pp_name": "PRO 2.0"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -36,
+          "error": -24.324324324324326
+        }
+      ],
+      "description": 0,
+      "pp_name": "Koràna"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -1,
+          "error": -10
+        }
+      ],
+      "description": 0,
+      "pp_name": "Freefiber"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -9,
+          "error": -450
+        }
+      ],
+      "description": 0,
+      "pp_name": "Aônaaa"
+    }
+  ],
+  "erreur_segment": [
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -16182,
+          "error": -47.092718700890515
+        }
+      ],
+      "segment": "ZERO",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -8876,
+          "error": -14.82842727789101
+        }
+      ],
+      "segment": "SUPER LOW VALUE",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -11131,
+          "error": -19.280802341896035
+        }
+      ],
+      "segment": "LOW VALUE",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -25705,
+          "error": -30.001167133520074
+        }
+      ],
+      "segment": "MEDIUM",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -62863,
+          "error": -52.06088663260151
+        }
+      ],
+      "segment": "HIGH",
+      "description": 0
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -131802,
+          "error": -86.7854955850689
+        }
+      ],
+      "segment": "SUPER HIGH VALUE",
+      "description": 0
+    },
+    {
+      "data": {
+        "voice_vas_amnt": 0,
+        "sms_i_cnt": 0,
+        "sms_vas_bndl_cnt": 0,
+        "voice_o_main_vol": 0,
+        "usage_4G_4G+": 0,
+        "voice_i_amnt": 0,
+        "data_bndl_vol": 0,
+        "data_amnt": 0,
+        "voice_i_cnt": 1,
+        "voice_vas_cnt": 0,
+        "data_main_vol": 0,
+        "sms_o_main_cnt": 0,
+        "voice_o_cnt": 0,
+        "sms_vas_amnt": 0,
+        "voice_i_vol": 436,
+        "sms_vas_cnt": 0,
+        "voice_o_bndl_vol": 0,
+        "voice_vas_main_vol": 0,
+        "usage_3G": 0,
+        "voice_o_amnt": 0,
+        "voice_vas_bndl_vol": 0,
+        "usage_2G": 0,
+        "sms_o_amnt": 0,
+        "sms_o_bndl_cnt": 0,
+        "usage_4G_TDD": 0,
+        "usage_4G_FDD": 0
+      },
+      "segment": "CHURN",
+      "description": -1
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "ecart": -3558,
+          "error": -51.95677570093458
+        }
+      ],
+      "segment": "null",
+      "description": 0
+    }
+  ],
+  "erreur_segment_cnt": 8
+},
+{
+  "_id": {
+    "$oid": "64de092a959789b54de68b4a"
+  },
+  "erreur_day_cnt": 1,
+  "erreur_day": [
+    {
+      "day": {
+        "$date": "2023-01-13T00:00:00.000Z"
+      },
+      "description": 0,
+      "data": [
+        {
+          "ecart": -265744,
+          "nom": "voice_i_cnt",
+          "error": -51.52623874201397
+        }
+      ]
+    }
+  ],
+  "day": {
+    "$date": "2023-01-13T00:00:00.000Z"
+  },
+  "usage_type": "usage",
+  "erreur_op_code": [
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -248838,
+          "nom": "voice_i_cnt",
+          "error": -54.548682964469855
+        }
+      ],
+      "op_code": "Telma"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -15672,
+          "nom": "voice_i_cnt",
+          "error": -41.36074529571666
+        }
+      ],
+      "op_code": "Airtel"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -473,
+          "nom": "voice_i_cnt",
+          "error": -17.96429927838967
+        }
+      ],
+      "op_code": "Telma Fixe"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -10,
+          "nom": "voice_i_cnt",
+          "error": -9.25925925925926
+        }
+      ],
+      "op_code": "Blueline"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -751,
+          "nom": "voice_i_cnt",
+          "error": -3.965781274753129
+        }
+      ],
+      "op_code": "International"
+    }
+  ],
+  "erreur_op_code_cnt": 5,
+  "erreur_market_cnt": 3,
+  "erreur_market": [
+    {
+      "market": "B2B",
+      "description": 0,
+      "data": [
+        {
+          "ecart": -70389,
+          "nom": "voice_i_cnt",
+          "error": -113.1346738029799
+        }
+      ]
+    },
+    {
+      "market": "B2C",
+      "description": 0,
+      "data": [
+        {
+          "ecart": -195351,
+          "nom": "voice_i_cnt",
+          "error": -43.073920952538444
+        }
+      ]
+    },
+    {
+      "market": "null",
+      "description": 0,
+      "data": [
+        {
+          "ecart": -4,
+          "nom": "voice_i_cnt",
+          "error": -133.33333333333331
+        }
+      ]
+    }
+  ],
+  "erreur_billing_type_cnt": 4,
+  "erreur_billing_type": [
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -190881,
+          "nom": "voice_i_cnt",
+          "error": -42.49694988912736
+        }
+      ],
+      "billing_type": "Prepaid"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -51278,
+          "nom": "voice_i_cnt",
+          "error": -117.15865472491318
+        }
+      ],
+      "billing_type": "Postpaid"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -9223,
+          "nom": "voice_i_cnt",
+          "error": -101.58607776186805
+        }
+      ],
+      "billing_type": "Hybride"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -14362,
+          "nom": "voice_i_cnt",
+          "error": -104.57259356341926
+        }
+      ],
+      "billing_type": "Postpaid Controlle"
+    }
+  ],
+  "erreur_pp_name_cnt": 47,
+  "erreur_pp_name": [
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -29,
+          "nom": "voice_i_cnt",
+          "error": -56.86274509803921
+        }
+      ],
+      "pp_name": "Business Internet Telephonie"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -505,
+          "nom": "voice_i_cnt",
+          "error": -450.8928571428571
+        }
+      ],
+      "pp_name": "HONG"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -1998,
+          "nom": "voice_i_cnt",
+          "error": -66.26865671641791
+        }
+      ],
+      "pp_name": "Forfait SMARTPHONE"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -16,
+          "nom": "voice_i_cnt",
+          "error": -320
+        }
+      ],
+      "pp_name": "Forfait Tranquille"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -54,
+          "nom": "voice_i_cnt",
+          "error": -5400
+        }
+      ],
+      "pp_name": "Orange 60 mode a la seconde"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -448,
+          "nom": "voice_i_cnt",
+          "error": -75.29411764705883
+        }
+      ],
+      "pp_name": "Orange Max"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -239,
+          "nom": "voice_i_cnt",
+          "error": -84.75177304964538
+        }
+      ],
+      "pp_name": "MITSITSY"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -5610,
+          "nom": "voice_i_cnt",
+          "error": -95.5218797888643
+        }
+      ],
+      "pp_name": "CMO SMARTPHONE"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -93,
+          "nom": "voice_i_cnt",
+          "error": -77.5
+        }
+      ],
+      "pp_name": "CMO Data"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -7497,
+          "nom": "voice_i_cnt",
+          "error": -122.3800195886386
+        }
+      ],
+      "pp_name": "Corporate Administration"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -1109,
+          "nom": "voice_i_cnt",
+          "error": -74.42953020134229
+        }
+      ],
+      "pp_name": "Corporate Premium"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -3873,
+          "nom": "voice_i_cnt",
+          "error": -122.60208926875593
+        }
+      ],
+      "pp_name": "Corporate VIP"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -1380,
+          "nom": "voice_i_cnt",
+          "error": -150.4907306434024
+        }
+      ],
+      "pp_name": "Corporate Gold"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -1099,
+          "nom": "voice_i_cnt",
+          "error": -88.34405144694534
+        }
+      ],
+      "pp_name": "Corporate 250 SMS"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -23874,
+          "nom": "voice_i_cnt",
+          "error": -123.32248566558191
+        }
+      ],
+      "pp_name": "Corporate +"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -450,
+          "nom": "voice_i_cnt",
+          "error": -131.57894736842107
+        }
+      ],
+      "pp_name": "Corporate 255"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -65,
+          "nom": "voice_i_cnt",
+          "error": -928.5714285714287
+        }
+      ],
+      "pp_name": "SMM 100"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -1783,
+          "nom": "voice_i_cnt",
+          "error": -105.87885985748218
+        }
+      ],
+      "pp_name": "CMO SMM NEW"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -2560,
+          "nom": "voice_i_cnt",
+          "error": -81.76301501117854
+        }
+      ],
+      "pp_name": "Corporate 100"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -16,
+          "nom": "voice_i_cnt",
+          "error": -24.242424242424242
+        }
+      ],
+      "pp_name": "Corporate Zero"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -77,
+          "nom": "voice_i_cnt",
+          "error": -76.23762376237624
+        }
+      ],
+      "pp_name": "CMO Premium 10"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -68,
+          "nom": "voice_i_cnt",
+          "error": -295.65217391304344
+        }
+      ],
+      "pp_name": "Mitsitsy +"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -1943,
+          "nom": "voice_i_cnt",
+          "error": -155.44
+        }
+      ],
+      "pp_name": "Corporate Equilibre"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -4649,
+          "nom": "voice_i_cnt",
+          "error": -117.36935117394597
+        }
+      ],
+      "pp_name": "Corporate Intense"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -79,
+          "nom": "voice_i_cnt",
+          "error": -3950
+        }
+      ],
+      "pp_name": "Corporate Initial"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -2311,
+          "nom": "voice_i_cnt",
+          "error": -132.20823798627
+        }
+      ],
+      "pp_name": "Corporate Ultra"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -1133,
+          "nom": "voice_i_cnt",
+          "error": -142.33668341708542
+        }
+      ],
+      "pp_name": "Corporate START"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -6227,
+          "nom": "voice_i_cnt",
+          "error": -93.34432618797781
+        }
+      ],
+      "pp_name": "Corporate IN"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -2802,
+          "nom": "voice_i_cnt",
+          "error": -120.9322399654726
+        }
+      ],
+      "pp_name": "Corporate IN+"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -56,
+          "nom": "voice_i_cnt",
+          "error": -70
+        }
+      ],
+      "pp_name": "Corporate Smart 2"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -1267,
+          "nom": "voice_i_cnt",
+          "error": -187.7037037037037
+        }
+      ],
+      "pp_name": "SMART"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -673,
+          "nom": "voice_i_cnt",
+          "error": -237.80918727915196
+        }
+      ],
+      "pp_name": "Corporate Smart 6"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -371,
+          "nom": "voice_i_cnt",
+          "error": -61.93656093489148
+        }
+      ],
+      "pp_name": "Corporate Smart 12"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -282,
+          "nom": "voice_i_cnt",
+          "error": -160.22727272727272
+        }
+      ],
+      "pp_name": "Corporate Smart 25"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -194,
+          "nom": "voice_i_cnt",
+          "error": -63.60655737704918
+        }
+      ],
+      "pp_name": "Corporate Smart Ultra"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -186756,
+          "nom": "voice_i_cnt",
+          "error": -42.29641188474004
+        }
+      ],
+      "pp_name": "IZY"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -156,
+          "nom": "voice_i_cnt",
+          "error": -42.16216216216216
+        }
+      ],
+      "pp_name": "Taratra"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -44,
+          "nom": "voice_i_cnt",
+          "error": -133.33333333333331
+        }
+      ],
+      "pp_name": "Taxi Phone"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -1735,
+          "nom": "voice_i_cnt",
+          "error": -55.913631969062195
+        }
+      ],
+      "pp_name": "Orange d"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -1086,
+          "nom": "voice_i_cnt",
+          "error": -56.65101721439749
+        }
+      ],
+      "pp_name": "ALLOWA"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -144,
+          "nom": "voice_i_cnt",
+          "error": -91.71974522292994
+        }
+      ],
+      "pp_name": "ALLOWA+"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -585,
+          "nom": "voice_i_cnt",
+          "error": -102.45183887915937
+        }
+      ],
+      "pp_name": "Pro"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -48,
+          "nom": "voice_i_cnt",
+          "error": -8.149405772495756
+        }
+      ],
+      "pp_name": "Open"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -221,
+          "nom": "voice_i_cnt",
+          "error": -31.752873563218394
+        }
+      ],
+      "pp_name": "PRO 2.0"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -16,
+          "nom": "voice_i_cnt",
+          "error": -145.45454545454547
+        }
+      ],
+      "pp_name": "Pro 3.0"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -67,
+          "nom": "voice_i_cnt",
+          "error": -45.57823129251701
+        }
+      ],
+      "pp_name": "Koràna"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -22,
+          "nom": "voice_i_cnt",
+          "error": -366.66666666666663
+        }
+      ],
+      "pp_name": "Aônaaa"
+    }
+  ],
+  "erreur_segment_cnt": 8,
+  "erreur_segment": [
+    {
+      "segment": "ZERO",
+      "description": 0,
+      "data": [
+        {
+          "ecart": -17716,
+          "nom": "voice_i_cnt",
+          "error": -50.973960581211344
+        }
+      ]
+    },
+    {
+      "segment": "SUPER LOW VALUE",
+      "description": 0,
+      "data": [
+        {
+          "ecart": -8959,
+          "nom": "voice_i_cnt",
+          "error": -15.464949681517668
+        }
+      ]
+    },
+    {
+      "segment": "LOW VALUE",
+      "description": 0,
+      "data": [
+        {
+          "ecart": -11794,
+          "nom": "voice_i_cnt",
+          "error": -21.02467199087279
+        }
+      ]
+    },
+    {
+      "segment": "MEDIUM",
+      "description": 0,
+      "data": [
+        {
+          "ecart": -25485,
+          "nom": "voice_i_cnt",
+          "error": -29.50643155688831
+        }
+      ]
+    },
+    {
+      "segment": "HIGH",
+      "description": 0,
+      "data": [
+        {
+          "ecart": -66106,
+          "nom": "voice_i_cnt",
+          "error": -54.53840442207739
+        }
+      ]
+    },
+    {
+      "segment": "SUPER HIGH VALUE",
+      "description": 0,
+      "data": [
+        {
+          "ecart": -131998,
+          "nom": "voice_i_cnt",
+          "error": -86.6748527490134
+        }
+      ]
+    },
+    {
+      "segment": "CHURN",
+      "description": -1,
+      "data": {
+        "data_main_vol": 0,
+        "sms_vas_amnt": 0,
+        "voice_o_cnt": 0,
+        "voice_o_amnt": 0,
+        "sms_o_amnt": 0,
+        "usage_4G_TDD": 0,
+        "voice_i_cnt": 1,
+        "voice_o_bndl_vol": 0,
+        "usage_4G_4G+": 0,
+        "voice_vas_cnt": 0,
+        "usage_2G": 0,
+        "sms_i_cnt": 1,
+        "sms_vas_bndl_cnt": 0,
+        "sms_o_bndl_cnt": 0,
+        "usage_3G": 46891796,
+        "voice_o_main_vol": 0,
+        "voice_vas_main_vol": 0,
+        "data_amnt": 0,
+        "voice_i_vol": 175,
+        "voice_i_amnt": 0,
+        "sms_o_main_cnt": 0,
+        "data_bndl_vol": 46891796,
+        "voice_vas_amnt": 0,
+        "usage_4G_FDD": 0,
+        "voice_vas_bndl_vol": 0,
+        "sms_vas_cnt": 0
+      }
+    },
+    {
+      "segment": "null",
+      "description": 0,
+      "data": [
+        {
+          "ecart": -3687,
+          "nom": "voice_i_cnt",
+          "error": -52.00282087447109
+        }
+      ]
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "64df3c353be020b8219f97a8"
+  },
+  "usage_type": "usage",
+  "erreur_day": [
+    {
+      "description": 0,
+      "day": {
+        "$date": "2023-01-14T00:00:00.000Z"
+      },
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -47.34811313269665,
+          "ecart": -226770
+        }
+      ]
+    }
+  ],
+  "day": {
+    "$date": "2023-01-14T00:00:00.000Z"
+  },
+  "erreur_day_cnt": 1,
+  "erreur_op_code_cnt": 4,
+  "erreur_op_code": [
+    {
+      "op_code": "Telma",
+      "description": 0,
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -50.25517876723197,
+          "ecart": -212204
+        }
+      ]
+    },
+    {
+      "op_code": "Airtel",
+      "description": 0,
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -35.37867241288695,
+          "ecart": -13463
+        }
+      ]
+    },
+    {
+      "op_code": "Telma Fixe",
+      "description": 0,
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -18.99592944369064,
+          "ecart": -140
+        }
+      ]
+    },
+    {
+      "op_code": "International",
+      "description": 0,
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -5.385906040268456,
+          "ecart": -963
+        }
+      ]
+    }
+  ],
+  "erreur_market": [
+    {
+      "market": "B2B",
+      "description": 0,
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -134.3287010451361,
+          "ecart": -46784
+        }
+      ]
+    },
+    {
+      "market": "B2C",
+      "description": 0,
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -40.52698181097646,
+          "ecart": -179986
+        }
+      ]
+    }
+  ],
+  "erreur_market_cnt": 2,
+  "erreur_billing_type": [
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -40.21904727358465,
+          "ecart": -177403
+        }
+      ],
+      "description": 0,
+      "billing_type": "Prepaid"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -134.14479170803384,
+          "ecart": -33779
+        }
+      ],
+      "description": 0,
+      "billing_type": "Postpaid"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -102.53866845998655,
+          "ecart": -6099
+        }
+      ],
+      "description": 0,
+      "billing_type": "Hybride"
+    },
+    {
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -141.18434756732628,
+          "ecart": -9489
+        }
+      ],
+      "description": 0,
+      "billing_type": "Postpaid Controlle"
+    }
+  ],
+  "erreur_billing_type_cnt": 4,
+  "erreur_pp_name": [
+    {
+      "description": 0,
+      "pp_name": "HONG",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -221.31147540983608,
+          "ecart": -270
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Forfait SMARTPHONE",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -92.07407407407408,
+          "ecart": -1243
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Forfait Tranquille",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -100,
+          "ecart": -2
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Orange Max",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -65.25198938992042,
+          "ecart": -246
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "MITSITSY",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -131.44329896907217,
+          "ecart": -255
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "CMO SMARTPHONE",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -105.9278350515464,
+          "ecart": -3288
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "CMO Data",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -42.57425742574257,
+          "ecart": -43
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Corporate Administration",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -155.98876009834913,
+          "ecart": -4441
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Corporate Premium",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -140.15384615384616,
+          "ecart": -911
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Corporate VIP",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -104.02157920549288,
+          "ecart": -2121
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Corporate Gold",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -231.6622691292876,
+          "ecart": -878
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Corporate 250 SMS",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -89.01869158878505,
+          "ecart": -762
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Corporate +",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -147.87626525399676,
+          "ecart": -15632
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Corporate 255",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -115.5223880597015,
+          "ecart": -387
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "SMM 100",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -150,
+          "ecart": -9
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "CMO SMM NEW",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -156.67600373482728,
+          "ecart": -1678
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Corporate 100",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -80.56460369163952,
+          "ecart": -1484
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Corporate Zero",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -38.297872340425535,
+          "ecart": -18
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "CMO Premium 10",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -51.162790697674424,
+          "ecart": -22
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Mitsitsy +",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -258.33333333333337,
+          "ecart": -31
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Corporate Equilibre",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -89.34993084370679,
+          "ecart": -646
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Corporate Intense",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -162.62755102040816,
+          "ecart": -3825
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Corporate Initial",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -1033.3333333333335,
+          "ecart": -31
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Corporate Ultra",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -94.92415402567094,
+          "ecart": -1627
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Corporate START",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -109.87983978638185,
+          "ecart": -823
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Corporate IN",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -146.60880745740917,
+          "ecart": -4561
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Corporate IN+",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -160.8906882591093,
+          "ecart": -1987
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Corporate Smart 2",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -68.57142857142857,
+          "ecart": -24
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "SMART",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -73.96449704142012,
+          "ecart": -750
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Corporate Smart 6",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -207.1651090342679,
+          "ecart": -665
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Corporate Smart 12",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -85.3061224489796,
+          "ecart": -209
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Corporate Smart 25",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -118.88111888111888,
+          "ecart": -170
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Corporate Smart Ultra",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -167.72486772486772,
+          "ecart": -317
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "MTC Verts",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -400,
+          "ecart": -4
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "IZY",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -39.97605672713878,
+          "ecart": -173640
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Taratra",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -42.31974921630094,
+          "ecart": -135
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Taxi Phone",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -500,
+          "ecart": -25
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Orange d",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -52.23613595706619,
+          "ecart": -1460
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "ALLOWA",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -50.41628122109159,
+          "ecart": -1090
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "ALLOWA+",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -125.51724137931035,
+          "ecart": -182
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Pro",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -140.39999999999998,
+          "ecart": -351
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Open",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -6.075949367088607,
+          "ecart": -24
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "PRO 2.0",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -94.14316702819957,
+          "ecart": -434
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Pro 3.0",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -11.11111111111111,
+          "ecart": -1
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Koràna",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -32.94117647058823,
+          "ecart": -56
+        }
+      ]
+    },
+    {
+      "description": 0,
+      "pp_name": "Aônaaa",
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -250,
+          "ecart": -5
+        }
+      ]
+    }
+  ],
+  "erreur_pp_name_cnt": 46,
+  "erreur_segment_cnt": 8,
+  "erreur_segment": [
+    {
+      "segment": "ZERO",
+      "description": 0,
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -44.15005527226046,
+          "ecart": -12381
+        }
+      ]
+    },
+    {
+      "segment": "SUPER LOW VALUE",
+      "description": 0,
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -15.328249103816688,
+          "ecart": -8723
+        }
+      ]
+    },
+    {
+      "segment": "LOW VALUE",
+      "description": 0,
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -19.31152387227753,
+          "ecart": -10844
+        }
+      ]
+    },
+    {
+      "segment": "MEDIUM",
+      "description": 0,
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -28.502980016360873,
+          "ecart": -24390
+        }
+      ]
+    },
+    {
+      "segment": "HIGH",
+      "description": 0,
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -49.581007970235355,
+          "ecart": -58102
+        }
+      ]
+    },
+    {
+      "segment": "SUPER HIGH VALUE",
+      "description": 0,
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -85.12539614225909,
+          "ecart": -108786
+        }
+      ]
+    },
+    {
+      "segment": "CHURN",
+      "description": -1,
+      "data": {
+        "usage_4G_FDD": 0,
+        "usage_4G_TDD": 0,
+        "data_main_vol": 0,
+        "data_bndl_vol": 145680704,
+        "voice_vas_amnt": 0,
+        "voice_vas_main_vol": 0,
+        "voice_i_vol": 0,
+        "voice_o_cnt": 0,
+        "voice_o_amnt": 0,
+        "sms_i_cnt": 0,
+        "voice_o_bndl_vol": 0,
+        "sms_vas_bndl_cnt": 0,
+        "sms_vas_amnt": 0,
+        "sms_vas_cnt": 0,
+        "usage_4G_4G+": 0,
+        "usage_2G": 0,
+        "voice_o_main_vol": 0,
+        "sms_o_main_cnt": 0,
+        "voice_vas_cnt": 0,
+        "voice_i_cnt": 0,
+        "voice_vas_bndl_vol": 0,
+        "sms_o_bndl_cnt": 0,
+        "usage_3G": 145680704,
+        "sms_o_amnt": 0,
+        "data_amnt": 0,
+        "voice_i_amnt": 0
+      }
+    },
+    {
+      "segment": "null",
+      "description": 0,
+      "data": [
+        {
+          "nom": "voice_i_cnt",
+          "error": -48.63455468642788,
+          "ecart": -3544
+        }
+      ]
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "64df6efff988a424a85685fa"
+  },
+  "usage_type": "usage",
+  "erreur_day_cnt": 1,
+  "erreur_day": [
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -139264,
+          "error": -36.705411032919535,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "day": {
+        "$date": "2023-01-15T00:00:00.000Z"
+      }
+    }
+  ],
+  "day": {
+    "$date": "2023-01-15T00:00:00.000Z"
+  },
+  "erreur_op_code_cnt": 4,
+  "erreur_op_code": [
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -130974,
+          "error": -39.020655260045345,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "op_code": "Telma"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -7476,
+          "error": -27.026245390788805,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "op_code": "Airtel"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -58,
+          "error": -21.48148148148148,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "op_code": "Telma Fixe"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -756,
+          "error": -4.777251184834124,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "op_code": "International"
+    }
+  ],
+  "erreur_market_cnt": 2,
+  "erreur_market": [
+    {
+      "data": [
+        {
+          "ecart": -20216,
+          "error": -129.46525776496958,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "description": 0,
+      "market": "B2B"
+    },
+    {
+      "data": [
+        {
+          "ecart": -119048,
+          "error": -32.72392418807296,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "description": 0,
+      "market": "B2C"
+    }
+  ],
+  "erreur_billing_type": [
+    {
+      "billing_type": "Prepaid",
+      "description": 0,
+      "data": [
+        {
+          "ecart": -117817,
+          "error": -32.47185994465697,
+          "nom": "voice_i_cnt"
+        }
+      ]
+    },
+    {
+      "billing_type": "Postpaid",
+      "description": 0,
+      "data": [
+        {
+          "ecart": -15074,
+          "error": -127.86495885995419,
+          "nom": "voice_i_cnt"
+        }
+      ]
+    },
+    {
+      "billing_type": "Hybride",
+      "description": 0,
+      "data": [
+        {
+          "ecart": -2690,
+          "error": -135.9959555106168,
+          "nom": "voice_i_cnt"
+        }
+      ]
+    },
+    {
+      "billing_type": "Postpaid Controlle",
+      "description": 0,
+      "data": [
+        {
+          "ecart": -3683,
+          "error": -130.8348134991119,
+          "nom": "voice_i_cnt"
+        }
+      ]
+    }
+  ],
+  "erreur_billing_type_cnt": 4,
+  "erreur_pp_name": [
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -202,
+          "error": -651.6129032258065,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "HONG"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -386,
+          "error": -70.6959706959707,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Forfait SMARTPHONE"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -3,
+          "error": -150,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Orange 60 mode a la seconde"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -169,
+          "error": -93.37016574585635,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Orange Max"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -83,
+          "error": -237.14285714285714,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "MITSITSY"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -1424,
+          "error": -181.8646232439336,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "CMO SMARTPHONE"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -14,
+          "error": -23.333333333333332,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "CMO Data"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -2150,
+          "error": -151.301900070373,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Corporate Administration"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -240,
+          "error": -41.23711340206185,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Corporate Premium"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -1047,
+          "error": -118.30508474576271,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Corporate VIP"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -294,
+          "error": -117.6,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Corporate Gold"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -327,
+          "error": -152.09302325581396,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Corporate 250 SMS"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -6346,
+          "error": -147.856477166822,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Corporate +"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -99,
+          "error": -50.76923076923077,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Corporate 255"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -5,
+          "error": -250,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "SMM 100"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -722,
+          "error": -124.69775474956822,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "CMO SMM NEW"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -900,
+          "error": -77.4526678141136,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Corporate 100"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -13,
+          "error": -52,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Corporate Zero"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -14,
+          "error": -116.66666666666667,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "CMO Premium 10"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -20,
+          "error": -666.6666666666667,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Mitsitsy +"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -354,
+          "error": -72.68993839835728,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Corporate Equilibre"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -1362,
+          "error": -187.86206896551724,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Corporate Intense"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -40,
+          "error": -2000,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Corporate Initial"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -1082,
+          "error": -117.86492374727669,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Corporate Ultra"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -323,
+          "error": -98.77675840978594,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Corporate START"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -2239,
+          "error": -150.57162071284463,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Corporate IN"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -730,
+          "error": -86.49289099526067,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Corporate IN+"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -23,
+          "error": -328.57142857142856,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Corporate Smart 2"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -395,
+          "error": -170.25862068965517,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "SMART"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -229,
+          "error": -159.02777777777777,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Corporate Smart 6"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -108,
+          "error": -300,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Corporate Smart 12"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -27,
+          "error": -40.298507462686565,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Corporate Smart 25"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -67,
+          "error": -319.0476190476191,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Corporate Smart Ultra"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -115841,
+          "error": -32.33803902082246,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "IZY"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -104,
+          "error": -37.545126353790614,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Taratra"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -5,
+          "error": -62.5,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Taxi Phone"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -763,
+          "error": -39.51320559295702,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Orange d"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -587,
+          "error": -36.66458463460337,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "ALLOWA"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -55,
+          "error": -43.30708661417323,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "ALLOWA+"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -204,
+          "error": -100.49261083743843,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Pro"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -107,
+          "error": -248.8372093023256,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Open"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -80,
+          "error": -29.411764705882355,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "PRO 2.0"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -2,
+          "error": -100,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Pro 3.0"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -65,
+          "error": -52.41935483870967,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Koràna"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -4,
+          "error": -57.14285714285714,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "pp_name": "Aônaaa"
+    }
+  ],
+  "erreur_pp_name_cnt": 45,
+  "erreur_segment": [
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -6370,
+          "error": -28.763659351575903,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "segment": "ZERO"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -6504,
+          "error": -12.215231477134003,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "segment": "SUPER LOW VALUE"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -8322,
+          "error": -16.120096852300243,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "segment": "LOW VALUE"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -17905,
+          "error": -24.67579002494453,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "segment": "MEDIUM"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -37855,
+          "error": -41.14629188813165,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "segment": "HIGH"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -59113,
+          "error": -73.50169103750125,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "segment": "SUPER HIGH VALUE"
+    },
+    {
+      "description": -1,
+      "data": {
+        "voice_vas_main_vol": 0,
+        "voice_vas_bndl_vol": 0,
+        "voice_vas_amnt": 0,
+        "sms_vas_amnt": 0,
+        "voice_i_vol": 0,
+        "voice_i_amnt": 0,
+        "usage_4G_TDD": 0,
+        "voice_o_amnt": 0,
+        "voice_vas_cnt": 0,
+        "voice_o_main_vol": 0,
+        "data_bndl_vol": 53095976,
+        "data_main_vol": 0,
+        "sms_o_amnt": 0,
+        "usage_2G": 0,
+        "sms_vas_cnt": 0,
+        "voice_o_cnt": 0,
+        "sms_o_bndl_cnt": 0,
+        "sms_i_cnt": 1,
+        "voice_i_cnt": 0,
+        "data_amnt": 0,
+        "usage_4G_4G+": 0,
+        "usage_4G_FDD": 0,
+        "sms_o_main_cnt": 0,
+        "voice_o_bndl_vol": 0,
+        "sms_vas_bndl_cnt": 0,
+        "usage_3G": 53095976
+      },
+      "segment": "CHURN"
+    },
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": -3195,
+          "error": -43.129049676025915,
+          "nom": "voice_i_cnt"
+        }
+      ],
+      "segment": "null"
+    }
+  ],
+  "erreur_segment_cnt": 8
+}]

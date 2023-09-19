@@ -238,7 +238,7 @@ def insertion_segment(day):
     {
         '$match': {
             'day': day, 
-            'bundle': {
+            'EC': {
                 '$exists': True
             }
         }

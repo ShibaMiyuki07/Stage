@@ -1,0 +1,283 @@
+Start ratra mongo usage cc at 2023-08-24 16:00:01
+date mongo
+mamafa collection 2023-08-24 16:00:01=
+daily_usage: 2053180
+daily_usage_international: 16149
+daily_purchase: 2702270
+Removing documents...
+MongoDB shell version v3.6.5
+connecting to: mongodb://127.0.0.1:27017
+MongoDB server version: 3.6.5
+switched to db cbm
+ISODate("2023-08-14T00:00:00Z")
+"remove purchase"
+{ "nRemoved" : 2702270 }
+"remove daily"
+{ "nRemoved" : 2053180 }
+"remove inter"
+{ "nRemoved" : 16149 }
+bye
+Remaining:
+daily_usage: 0
+daily_usage_international: 0
+daily_purchase: 0
+End at 2023-08-24 16:12:34
+Start rattra cc
+Thu Aug 24 16:12:34 EAT 2023
+Debut - Thu Aug 24 16:12:34 EAT 2023
+Starting mongo usage between 2023-08-14 and 2023-08-14
+
+
+Loading Refs. 0
+fin du traitement ref:1
+load caller 1
+End Refs. 2
+
+
+Loading Refs. 0
+fin du traitement ref:1
+load caller 1
+End Refs. 2
+
+
+Loading Refs. 0
+fin du traitement IMEI:10
+fin du traitement ref:1
+load caller 1
+End Refs. 3
+
+
+Loading Refs. 0
+fin du traitement ref:1
+load caller 1
+End Refs. 2
+fin du traitement IMEI:14
+
+
+Loading Refs. 0
+fin du traitement ref:0
+load caller 0
+End Refs. 1
+fin du traitement IMEI:14
+fin du traitement IMEI:16
+fin du traitement IMEI:16
+traitement trafic sortant 5 149
+traitement trafic sortant 2 166
+traitement trafic sortant 3 162
+traitement trafic sortant 1 178
+traitement trafic sortant 4 301
+End CDRs 5 : 4203
+traitement souscriptions SDP 5 4203
+End CDRs 4 : 4209
+traitement souscriptions SDP 4 4209
+Inserting remaining SDP purchase docs 4 : 6616
+Inserting remaining SDP purchase docs 5 : 7075
+End CDRs : 4 5078
+
+traitement du trafic entrant 4 5078
+End CDRs : 5 5072
+
+traitement du trafic entrant 5 5072
+End CDRs 2 : 5408
+traitement souscriptions SDP 2 5408
+End CDRs 3 : 5407
+traitement souscriptions SDP 3 5407
+End CDRs entrant 5 : 5845
+
+traitement imei 5845
+End CDRs entrant 4 : 5851
+
+traitement imei 5851
+Inserting remaining SDP purchase docs 3 : 7098
+End CDRs : 3 5867
+
+traitement du trafic entrant 3 5867
+Inserting remaining SDP purchase docs 2 : 8814
+End CDRs : 2 5873
+
+traitement du trafic entrant 2 5873
+End CDRs 1 : 6320
+traitement souscriptions SDP 1 6320
+End CDRs entrant 2 : 6554
+
+traitement imei 6554
+End CDRs entrant 3 : 6549
+
+traitement imei 6549
+Inserting remaining SDP purchase docs 1 : 2491
+End CDRs : 1 6910
+
+traitement du trafic entrant 1 6910
+End CDRs entrant 1 : 7813
+
+traitement imei 7813
+End imei : 8297
+
+traitement OM 5 8297
+End CDRs OM 5 : 8311
+
+traitement des autres sources 5 8311
+End AGO & TAN 8312
+Insertion 5 8329
+Inserting remaining usage docs : 1734
+Inserting remaining usage international docs : 1650
+End Inserting 5 : 8467
+End day 5 2023-08-14 8467
+End imei : 8753
+
+End imei : 8748
+
+traitement OM 2 8753
+traitement OM 3 8748
+End CDRs OM 3 : 8764
+
+traitement des autres sources 3 8764
+End AGO & TAN 8764
+End CDRs OM 2 : 8770
+
+traitement des autres sources 2 8770
+End AGO & TAN 8770
+Insertion 3 8780
+Insertion 2 8788
+Inseted 1000000 usage docs 2 1692891757
+Inseted 1000000 usage docs 3 1692891763
+Inserting remaining usage docs : 9311
+Inserting remaining usage international docs : 3666
+End Inserting 2 : 9067
+End day 2 2023-08-14 9067
+Inserting remaining usage docs : 1352
+Inserting remaining usage international docs : 3637
+End Inserting 3 : 9075
+End day 3 2023-08-14 9075
+End imei : 10051
+
+traitement OM 1 10051
+End CDRs OM 1 : 10068
+
+traitement des autres sources 1 10068
+End AGO & TAN 10068
+Insertion 1 10086
+Inseted 1000000 usage docs 1 1692892930
+Inserting remaining usage docs : 2828
+Inserting remaining usage international docs : 5323
+End Inserting 1 : 10423
+End day 1 2023-08-14 10423
+End imei : 15169
+
+traitement OM 4 15169
+End CDRs OM 4 : 15181
+
+traitement des autres sources 4 15181
+End AGO & TAN 15181
+Insertion 4 15192
+Inserting remaining usage docs : 6160
+Inserting remaining usage international docs : 1873
+End Inserting 4 : 15277
+End day 4 2023-08-14 15277
+End - Thu Aug 24 20:27:36 EAT 2023
+
+WARNING:
+Article 323-1 of the Criminal Code (French Law)
+The act of accessing or remaining, fraudulently, in all or part of the
+automated data processing system is punishable by two years of prison
+and a 30,000 euros fine (150,000 for legal persons).
+
+ATTENTION :
+Article 323-1 du code penal
+Le fait d'acceder ou de se maintenir, frauduleusement, dans tout ou
+partie d'un systeme de traitement automatise de donnees est puni de
+deux ans d'emprisonnement et de 30000 euros d'amende (150000 euros pour les personnes morales).
+Using keyboard-interactive authentication.
+
+
+bt null...
+Traceback (most recent call last):
+  File "/data/script/python/rattra_cbm/tp_bt_market.py", line 166, in <module>
+    pool.map(multi_run_wrapper, tasks)
+  File "/usr/lib64/python2.6/multiprocessing/pool.py", line 148, in map
+    return self.map_async(func, iterable, chunksize).get()
+  File "/usr/lib64/python2.6/multiprocessing/pool.py", line 422, in get
+    raise self._value
+pymongo.errors.CursorNotFound: cursor id '4664881203159846291' not valid at server
+
+WARNING:
+Article 323-1 of the Criminal Code (French Law)
+The act of accessing or remaining, fraudulently, in all or part of the
+automated data processing system is punishable by two years of prison
+and a 30,000 euros fine (150,000 for legal persons).
+
+ATTENTION :
+Article 323-1 du code penal
+Le fait d'acceder ou de se maintenir, frauduleusement, dans tout ou
+partie d'un systeme de traitement automatise de donnees est puni de
+deux ans d'emprisonnement et de 30000 euros d'amende (150000 euros pour les personnes morales).
+Using keyboard-interactive authentication.
+
+
+usage_op site_name null
+0 site(s) done in daily_usage_international on 2023-08-23
+0 site(s) done in daily_purchase on 2023-08-23
+0 site(s) done in daily_usage on 2023-08-23
+Finished usage_op site_name
+
+WARNING:
+Article 323-1 of the Criminal Code (French Law)
+The act of accessing or remaining, fraudulently, in all or part of the
+automated data processing system is punishable by two years of prison
+and a 30,000 euros fine (150,000 for legal persons).
+
+ATTENTION :
+Article 323-1 du code penal
+Le fait d'acceder ou de se maintenir, frauduleusement, dans tout ou
+partie d'un systeme de traitement automatise de donnees est puni de
+deux ans d'emprisonnement et de 30000 euros d'amende (150000 euros pour les personnes morales).
+Using keyboard-interactive authentication.
+
+
+topup recharge site_name null...
+Finished topup recharge site_name null
+
+WARNING:
+Article 323-1 of the Criminal Code (French Law)
+The act of accessing or remaining, fraudulently, in all or part of the
+automated data processing system is punishable by two years of prison
+and a 30,000 euros fine (150,000 for legal persons).
+
+ATTENTION :
+Article 323-1 du code penal
+Le fait d'acceder ou de se maintenir, frauduleusement, dans tout ou
+partie d'un systeme de traitement automatise de donnees est puni de
+deux ans d'emprisonnement et de 30000 euros d'amende (150000 euros pour les personnes morales).
+Using keyboard-interactive authentication.
+
+
+Traitement site_name null
+0
+Retrieved results in 0.272052049637 seconds
+0 site(s) done in 0.272104024887 seconds
+Finished
+Took 0.272117137909 seconds
+
+WARNING:
+Article 323-1 of the Criminal Code (French Law)
+The act of accessing or remaining, fraudulently, in all or part of the
+automated data processing system is punishable by two years of prison
+and a 30,000 euros fine (150,000 for legal persons).
+
+ATTENTION :
+Article 323-1 du code penal
+Le fait d'acceder ou de se maintenir, frauduleusement, dans tout ou
+partie d'un systeme de traitement automatise de donnees est puni de
+deux ans d'emprisonnement et de 30000 euros d'amende (150000 euros pour les personnes morales).
+Using keyboard-interactive authentication.
+
+
+loc_name null...
+daily_usage - 2023-08-14
+7949
+1899 loc_name(s) done in daily_usage on 2023-08-14
+daily_usage_international - 2023-08-14
+0
+0 loc_name(s) done in daily_usage_international on 2023-08-14
+Finished processing loc_name
+End at 2023-08-24 20:40:06

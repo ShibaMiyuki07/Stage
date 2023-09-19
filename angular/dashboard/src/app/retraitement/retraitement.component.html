@@ -1,0 +1,13 @@
+<div align="center">
+    <h1 style="color: red;">{{ error }}</h1>
+    <br>
+    <h2>Log de retraitement du {{ day }}</h2>
+    <br>
+    <div class="log-window">
+        <div class="log-message" >
+            <pre>{{log}}</pre>
+        </div>
+    </div>
+    <div *ngIf="message != ''">{{ message }}</div>
+    <div><button (click)="confirmation_quitter()" class="btn btn-outline-primary m-2">Retour</button></div>
+</div>

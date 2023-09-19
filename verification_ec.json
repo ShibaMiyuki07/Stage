@@ -1,0 +1,171 @@
+[{
+  "_id": {
+    "$oid": "64dcda92e9d8437f27f38e60"
+  },
+  "usage_type": "ec",
+  "erreur_day_cnt": 0,
+  "day": {
+    "$date": "2023-01-11T00:00:00.000Z"
+  },
+  "erreur_day": [],
+  "erreur_site_name": [
+    {
+      "site_name": "Vondrozo",
+      "description": 0,
+      "data": [
+        {
+          "ecart": 2000,
+          "error": 9.75609756097561,
+          "nom": "ec_loan"
+        },
+        {
+          "ecart": 2000,
+          "error": 100,
+          "nom": "ca_reactivation"
+        },
+        {
+          "ecart": 1,
+          "error": 10,
+          "nom": "ec_qty"
+        }
+      ]
+    },
+    {
+      "site_name": "AmparafaravolaVohimena",
+      "description": 1,
+      "data": {
+        "ec_fees": 0,
+        "ec_loan": 2000,
+        "ca_reactivation": 2000,
+        "ec_qty": 1,
+        "ec_payback": 0
+      }
+    }
+  ],
+  "erreur_site_name_cnt": 2,
+  "erreur_market_cnt": 0,
+  "erreur_market": [],
+  "erreur_billing_type_cnt": 0,
+  "erreur_billing_type": [],
+  "erreur_pp_name": [],
+  "erreur_pp_name_cnt": 0,
+  "erreur_segment_cnt": 0,
+  "erreur_segment": []
+},
+{
+  "_id": {
+    "$oid": "64ddadb0b972190d99e4b496"
+  },
+  "usage_type": "ec",
+  "day": {
+    "$date": "2023-01-12T00:00:00.000Z"
+  },
+  "erreur_day_cnt": 0,
+  "erreur_day": [],
+  "erreur_site_name": [],
+  "erreur_site_name_cnt": 0,
+  "erreur_market": [],
+  "erreur_market_cnt": 0,
+  "erreur_billing_type": [],
+  "erreur_billing_type_cnt": 0,
+  "erreur_pp_name_cnt": 0,
+  "erreur_pp_name": [],
+  "erreur_segment_cnt": 0,
+  "erreur_segment": []
+},
+{
+  "_id": {
+    "$oid": "64ddb16f700f26d8e78a8936"
+  },
+  "day": {
+    "$date": "2023-01-13T00:00:00.000Z"
+  },
+  "usage_type": "ec",
+  "erreur_day": [],
+  "erreur_day_cnt": 0,
+  "erreur_site_name_cnt": 0,
+  "erreur_site_name": [],
+  "erreur_market": [],
+  "erreur_market_cnt": 0,
+  "erreur_billing_type_cnt": 0,
+  "erreur_billing_type": [],
+  "erreur_pp_name": [],
+  "erreur_pp_name_cnt": 0,
+  "erreur_segment": [],
+  "erreur_segment_cnt": 0
+},
+{
+  "_id": {
+    "$oid": "64ddb40e0ee9b4b29df8922c"
+  },
+  "erreur_day_cnt": 0,
+  "erreur_day": [],
+  "usage_type": "ec",
+  "day": {
+    "$date": "2023-01-14T00:00:00.000Z"
+  },
+  "erreur_site_name_cnt": 0,
+  "erreur_site_name": [],
+  "erreur_market": [],
+  "erreur_market_cnt": 0,
+  "erreur_billing_type": [],
+  "erreur_billing_type_cnt": 0,
+  "erreur_pp_name_cnt": 0,
+  "erreur_pp_name": [],
+  "erreur_segment": [],
+  "erreur_segment_cnt": 0
+},
+{
+  "_id": {
+    "$oid": "64ddba9154158bf6f2475e69"
+  },
+  "usage_type": "ec",
+  "erreur_day_cnt": 0,
+  "day": {
+    "$date": "2023-01-15T00:00:00.000Z"
+  },
+  "erreur_day": [],
+  "erreur_site_name": [
+    {
+      "description": 0,
+      "data": [
+        {
+          "ecart": 1,
+          "nom": "ec_qty",
+          "error": 50
+        },
+        {
+          "ecart": 2000,
+          "nom": "ec_loan",
+          "error": 40
+        },
+        {
+          "ecart": 2000,
+          "nom": "ca_reactivation",
+          "error": 100
+        }
+      ],
+      "site_name": "Vondrozo"
+    },
+    {
+      "description": 1,
+      "data": {
+        "ec_qty": 1,
+        "ec_fees": 0,
+        "ec_loan": 2000,
+        "ca_reactivation": 2000,
+        "ec_payback": 0
+      },
+      "site_name": "AndramasinaTrimoloharano"
+    }
+  ],
+  "erreur_site_name_cnt": 2,
+  "erreur_market_cnt": 0,
+  "erreur_market": [],
+  "erreur_billing_type_cnt": 0,
+  "erreur_billing_type": [],
+  "erreur_pp_name": [],
+  "erreur_pp_name_cnt": 0,
+  "erreur_segment": [],
+  "erreur_segment_cnt": 0
+}]

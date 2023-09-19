@@ -1,0 +1,18 @@
+div{
+    background-color: #F3F6F9;
+}
+.log-window {
+    width: 475px;
+    height: 200px;
+    color:  white;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    background-color: black;
+  }
+  
+  .log-message {
+    text-align: left;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+  }
