@@ -141,3 +141,14 @@ def getliste_pp():
         liste_pp.append(description[0])
     liste_pp.append('null')
     return liste_pp
+
+def getType_subscriptions():
+    connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.196',database='DM_RF')
+    cursor = connexion.cursor() 
+    query = "select name from rf_type_subscriptions"
+    cursor.execute(query)
+    liste_pp = []
+    for(description) in cursor:
+        liste_pp.append(description[0])
+    liste_pp.append('null')
+    return liste_pp

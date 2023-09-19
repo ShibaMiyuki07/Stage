@@ -1,5 +1,14 @@
-import { Component, NgIterable, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit,Inject,
+  LOCALE_ID } from '@angular/core';
 import { ApiService } from '../api.service';
+import { ActivatedRoute } from '@angular/router';
+import {
+  formatDate
+ }
+  from '@angular/common';
+  import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+
 
 @Component({
   selector: 'app-list',
@@ -7,111 +16,68 @@ import { ApiService } from '../api.service';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit{
-  bundlelist: any[] | undefined;
-  topuplist: any[] | undefined;
-  omlist : any[] | undefined;
-  usagelist : any[] |undefined;
-  eclist : any[] | undefined;
-  e_rclist : any[] | undefined;
-  roaminglist : any[] | undefined;
-
-  bundle_page = 0;
-  topup_page = 0;
-  om_page = 0;
-  usage_page = 0;
-  ec_page = 0;
-  e_rc_page = 0;
-  roaming_page = 0; 
-  constructor (private apiservice : ApiService){}
+  liste: any;
+  type = 0;
+  page = 1;
+  erreur : any = "";
+  closeResult : string = "";
+  log : any;
+  interval : any;
+  erreur_log : string = "";
+  constructor ( @Inject(LOCALE_ID) public locale: string,private apiservice : ApiService,private route : ActivatedRoute,private modalService:NgbModal){}
   ngOnInit() {
-    this.apiservice.getBundle(this.bundle_page).toPromise().then((data : any) => this.bundlelist = data) 
-    this.apiservice.getTopup(this.topup_page).toPromise().then((data : any) => this.topuplist = data) 
-    this.apiservice.getOm(this.om_page).toPromise().then((data : any) => this.omlist = data) 
-    this.apiservice.getUsage(this.usage_page).toPromise().then((data : any) => this.usagelist = data) 
-    this.apiservice.getEc(this.ec_page).toPromise().then((data : any) => this.eclist = data) 
-    this.apiservice.getE_rc(this.e_rc_page).toPromise().then((data : any) => this.e_rclist = data) 
-    this.apiservice.getRoaming(this.roaming_page).toPromise().then((data : any) => this.roaminglist = data) 
+    this.route.queryParams.subscribe(params => this.type = params['type'])
+    this.apiservice.getListe(this.type,this.page).toPromise().then((data : any) => this.liste = data).catch(error =>{
+      setTimeout(() => {
+        this.erreur = "Impossible de se connecter. Essayer de relancer le web service et rafraichissez la page";
+      },1000)
+    })
   }
 
-   bundle(nbr : number) {
-    if (nbr == 1)
+  change_page(page_number : number)
+  {
+    if(page_number == 1)
     {
-      this.bundle_page ++
+      this.page++
     }
-    else
+    if(page_number == -1)
     {
-      this.bundle_page--
+      this.page--
     }
-    this.apiservice.getBundle(this.bundle_page).toPromise().then((data : any) => this.bundlelist = data) 
-  }
-  topup(nbr : number) {
-    if (nbr == 1)
-    {
-      this.topup_page ++
-    }
-    else
-    {
-      this.topup_page--
-    }
-    this.apiservice.getTopup(this.topup_page).toPromise().then((data : any) => this.topuplist = data)  
+    setTimeout(()=>{
+      this.apiservice.getListe(this.type,this.page).toPromise().then((data : any) => this.liste = data)
+    },100)
   }
 
-  om(nbr : number) {
-    if (nbr == 1)
+  check_next()
+  {
+    if((this.page)>this.liste.nbr_doc/7 || this.page == this.liste.nbr_doc/7)
     {
-      this.om_page ++
+      return 0
     }
-    else
-    {
-      this.om_page--
-    }
-    this.apiservice.getOm(this.om_page).toPromise().then((data : any) => this.omlist = data) 
-  }
-  usage(nbr : number) {
-    if (nbr == 1)
-    {
-      this.usage_page ++
-    }
-    else
-    {
-      this.usage_page--
-    }
-    this.apiservice.getUsage(this.usage_page).toPromise().then((data : any) => this.usagelist = data) 
+    return 1
   }
 
-  ec(nbr : number) {
-    if (nbr == 1)
-    {
-      this.ec_page ++
-    }
-    else
-    {
-      this.ec_page--
-    }
-    this.apiservice.getEc(this.ec_page).toPromise().then((data : any) => this.eclist = data)  
-  }
+  open(content : any,date : any,type : number) {  
+    date = formatDate(date,'YYYY-MM-dd',this.locale);
+    this.apiservice.fichier_log(date,type).subscribe(data => {
+      this.log = data;
+      this.erreur_log = "";
+      this.interval = setInterval(()=>{
+        this.apiservice.fichier_log(date,type).subscribe(data => this.log = data,error => {
+          this.erreur_log = "Le log n'existe pas";
+          clearInterval(this.interval);
+        })
+      },3000);
+    },error => {
+      this.erreur_log = "Le log n'existe pas";
+    });
+    
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {  
+      this.closeResult = `Closed with: ${result}`; 
+    }, (reason) => {  
+      this.closeResult = `Dismissed`;  
+    });  
+  }  
 
-  e_rc(nbr : number) {
-    if (nbr == 1)
-    {
-      this.e_rc_page ++
-    }
-    else
-    {
-      this.e_rc_page--
-    }
-    this.apiservice.getE_rc(this.e_rc_page).toPromise().then((data : any) => this.e_rclist = data)  
-  }
-
-  roaming(nbr : number) {
-    if (nbr == 1)
-    {
-      this.roaming_page ++
-    }
-    else
-    {
-      this.roaming_page--
-    }
-    this.apiservice.getRoaming(this.roaming_page).toPromise().then((data : any) => this.roaminglist = data) 
-  }
 }

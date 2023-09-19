@@ -9,9 +9,14 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DetailsBundleComponent implements OnInit{
   bundleDetails : any;
+  type : any;
+  day : any;
+  message : any = {"erreur" : ""};
   constructor(private ApiService:ApiService,private route : ActivatedRoute){}
   ngOnInit() {
-    this.route.queryParams.subscribe(params => this.ApiService.getdetails(params['day'],params['type']).toPromise().then((data) => this.bundleDetails = data))
+    setTimeout(() =>{
+      this.route.queryParams.subscribe(params => {this.type = params['type'];this.day = params['day']})
+      this.ApiService.getdetails(this.day,this.type).subscribe(data => {this.bundleDetails = data},error => {this.message['erreur'] = "Impossible de prendre les données"});
+    },100)
   }
-
 }

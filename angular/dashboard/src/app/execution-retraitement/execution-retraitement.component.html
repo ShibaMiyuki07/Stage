@@ -1,0 +1,16 @@
+<div align="center">
+    <br>
+    <h2>{{ titre }}</h2>
+    <h2>{{ veuillez_patienter}}</h2>
+    <br>
+    <div class="log-window">
+        <div class="log-message" >
+            <pre>{{log}}</pre>
+        </div>
+    </div>
+    <h2 *ngIf="message.log !=''" style="color: green;">{{message.log }}</h2>
+    <h2 *ngIf="message.error !=''" style="color: red;">{{message.error }}</h2>
+    <div style="background-color: #F3F6F9;" align="center">
+        <button class="btn btn-outline-primary m-2" (click)="confirmation_quitter()">Retour</button>
+    </div>
+</div>

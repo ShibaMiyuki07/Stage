@@ -1,0 +1,11 @@
+<div align="center">
+    <br>
+    <h1>{{ verification }}</h1>
+    <h2>{{execution_en_cours}}</h2>
+    <h2 class="veuillez_patienter">{{veuillez_patienter}}</h2>
+    <h2 *ngIf="message.log !=''" style="color: green;">{{message.log }}</h2>
+    <h2 *ngIf="message.error !=''" style="color: red;">{{message.error }}</h2>
+    <div style="background-color: #F3F6F9;" align="center">
+        <button class="btn btn-outline-primary m-2" (click)="confirmation_quitter()">Retour</button>
+    </div>
+</div>

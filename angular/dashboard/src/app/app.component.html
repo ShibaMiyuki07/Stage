@@ -1,26 +1,54 @@
-<!DOCTYPE html>
-<html>
-  <head><link rel="icon" src="/assets/image/orange.png"></head>
-  <body>
-    <div class="header">
-      <img width="100px" src="/assets/image/orange.png">
+
+    <div class="container-xxl position-relative  " style="background-color: #F3F6F9;">
+        <!-- Sidebar Start -->
+        <div class="sidebar pe-4 pb-3">
+            <nav class="navbar navbar-light">
+                <div align="center" class="d-flex align-items-center ms-4 mb-4">
+                    <div class="ms-3">
+                      <img  width="100px" src="/assets/image/orange.png">
+                    </div>
+                </div>
+                <div class="navbar-nav w-100">
+                    <a href="/verification_manuel" class="nav-item nav-link"><i class="fa fa-check me-2"></i>Verification</a>
+                    <a href="/retraitement_manuel" class="nav-item nav-link"><i class="fa fa-file me-2"></i>Retraitement</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Liste à retraiter</a>
+                        <div class="dropdown-menu border-0" style="background-color: black;">
+                            <a href="/liste_retraitement?type=1" class="dropdown-item">Usage</a>
+                            <a href="/liste_retraitement?type=2" class="dropdown-item">Bundle</a>
+                            <a href="/liste_retraitement?type=3" class="dropdown-item">Topup</a>
+                            <a href="/liste_retraitement?type=4" class="dropdown-item">Orange Money</a>
+                            <a href="/liste_retraitement?type=5" class="dropdown-item">Lany credit</a>
+                            <a href="/liste_retraitement?type=6" class="dropdown-item">E-recharge</a>
+                            <a href="/liste_retraitement?type=7" class="dropdown-item">Roaming</a>
+                            <a href="/liste_retraitement?type=8" class="dropdown-item">Parc</a>
+                            <a href="/liste_retraitement?type=9" class="dropdown-item">Nomade</a>
+                        </div>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-tachometer-alt me-2"></i>Dashboard</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="/dashboard_usage?type=1" class="dropdown-item">Usage</a>
+                            <a href="/dashboard_bundle?type=2" class="dropdown-item">Bundle</a>
+                            <a href="/dashboard_topup?type=3" class="dropdown-item">Topup</a>
+                            <a href="/dashboard_om?type=4" class="dropdown-item">Orange Money</a>
+                            <a href="/dashboard_ec?type=5" class="dropdown-item">Lany credit</a>
+                            <a href="/liste_retraitement?type=6" class="dropdown-item">E-recharge</a>
+                            <a href="/dashboard_roaming?type=7" class="dropdown-item">Roaming</a>
+                            <a href="/dashboard_roaming?type=8" class="dropdown-item">Parc</a>
+                            <a href="/dashboard_roaming?type=9" class="dropdown-item">Nomade</a>
+                        </div>
+                    </div>
+                    <a *ngIf="log == 'true'" href="#" (click)="deconnexion()" class="nav-item nav-link"><i class="fa fa-times me-2"></i>Deconnexion</a>
+                </div>
+            </nav>
+        </div>
+        <div style="background-color: #F3F6F9;" class="content">
+          <router-outlet></router-outlet>
+          <footer id="footer" >
+            <div align="center">
+                 <a href="https://www.orange.mg/">Orange Madagascar</a> &copy; 2023 All Right Reserved. 
+            </div>
+          </footer>
+        </div>
     </div>
-    <input type="checkbox" id="active">
-    <label for="active" class="menu-btn"><span></span></label>
-    <label for="active" class="close"></label>
-    <div class="wrapper">
-      <ul>
-        <li><a [routerLink]="['/liste_retraitement']">Retraitement</a></li>
-        <li><a href="#">Deshboard</a></li>
-        <li><a href="#">Services</a></li>
-        <li><a href="#">Gallery</a></li>
-        <li><a href="#">Feedback</a></li>
-      </ul>
-    </div>
-<router-outlet></router-outlet>
-<br>
-</body>
-<footer>
-      <p>Copyright © 2023 Orange Madagascar.All rights reserved.&nbsp; &nbsp;</p>
-</footer>
-</html>

@@ -1,0 +1,28 @@
+<div class="div" align="center">
+    <div style="padding-top:20px ;" class="col-sm-12 col-xl-6">
+        <div class=" rounded h-100 p-4">
+            <h3 class="mb-4">Retraitement manuel</h3>
+            <form (ngSubmit)="lancer_retraitement()">
+                <div class="mb-3">
+                    <strong for="date" class="form-label">Choisissez la date de debut à vérifier</strong>
+                    <input type="date" class="form-control" name="date_debut" [(ngModel)]="date_debut">
+                </div>
+                <br>
+                <div class="mb-3">
+                    <strong for="date" class="form-label">Choisissez la date de fin à vérifier</strong>
+                    <input type="date" class="form-control" name="date_fin" [(ngModel)]="date_fin">
+                </div>
+                <br>
+                <div class="mb-3">
+                    <strong for="usagetype" class="form-label">Choisissez le type d'usage</strong>
+                    <select name="usage_type" class="form-control" [(ngModel)]="usage">
+                        <option *ngFor="let usage of usage_type" value="{{usage.id}}">
+                            {{usage.name}}
+                        </option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-outline-primary">Lancer</button>
+            </form>
+        </div>
+    </div>
+</div>
