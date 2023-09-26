@@ -225,7 +225,7 @@ async def verification(date_debut:str,date_fin : str,type : int):
                 break
             day_actuelle = day_actuelle + timedelta(1)
 
-    for i in range(liste_en_cours[1]):
+    for i in range(len(liste_en_cours[1])):
         if date_debut == liste_en_cours[1][i]['date_debut'] and date_fin == liste_en_cours[1][i]['date_fin'] and type == liste_en_cours[1][i]['id_usage']:
             liste_en_cours[1].pop(i)
     if day_debut != day_fin:
@@ -276,7 +276,7 @@ async def retraitement_manuel(date_debut : str,date_fin : str,type : int):
     subprocess.run(cmd_retraitement)
 
     #Enleve les donnee retraites termines
-    for i in range(liste_en_cours[0]):
+    for i in range(len(liste_en_cours[0])):
         if date_debut == liste_en_cours[0][i]['date_debut'] and date_fin == liste_en_cours[0][i]['date_fin'] and type == liste_en_cours[0][i]['id_usage']:
             liste_en_cours[0].pop(i)
 
