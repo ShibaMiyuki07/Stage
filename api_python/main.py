@@ -173,6 +173,10 @@ def get_data_from_file(file_path: str) -> Generator:
 '''
 @app.get('/verification/{date_debut}/{date_fin}/{type}')
 async def verification(date_debut:str,date_fin : str,type : int):
+    host = "192.168.61.111"
+    username = "osadmin"
+    password = "osadmin@321"
+    
     day_debut = Verification.remplacement_date(date_debut)
     day_fin = Verification.remplacement_date(date_fin)
     usage_type = getusage_type(type)
@@ -192,25 +196,38 @@ async def verification(date_debut:str,date_fin : str,type : int):
             return {"error" : "Des données de cette période sont déjà en cours de vérification"}
 
     liste_en_cours[1].append({'date_debut' : day_debut,'date_fin' : day_fin,'usage_type' : usage_type,"id_usage" : type})
+    
     #boucle pour lancer la vérification durant la periode donnee
-    '''
     while True:
-        
-        directory_insertion="/Insertion_Data/"
-        date = day_actuelle.strftime("%Y-%m-%d")
-        cmd_insertion = "python -u "+directory_insertion+"Insertion_daily_"+usage_type+" "+date
-        subprocess.run([cmd_insertion])
+        if(usage_type != 'om'):    
+            directory_insertion="/data2/tmp/Stage/Insertion_Data/"
+            date = day_actuelle.strftime("%Y-%m-%d")
+            cmd_insertion = "python -u "+directory_insertion+"Insertion_daily_"+usage_type+" "+date
+            subprocess.run([cmd_insertion])
 
-        directory_verification="/verification/"+usage_type+"/main.py"
-        cmd_verification="python -u "+directory_verification+" "+date
-        subprocess.run([cmd_verification])
-        if(day_actuelle == day_fin):
-            break
-        day_actuelle = day_actuelle + timedelta(1)
+            directory_verification="/verification/"+usage_type+"/main.py"
+            cmd_verification="python -u "+directory_verification+" "+date
+            client.exec_command(cm_verification)
+            #subprocess.run([cmd_verification])
+            if(day_actuelle == day_fin):
+                break
+            day_actuelle = day_actuelle + timedelta(1)
+        else:   
+            directory_insertion="/data2/tmp/Stage/dossier_final/om/Insertion_data/Extraction_Data.py"
+            date = day_actuelle.strftime("%Y-%m-%d")
+            cmd_insertion = "python -u "+directory_insertion+" "+date
+            subprocess.run([cmd_insertion])
+
+            directory_verification="/data2/tmp/Stage/dossier_final/"+usage_type+"/main.py"
+            cmd_verification="python -u "+directory_verification+" "+date
+            subprocess.run([cmd_verification])
+            if(day_actuelle == day_fin):
+                break
+            day_actuelle = day_actuelle + timedelta(1)
 
     for i in range(liste_en_cours[1]):
         if date_debut == liste_en_cours[1][i]['date_debut'] and date_fin == liste_en_cours[1][i]['date_fin'] and type == liste_en_cours[1][i]['id_usage']:
-            liste_en_cours[1].pop(i)'''
+            liste_en_cours[1].pop(i)
     if day_debut != day_fin:
         return {'log' :  'Vérification de '+date_debut+" à "+date_fin+' términé'}
     else:
@@ -248,7 +265,7 @@ async def retraitement_manuel(date_debut : str,date_fin : str,type : int):
     else :
         liste_en_cours[0].append({'date_debut' : day_debut,'date_fin' : day_fin,'usage_type' : usage_type,"id_usage" : type})
 
-    '''if usage_type in usage_global:
+    if usage_type in usage_global:
         a_lancer = "usage_restant.sh "
     elif(usage_type == "e-rc"):
         a_lancer = "launch_global_erc.sh "
@@ -275,7 +292,7 @@ async def retraitement_manuel(date_debut : str,date_fin : str,type : int):
         for usage in usage_global:       
             verification_donne(day_debut,day_fin,usage,liste_en_cours)
     else:
-       verification_donne(day_debut,day_fin,usage_type,liste_en_cours)'''
+       verification_donne(day_debut,day_fin,usage_type,liste_en_cours)
         
     return {'log' : 'Les données de '+date_debut+" a "+date_fin+" ont été retraités et vérifiés"}
 
