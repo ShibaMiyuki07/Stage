@@ -106,29 +106,33 @@ async def retraitement(date : str,type : int):
     if count == 0:
         return "Erreur données pas encore vérifiés"
     cmd = "sh "
-    directory = ""
+    directory = "/data/script/work/shell/retraitement/"
     a_lancer = ""
     usage_global =  ['bundle','topup','ec','usage','roaming']
     if usage_type in usage_global:
-        a_lancer = "usage_restant.sh "
+        a_lancer = "launch_global_usage.sh "
+        for u in usage_global:
+            liste_retraitement_en_cours[u][day] = 1
     elif(usage_type == "e-rc"):
         a_lancer = "launch_global_erc.sh "
+        liste_retraitement_en_cours[usage_type][day] = 1
     else : 
         a_lancer = "launch_global_"+usage_type+".sh "
+        liste_retraitement_en_cours[usage_type][day] = 1
 
     a_lancer = cmd+directory+a_lancer+date+" "+date
     try:
-        liste_retraitement_en_cours[usage_type][day] = 1
-        commande_a_lancer = a_lancer+" > retraitement_"+getfichier_log(day,usage_type)
-        subprocess.run([commande_a_lancer])
+        
+        commande_a_lancer = "(sshpass -p Adm3PI2 ssh osadmin@192.168.61.199 "+a_lancer+") > retraitement_"+getfichier_log(day,usage_type)
+        subprocess.run(commande_a_lancer)
         a_lancer_verification = ""
         if(usage_type in usage_global):
             for i in usage_global:
                 a_lancer_verification = getlocation_verification(i,date)
-                subprocess.run([a_lancer_verification])
+                subprocess.run(a_lancer_verification)
         else : 
             a_lancer_verification = getlocation_verification(usage_type,date)
-            subprocess.run([a_lancer_verification])
+            subprocess.run(a_lancer_verification)
         del liste_retraitement_en_cours[usage_type][day]
         return "Retraitement terminé avec succès veuillez revoir le tableau pour voir le resultat "
     except:
@@ -173,9 +177,6 @@ def get_data_from_file(file_path: str) -> Generator:
 '''
 @app.get('/verification/{date_debut}/{date_fin}/{type}')
 async def verification(date_debut:str,date_fin : str,type : int):
-    host = "192.168.61.111"
-    username = "osadmin"
-    password = "osadmin@321"
     
     day_debut = Verification.remplacement_date(date_debut)
     day_fin = Verification.remplacement_date(date_fin)
@@ -203,12 +204,11 @@ async def verification(date_debut:str,date_fin : str,type : int):
             directory_insertion="/data2/tmp/Stage/Insertion_Data/"
             date = day_actuelle.strftime("%Y-%m-%d")
             cmd_insertion = "python -u "+directory_insertion+"Insertion_daily_"+usage_type+" "+date
-            subprocess.run([cmd_insertion])
+            subprocess.run(cmd_insertion)
 
-            directory_verification="/verification/"+usage_type+"/main.py"
+            directory_verification="/data2/tmp/Stage/dossier_final/"+usage_type+"/main.py"
             cmd_verification="python -u "+directory_verification+" "+date
-            client.exec_command(cm_verification)
-            #subprocess.run([cmd_verification])
+            subprocess.run(cmd_verification)
             if(day_actuelle == day_fin):
                 break
             day_actuelle = day_actuelle + timedelta(1)
@@ -216,11 +216,11 @@ async def verification(date_debut:str,date_fin : str,type : int):
             directory_insertion="/data2/tmp/Stage/dossier_final/om/Insertion_data/Extraction_Data.py"
             date = day_actuelle.strftime("%Y-%m-%d")
             cmd_insertion = "python -u "+directory_insertion+" "+date
-            subprocess.run([cmd_insertion])
+            subprocess.run(cmd_insertion)
 
             directory_verification="/data2/tmp/Stage/dossier_final/"+usage_type+"/main.py"
             cmd_verification="python -u "+directory_verification+" "+date
-            subprocess.run([cmd_verification])
+            subprocess.run(cmd_verification)
             if(day_actuelle == day_fin):
                 break
             day_actuelle = day_actuelle + timedelta(1)
@@ -266,14 +266,14 @@ async def retraitement_manuel(date_debut : str,date_fin : str,type : int):
         liste_en_cours[0].append({'date_debut' : day_debut,'date_fin' : day_fin,'usage_type' : usage_type,"id_usage" : type})
 
     if usage_type in usage_global:
-        a_lancer = "usage_restant.sh "
+        a_lancer = "launch_global_usage.sh "
     elif(usage_type == "e-rc"):
         a_lancer = "launch_global_erc.sh "
     else : 
         a_lancer = "launch_global_"+usage_type+".sh "
-    fichier_a_lancer = "/"+a_lancer
-    cmd_retraitement = "sh "+fichier_a_lancer+day_debut+" "+day_fin+" > log/retraitement_"+getfichier_log(day_debut,usage_type)+"_"+getfichier_log(day_fin,usage_type)
-    subprocess.run([cmd_retraitement])
+    fichier_a_lancer = "/data/script/work/shell/retraitement/"+a_lancer
+    cmd_retraitement = "(sshpass -p ssh osadmin@192.168.61.199 sh "+fichier_a_lancer+day_debut+" "+day_fin+") > log/retraitement_"+getfichier_log(day_debut,usage_type)+"_"+getfichier_log(day_fin,usage_type)
+    subprocess.run(cmd_retraitement)
 
     #Enleve les donnee retraites termines
     for i in range(liste_en_cours[0]):
