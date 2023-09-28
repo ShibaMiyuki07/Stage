@@ -27,7 +27,7 @@ def get_aggregation():
     return collection
 
 def connexion_sql():
-    connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.196',database="DWH")
+    connexion = mysql.connector.connect(user='ETL_USER',password='3tl_4ser',host='192.168.61.111',database="DWH")
     return connexion
 
 def test_login(user : Utilisateur):

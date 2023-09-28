@@ -38,14 +38,12 @@ liste_retraitement_en_cours['roaming'][datetime.datetime(2023,1,11)] = 1
 liste_en_cours = []
 liste_en_cours.append([])
 liste_en_cours.append([])
-liste_en_cours[1].append({'date_debut' : "2023-01-11",'date_fin' : "2023-01-12",'usage_type' : "bundle","id_usage" : 2})
-liste_en_cours[0].append({'date_debut' : "2023-01-12",'date_fin' : "2023-01-12",'usage_type' : "bundle","id_usage" : 2})
 
 '''
     Lien pour la liste
 '''
 @app.get('/liste/{type}/{page}')
-async def liste(type : int,page : int):
+def liste(type : int,page : int):
     collection = getverification_collection()
     usage_type = getusage_type(type)
     nbr_doc = collection.count_documents({"usage_type" : usage_type})
@@ -57,7 +55,7 @@ async def liste(type : int,page : int):
     Lien pour les détails
 '''
 @app.get('/details/{date}/{type}')
-async def verification_details(date:str,type:int):
+def verification_details(date:str,type:int):
     collection = getverification_collection()
     day = Verification.remplacement_date(date)
     usage_type = getusage_type(type)
@@ -70,7 +68,7 @@ async def verification_details(date:str,type:int):
 '''
 
 @app.get('/dashboard/{type}/{date_debut}/{date_fin}')
-async def dashboard_bundle(type:int,date_debut : str,date_fin : str):
+def dashboard_bundle(type:int,date_debut : str,date_fin : str):
     collection = get_aggregation()
     usage_type = getusage_type(type)
     date_debut = Verification.remplacement_date(date_debut)
@@ -83,7 +81,7 @@ async def dashboard_bundle(type:int,date_debut : str,date_fin : str):
     Lien pour le dashboard
 '''
 @app.get('/dashboard/{type}')
-async def dashboard_bundle(type : int):
+def dashboard_bundle(type : int):
     collection = get_aggregation()
     usage_type = getusage_type(type)
     resultats = collection.find({'usage_type' : usage_type,'type_aggregation' : 'day'}).sort('day',-1).limit(8).sort('day',1)
@@ -95,7 +93,7 @@ async def dashboard_bundle(type : int):
     Lien pour le retraitement à partir du tableau
 '''
 @app.get('/retraitement/{date}/{type}')
-async def retraitement(date : str,type : int):
+def retraitement(date : str,type : int):
     collection = get_aggregation()
     usage_type = getusage_type(type)
     day = Verification.remplacement_date(date)
@@ -123,16 +121,16 @@ async def retraitement(date : str,type : int):
     a_lancer = cmd+directory+a_lancer+date+" "+date
     try:
         
-        commande_a_lancer = "(sshpass -p Adm3PI2 ssh osadmin@192.168.61.199 "+a_lancer+") > retraitement_"+getfichier_log(day,usage_type)
+        commande_a_lancer = '(plink -ssh osadmin@192.168.61.199 -pw Adm3PI2 "'+a_lancer+'") > C:\\Users\\aen_stg\\Documents\\log\\retraitement_'+getfichier_log(day,usage_type)
         subprocess.run(commande_a_lancer)
         a_lancer_verification = ""
         if(usage_type in usage_global):
             for i in usage_global:
                 a_lancer_verification = getlocation_verification(i,date)
-                subprocess.run(a_lancer_verification)
+                subprocess.run(a_lancer_verification,shell=True)
         else : 
             a_lancer_verification = getlocation_verification(usage_type,date)
-            subprocess.run(a_lancer_verification)
+            subprocess.run(a_lancer_verification,shell=True)
         del liste_retraitement_en_cours[usage_type][day]
         return "Retraitement terminé avec succès veuillez revoir le tableau pour voir le resultat "
     except:
@@ -144,7 +142,7 @@ async def retraitement(date : str,type : int):
     Lien pour le log du retraitement à partir du tableau
 '''
 @app.get('/fichier_log/{date}/{type}')
-async def fichier_log(date:str,type:int):
+def fichier_log(date:str,type:int):
     collection = get_aggregation()
     day = Verification.remplacement_date(date)
     usage_type = getusage_type(type)
@@ -154,9 +152,9 @@ async def fichier_log(date:str,type:int):
         count +=1
     if count == 0:
         raise HTTPException(detail="Data not found.", status_code=status.HTTP_404_NOT_FOUND)
-    fichier = "retraitement_"+getfichier_log(day,usage_type)
+    fichier = "C:\\Users\\aen_stg\\Documents\\log\\retraitement_"+getfichier_log(day,usage_type)
     try:
-        file_contents = get_data_from_file(file_path="D:/ITU/Stage/api_python/log/rattra_daily_20230814.log")
+        file_contents = get_data_from_file(file_path=fichier)
         response = StreamingResponse(
             content=file_contents,
             status_code=status.HTTP_200_OK,
@@ -176,7 +174,7 @@ def get_data_from_file(file_path: str) -> Generator:
     Lien pour la verification manuel
 '''
 @app.get('/verification/{date_debut}/{date_fin}/{type}')
-async def verification(date_debut:str,date_fin : str,type : int):
+def verification(date_debut:str,date_fin : str,type : int):
     
     day_debut = Verification.remplacement_date(date_debut)
     day_fin = Verification.remplacement_date(date_fin)
@@ -199,15 +197,16 @@ async def verification(date_debut:str,date_fin : str,type : int):
     liste_en_cours[1].append({'date_debut' : day_debut,'date_fin' : day_fin,'usage_type' : usage_type,"id_usage" : type})
     
     #boucle pour lancer la vérification durant la periode donnee
-    while True:
+    verification_donne(day_debut,day_fin,usage_type,liste_en_cours)
+    '''while True:
         if(usage_type != 'om'):    
             directory_insertion="/data2/tmp/Stage/Insertion_Data/"
             date = day_actuelle.strftime("%Y-%m-%d")
-            cmd_insertion = "python -u "+directory_insertion+"Insertion_daily_"+usage_type+" "+date
-            subprocess.run(cmd_insertion)
+            cmd_insertion = 'plink -ssh osadmin@192.168.61.111 -pw osadmin@321 "source /data/temp/venv_test/bin/activate ;python -u '+directory_insertion+'Insertion_Daily_'+usage_type+'.py '+date+' ;deactivate"'
+            subprocess.run(cmd_insertion,shell=True)
 
             directory_verification="/data2/tmp/Stage/dossier_final/"+usage_type+"/main.py"
-            cmd_verification="python -u "+directory_verification+" "+date
+            cmd_verification='plink -ssh osadmin@192.168.61.111 -pw osadmin@321 "source /data/temp/venv_test/bin/activate ;python -u '+directory_verification+' '+date+' ;deactivate"'
             subprocess.run(cmd_verification)
             if(day_actuelle == day_fin):
                 break
@@ -215,18 +214,18 @@ async def verification(date_debut:str,date_fin : str,type : int):
         else:   
             directory_insertion="/data2/tmp/Stage/dossier_final/om/Insertion_data/Extraction_Data.py"
             date = day_actuelle.strftime("%Y-%m-%d")
-            cmd_insertion = "python -u "+directory_insertion+" "+date
-            subprocess.run(cmd_insertion)
+            cmd_insertion = "plink -ssh osadmin@192.168.61.111 -pw osadmin@321 'source /data/temp/venv_test/bin/activate ; python -u "+directory_insertion+" "+date+"; deactivate'"
+            subprocess.run(cmd_insertion,shell=True)
 
             directory_verification="/data2/tmp/Stage/dossier_final/"+usage_type+"/main.py"
-            cmd_verification="python -u "+directory_verification+" "+date
-            subprocess.run(cmd_verification)
+            cmd_verification='plink -ssh osadmin@192.168.61.111 -pw osadmin@321 "source /data/temp/venv_test/bin/activate ;python -u '+directory_verification+' '+date+';deactivate"'
+            subprocess.run(cmd_verification,shell=True)
             if(day_actuelle == day_fin):
                 break
-            day_actuelle = day_actuelle + timedelta(1)
+            day_actuelle = day_actuelle + timedelta(1)'''
 
     for i in range(len(liste_en_cours[1])):
-        if date_debut == liste_en_cours[1][i]['date_debut'] and date_fin == liste_en_cours[1][i]['date_fin'] and type == liste_en_cours[1][i]['id_usage']:
+        if day_debut == liste_en_cours[1][i]['date_debut'] and day_fin == liste_en_cours[1][i]['date_fin'] and type == liste_en_cours[1][i]['id_usage']:
             liste_en_cours[1].pop(i)
     if day_debut != day_fin:
         return {'log' :  'Vérification de '+date_debut+" à "+date_fin+' términé'}
@@ -238,7 +237,7 @@ async def verification(date_debut:str,date_fin : str,type : int):
     Lien pour le retraitement manuel
 '''
 @app.get('/retraitement_manuel/{date_debut}/{date_fin}/{type}')
-async def retraitement_manuel(date_debut : str,date_fin : str,type : int):
+def retraitement_manuel(date_debut : str,date_fin : str,type : int):
     fichier_a_lancer = ""
     usage_type = getusage_type(type)
 
@@ -271,17 +270,16 @@ async def retraitement_manuel(date_debut : str,date_fin : str,type : int):
         a_lancer = "launch_global_erc.sh "
     else : 
         a_lancer = "launch_global_"+usage_type+".sh "
-    fichier_a_lancer = "/data/script/work/shell/retraitement/"+a_lancer
-    cmd_retraitement = "(sshpass -p ssh osadmin@192.168.61.199 sh "+fichier_a_lancer+day_debut+" "+day_fin+") > log/retraitement_"+getfichier_log(day_debut,usage_type)+"_"+getfichier_log(day_fin,usage_type)
-    subprocess.run(cmd_retraitement)
+    fichier_a_lancer = "/home/osadmin/tmv/"+a_lancer
+    cmd_retraitement = '(plink -ssh osadmin@192.168.61.199 -pw Adm3PI2 "sh '+fichier_a_lancer+date_debut+' '+date_fin+'") '#> C:\\Users\\aen_stg\\Documents\\log\\retraitement_'+getfichier_log(day_debut,usage_type)+'_'+getfichier_log(day_fin,usage_type)
+    #subprocess.run(cmd_retraitement,shell=True)
+    print(cmd_retraitement)
 
     #Enleve les donnee retraites termines
-    for i in range(len(liste_en_cours[0])):
-        if date_debut == liste_en_cours[0][i]['date_debut'] and date_fin == liste_en_cours[0][i]['date_fin'] and type == liste_en_cours[0][i]['id_usage']:
-            liste_en_cours[0].pop(i)
+    
 
     #Verifie si les donnees retraites sont les usages de depart
-    if(usage_type in usage_global):
+    '''if(usage_type in usage_global):
         for i in usage_global:
             liste_en_cours[1].append({'date_debut' : day_debut,'date_fin' : day_fin,'usage_type' : i,"id_usage" : type})
     else :
@@ -292,7 +290,7 @@ async def retraitement_manuel(date_debut : str,date_fin : str,type : int):
         for usage in usage_global:       
             verification_donne(day_debut,day_fin,usage,liste_en_cours)
     else:
-       verification_donne(day_debut,day_fin,usage_type,liste_en_cours)
+       verification_donne(day_debut,day_fin,usage_type,liste_en_cours)'''
         
     return {'log' : 'Les données de '+date_debut+" a "+date_fin+" ont été retraités et vérifiés"}
 
@@ -301,11 +299,11 @@ async def retraitement_manuel(date_debut : str,date_fin : str,type : int):
     Lien pour le log du retraitement manuel
 '''
 @app.get('/log_retraitement/{date_debut}/{date_fin}/{type}')
-async def log_retraitement(date_debut : str,date_fin : str,type : int):
+def log_retraitement(date_debut : str,date_fin : str,type : int):
     day_debut = Verification.remplacement_date(date_debut)
     usage_type = getusage_type(type)
     day_fin = Verification.remplacement_date(date_fin)
-    fichier_a_ouvrir = "log/retraitement_"+getfichier_log(day_debut,usage_type)+"_"+getfichier_log(day_fin,usage_type)
+    fichier_a_ouvrir = "C:\\Users\\aen_stg\\Documents\\log\\retraitement_"+getfichier_log(day_debut,usage_type)+"_"+getfichier_log(day_fin,usage_type)
     
     #Ouverture du fichier et envoi de celui-ci à l'utilisateur
     try:
@@ -324,23 +322,23 @@ async def log_retraitement(date_debut : str,date_fin : str,type : int):
     Lien pour la connexion de l'utilisateur
 '''
 @app.post('/login')
-async def login(user : Utilisateur):
+def login(user : Utilisateur):
     existe = test_login(user)
     return existe
 
 
 @app.get('/en_cours/{action}')
-async def en_cours(action : int):
+def en_cours(action : int):
     return {'data' : liste_en_cours[action]}
 
 
 @app.get('/log/{date_debut}/{date_fin}/{type}/{type_execution}')
-async def log_retraitement(date_debut : str,date_fin : str,type : int,type_execution : int):
+def log_retraitement(date_debut : str,date_fin : str,type : int,type_execution : int):
     day_debut = Verification.remplacement_date(date_debut)
     usage_type = getusage_type(type)
     day_fin = Verification.remplacement_date(date_fin)
     if(type_execution == 0):
-        fichier_a_ouvrir = "log/retraitement_"+getfichier_log(day_debut,usage_type)+"_"+getfichier_log(day_fin,usage_type)
+        fichier_a_ouvrir = "C:\\Users\\aen_stg\\Documents\\log\\retraitement_"+getfichier_log(day_debut,usage_type)+"_"+getfichier_log(day_fin,usage_type)
     elif(type_execution == 1):
         fichier_a_ouvrir = "log/verification"+getfichier_log(day_debut,usage_type)+"_"+getfichier_log(day_fin,usage_type)
     

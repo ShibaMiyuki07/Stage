@@ -33,28 +33,42 @@ def getfichier_log(day,usage_type):
 
 
 def getlocation_verification(usage_type,date):
-    commande_python = "python -u "
+    commande_python = 'plink -ssh osadmin@192.168.61.111 -pw osadmin@321 "source /data/temp/venv_test/bin/activate ;python -u '
     directory_verification = "/verification/"+usage_type+"/main.py "
     day = Verification.remplacement_date(date)
-    a_lancer_verification = commande_python+directory_verification+date+" | tee log/verification"+getfichier_log(day,usage_type)
+    a_lancer_verification = commande_python+directory_verification+date+' ;dactivate"'
     return a_lancer_verification
 
 def verification_donne(day_debut,day_fin,usage_type,en_cours):
     day_actuelle = day_debut
     while True:
-                directory_insertion="/Insertion_Data/"
-                date = day_actuelle.strftime("%Y-%m-%d")
-                cmd_insertion = "python -u "+directory_insertion+"Insertion_daily_"+usage_type+" "+date
-                subprocess.run([cmd_insertion])
+        if(usage_type != 'om'):    
+            directory_insertion="/data2/tmp/Stage/Insertion_Data/"
+            date = day_actuelle.strftime("%Y-%m-%d")
+            cmd_insertion = 'plink -ssh osadmin@192.168.61.111 -pw osadmin@321 "source /data/temp/venv_test/bin/activate ;python -u '+directory_insertion+'Insertion_Daily_'+usage_type+'.py '+date+' ;deactivate"'
+            subprocess.run(cmd_insertion,shell=True)
 
-                directory_verification="/verification/"+usage_type+"/main.py"
-                cmd_verification="python -u "+directory_verification+" "+date
-                subprocess.run([cmd_verification])
-
-                #check si la date en cours d'execution est égale à la date finale
-                if(day_actuelle == day_fin):
-                    for i in range(en_cours[1]):
+            directory_verification="/data2/tmp/Stage/dossier_final/"+usage_type+"/main.py"
+            cmd_verification='plink -ssh osadmin@192.168.61.111 -pw osadmin@321 "source /data/temp/venv_test/bin/activate ;python -u '+directory_verification+' '+date+' ;deactivate"'
+            subprocess.run(cmd_verification)
+            if(day_actuelle == day_fin):
+                for i in range(en_cours[1]):
                         if day_debut == en_cours[1][i]['date_debut'] and day_fin == en_cours[1][i]['date_fin'] and usage_type == en_cours[1][i]['usage_type']:
                             en_cours[1].pop(i)
-                    break
-                day_actuelle = day_actuelle + timedelta(1)
+                break
+            day_actuelle = day_actuelle + timedelta(1)
+        else:   
+            directory_insertion="/data2/tmp/Stage/dossier_final/om/Insertion_data/Extraction_Data.py"
+            date = day_actuelle.strftime("%Y-%m-%d")
+            cmd_insertion = "plink -ssh osadmin@192.168.61.111 -pw osadmin@321 'source /data/temp/venv_test/bin/activate ; python -u "+directory_insertion+" "+date+"; deactivate'"
+            subprocess.run(cmd_insertion,shell=True)
+
+            directory_verification="/data2/tmp/Stage/dossier_final/"+usage_type+"/main.py"
+            cmd_verification='plink -ssh osadmin@192.168.61.111 -pw osadmin@321 "source /data/temp/venv_test/bin/activate ;python -u '+directory_verification+' '+date+';deactivate"'
+            subprocess.run(cmd_verification,shell=True)
+            if(day_actuelle == day_fin):
+                for i in range(en_cours[1]):
+                        if day_debut == en_cours[1][i]['date_debut'] and day_fin == en_cours[1][i]['date_fin'] and usage_type == en_cours[1][i]['usage_type']:
+                            en_cours[1].pop(i)
+                break
+            day_actuelle = day_actuelle + timedelta(1)
