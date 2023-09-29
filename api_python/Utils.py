@@ -52,7 +52,7 @@ def verification_donne(day_debut,day_fin,usage_type,en_cours):
             cmd_verification='plink -ssh osadmin@192.168.61.111 -pw osadmin@321 "source /data/temp/venv_test/bin/activate ;python -u '+directory_verification+' '+date+' ;deactivate"'
             subprocess.run(cmd_verification)
             if(day_actuelle == day_fin):
-                for i in range(en_cours[1]):
+                for i in range(len(en_cours[1])):
                         if day_debut == en_cours[1][i]['date_debut'] and day_fin == en_cours[1][i]['date_fin'] and usage_type == en_cours[1][i]['usage_type']:
                             en_cours[1].pop(i)
                 break
@@ -60,14 +60,16 @@ def verification_donne(day_debut,day_fin,usage_type,en_cours):
         else:   
             directory_insertion="/data2/tmp/Stage/dossier_final/om/Insertion_data/Extraction_Data.py"
             date = day_actuelle.strftime("%Y-%m-%d")
-            cmd_insertion = "plink -ssh osadmin@192.168.61.111 -pw osadmin@321 'source /data/temp/venv_test/bin/activate ; python -u "+directory_insertion+" "+date+"; deactivate'"
+            cmd_insertion = 'plink -ssh osadmin@192.168.61.111 -pw osadmin@321 "source /data/temp/venv_test/bin/activate ; python -u '+directory_insertion+' '+date+'; deactivate"'
+            print(cmd_insertion)
             subprocess.run(cmd_insertion,shell=True)
 
             directory_verification="/data2/tmp/Stage/dossier_final/"+usage_type+"/main.py"
             cmd_verification='plink -ssh osadmin@192.168.61.111 -pw osadmin@321 "source /data/temp/venv_test/bin/activate ;python -u '+directory_verification+' '+date+';deactivate"'
+            print(cmd_verification)
             subprocess.run(cmd_verification,shell=True)
             if(day_actuelle == day_fin):
-                for i in range(en_cours[1]):
+                for i in range(len(en_cours[1])):
                         if day_debut == en_cours[1][i]['date_debut'] and day_fin == en_cours[1][i]['date_fin'] and usage_type == en_cours[1][i]['usage_type']:
                             en_cours[1].pop(i)
                 break
