@@ -20,6 +20,13 @@ def getverification_collection():
     collection = db['daily_usage_verification']
     return collection
 
+
+def getconfig():
+    client = connexion_base()
+    db = client['test']
+    collection = db['dashboard_config']
+    return collection
+
 def get_aggregation():
     client = connexion_base()
     db = client['test']

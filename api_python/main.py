@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from Model.Utilisateur import Utilisateur
 from Utils import getfichier_log, getlocation_verification, getusage_type, verification_donne
-from database.Connexion import test_login, get_aggregation, getverification_collection
+from database.Connexion import test_login, get_aggregation, getverification_collection,getconfig
 from Model.Verification import Verification
 import uvicorn
 import subprocess
@@ -48,6 +48,12 @@ def liste(type : int,page : int):
     nbr_doc = collection.count_documents({"usage_type" : usage_type})
     resultat = collection.find({"usage_type" : usage_type}).skip((page-1)*7).limit(7).sort('day',-1)
     return {'usage_type' : usage_type,'nbr_doc' : nbr_doc,'data' : [Verification.insertion_data(r,liste_retraitement_en_cours) for r in resultat]}
+
+
+@app.get('/usage_type')
+def getusage_type():
+    resultats = getconfig().find({'type_donne' : 'config'})
+    return [r for r in resultats]
 
 
 '''
