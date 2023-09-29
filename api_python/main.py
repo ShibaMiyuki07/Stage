@@ -4,7 +4,7 @@ from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from Model.Utilisateur import Utilisateur
-from Utils import getfichier_log, getlocation_verification, getusage_type, verification_donne
+from Utils import getfichier_log, getlocation_verification, getusage_type, verification_donne,change_dict
 from database.Connexion import test_login, get_aggregation, getverification_collection,getconfig
 from Model.Verification import Verification
 import uvicorn
@@ -51,9 +51,15 @@ def liste(type : int,page : int):
 
 
 @app.get('/usage_type')
-def getusage_type():
+def get_all_usage():
     resultats = getconfig().find({'type_donne' : 'config'})
-    return [r for r in resultats]
+    return [change_dict(r) for r in resultats]
+
+@app.get('/usage_type/{type}')
+def get_usage_from_config(type : int):
+    resultats = getconfig().find({'identifiant' : type})
+    for r in resultats:
+        return change_dict(r)
 
 
 '''
