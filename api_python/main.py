@@ -32,7 +32,6 @@ liste_retraitement_en_cours['nomad'] = {}
 liste_retraitement_en_cours['parc'] = {}
 liste_retraitement_en_cours['om'] = {}
 
-liste_retraitement_en_cours['roaming'][datetime.datetime(2023,1,11)] = 1
 
 
 liste_en_cours = []
@@ -104,7 +103,7 @@ def retraitement(date : str,type : int):
     if count == 0:
         return "Erreur données pas encore vérifiés"
     cmd = "sh "
-    directory = "/data/script/work/shell/retraitement/"
+    directory = "/home/osadmin/tmv/"
     a_lancer = ""
     usage_global =  ['bundle','topup','ec','usage','roaming']
     if usage_type in usage_global:
@@ -121,7 +120,7 @@ def retraitement(date : str,type : int):
     a_lancer = cmd+directory+a_lancer+date+" "+date
     try:
         
-        commande_a_lancer = '(plink -ssh osadmin@192.168.61.199 -pw Adm3PI2 "'+a_lancer+'") > C:\\Users\\aen_stg\\Documents\\log\\retraitement_'+getfichier_log(day,usage_type)
+        commande_a_lancer = '(plink -ssh osadmin@192.168.61.199 -pw Adm3PI2 "'+a_lancer+' ") > C:\\Users\\aen_stg\\Documents\\log\\retraitement_'+getfichier_log(day,usage_type)+'_'+getfichier_log(day,usage_type)
         subprocess.run(commande_a_lancer)
         a_lancer_verification = ""
         if(usage_type in usage_global):
@@ -152,7 +151,7 @@ def fichier_log(date:str,type:int):
         count +=1
     if count == 0:
         raise HTTPException(detail="Data not found.", status_code=status.HTTP_404_NOT_FOUND)
-    fichier = "C:\\Users\\aen_stg\\Documents\\log\\retraitement_"+getfichier_log(day,usage_type)
+    fichier = "C:\\Users\\aen_stg\\Documents\\log\\retraitement_"+getfichier_log(day,usage_type)+"_"+getfichier_log(day,usage_type)
     try:
         file_contents = get_data_from_file(file_path=fichier)
         response = StreamingResponse(
@@ -198,31 +197,6 @@ def verification(date_debut:str,date_fin : str,type : int):
     
     #boucle pour lancer la vérification durant la periode donnee
     verification_donne(day_debut,day_fin,usage_type,liste_en_cours)
-    '''while True:
-        if(usage_type != 'om'):    
-            directory_insertion="/data2/tmp/Stage/Insertion_Data/"
-            date = day_actuelle.strftime("%Y-%m-%d")
-            cmd_insertion = 'plink -ssh osadmin@192.168.61.111 -pw osadmin@321 "source /data/temp/venv_test/bin/activate ;python -u '+directory_insertion+'Insertion_Daily_'+usage_type+'.py '+date+' ;deactivate"'
-            subprocess.run(cmd_insertion,shell=True)
-
-            directory_verification="/data2/tmp/Stage/dossier_final/"+usage_type+"/main.py"
-            cmd_verification='plink -ssh osadmin@192.168.61.111 -pw osadmin@321 "source /data/temp/venv_test/bin/activate ;python -u '+directory_verification+' '+date+' ;deactivate"'
-            subprocess.run(cmd_verification)
-            if(day_actuelle == day_fin):
-                break
-            day_actuelle = day_actuelle + timedelta(1)
-        else:   
-            directory_insertion="/data2/tmp/Stage/dossier_final/om/Insertion_data/Extraction_Data.py"
-            date = day_actuelle.strftime("%Y-%m-%d")
-            cmd_insertion = "plink -ssh osadmin@192.168.61.111 -pw osadmin@321 'source /data/temp/venv_test/bin/activate ; python -u "+directory_insertion+" "+date+"; deactivate'"
-            subprocess.run(cmd_insertion,shell=True)
-
-            directory_verification="/data2/tmp/Stage/dossier_final/"+usage_type+"/main.py"
-            cmd_verification='plink -ssh osadmin@192.168.61.111 -pw osadmin@321 "source /data/temp/venv_test/bin/activate ;python -u '+directory_verification+' '+date+';deactivate"'
-            subprocess.run(cmd_verification,shell=True)
-            if(day_actuelle == day_fin):
-                break
-            day_actuelle = day_actuelle + timedelta(1)'''
 
     for i in range(len(liste_en_cours[1])):
         if day_debut == liste_en_cours[1][i]['date_debut'] and day_fin == liste_en_cours[1][i]['date_fin'] and type == liste_en_cours[1][i]['id_usage']:
@@ -271,15 +245,14 @@ def retraitement_manuel(date_debut : str,date_fin : str,type : int):
     else : 
         a_lancer = "launch_global_"+usage_type+".sh "
     fichier_a_lancer = "/home/osadmin/tmv/"+a_lancer
-    cmd_retraitement = '(plink -ssh osadmin@192.168.61.199 -pw Adm3PI2 "sh '+fichier_a_lancer+date_debut+' '+date_fin+'") '#> C:\\Users\\aen_stg\\Documents\\log\\retraitement_'+getfichier_log(day_debut,usage_type)+'_'+getfichier_log(day_fin,usage_type)
-    #subprocess.run(cmd_retraitement,shell=True)
-    print(cmd_retraitement)
+    cmd_retraitement = '(plink -ssh osadmin@192.168.61.199 -pw Adm3PI2 "sh '+fichier_a_lancer+date_debut+' '+date_fin+' ") > C:\\Users\\aen_stg\\Documents\\log\\retraitement_'+getfichier_log(day_debut,usage_type)+'_'+getfichier_log(day_fin,usage_type)
+    subprocess.run(cmd_retraitement,shell=True)
 
     #Enleve les donnee retraites termines
     
 
     #Verifie si les donnees retraites sont les usages de depart
-    '''if(usage_type in usage_global):
+    if(usage_type in usage_global):
         for i in usage_global:
             liste_en_cours[1].append({'date_debut' : day_debut,'date_fin' : day_fin,'usage_type' : i,"id_usage" : type})
     else :
@@ -290,7 +263,7 @@ def retraitement_manuel(date_debut : str,date_fin : str,type : int):
         for usage in usage_global:       
             verification_donne(day_debut,day_fin,usage,liste_en_cours)
     else:
-       verification_donne(day_debut,day_fin,usage_type,liste_en_cours)'''
+       verification_donne(day_debut,day_fin,usage_type,liste_en_cours)
         
     return {'log' : 'Les données de '+date_debut+" a "+date_fin+" ont été retraités et vérifiés"}
 
