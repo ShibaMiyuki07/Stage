@@ -43,8 +43,10 @@ liste_en_cours.append([])
 '''
 @app.get('/liste/{type}/{page}')
 def liste(type : int,page : int):
+    print(type)
     collection = getverification_collection()
     usage_type = getusage_type(type)
+    print(usage_type)
     nbr_doc = collection.count_documents({"usage_type" : usage_type})
     resultat = collection.find({"usage_type" : usage_type}).skip((page-1)*7).limit(7).sort('day',-1)
     return {'usage_type' : usage_type,'nbr_doc' : nbr_doc,'data' : [Verification.insertion_data(r,liste_retraitement_en_cours) for r in resultat]}

@@ -5,7 +5,7 @@ from database.Connexion import getconfig
 
 
 def getusage_type(type):
-    resultats = getconfig().find({'type' : 'config','usage_type' : type})
+    resultats = getconfig().find({'type_donne' : 'config','identifiant' : type})
     for r in resultats:
         return r['usage_type']
 
