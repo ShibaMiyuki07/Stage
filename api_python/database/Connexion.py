@@ -20,6 +20,11 @@ def getverification_collection():
     collection = db['daily_usage_verification']
     return collection
 
+def getglobal_usage():
+    client = connexion_base()
+    db = client['cbm']
+    collection = db['global_daily_usage']
+    return collection
 
 def getconfig():
     client = connexion_base()

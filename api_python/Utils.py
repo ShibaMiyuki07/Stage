@@ -8,6 +8,16 @@ def getusage_type(type):
     resultats = getconfig().find({'type_donne' : 'config','identifiant' : type})
     for r in resultats:
         return r['usage_type']
+    
+
+def getusage_get_colonne(type):
+    nom_colonne = []
+    resultats = getconfig().find({'type_donne' : 'config','identifiant' : type})
+    for r in resultats:
+        for i in range(len(r['colonne'])):
+            nom_colonne.append(r['colonne'][i]['nom'])
+
+    return nom_colonne
 
 
 def getfichier_log(day,usage_type):
@@ -17,7 +27,7 @@ def getfichier_log(day,usage_type):
 
 def getlocation_verification(usage_type,date):
     commande_python = 'plink -ssh osadmin@192.168.61.111 -pw osadmin@321 "source /data/temp/venv_test/bin/activate ;python -u '
-    directory_verification = "/verification/"+usage_type+"/main.py "
+    directory_verification = "/data2/tmp/Stage/dossier_final/"+usage_type+"/main.py "
     day = Verification.remplacement_date(date)
     a_lancer_verification = commande_python+directory_verification+date+' ;dactivate"'
     return a_lancer_verification

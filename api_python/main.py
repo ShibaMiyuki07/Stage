@@ -4,8 +4,8 @@ from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from Model.Utilisateur import Utilisateur
-from Utils import getfichier_log, getlocation_verification, getusage_type, verification_donne,change_dict
-from database.Connexion import test_login, get_aggregation, getverification_collection,getconfig
+from Utils import getfichier_log, getlocation_verification, getusage_type, verification_donne,change_dict,getusage_get_colonne
+from database.Connexion import test_login, get_aggregation, getverification_collection,getconfig,getglobal_usage
 from Model.Verification import Verification
 import uvicorn
 import subprocess
@@ -97,6 +97,19 @@ def dashboard_bundle(type:int,date_debut : str,date_fin : str):
 def dashboard_bundle(type : int):
     collection = get_aggregation()
     usage_type = getusage_type(type)
+    '''group = {"$group":{
+
+    }}
+    
+    date_depart = datetime.datetime(datetime.datetime.today().year,datetime.datetime.today().month,datetime.datetime.today().day)
+    date_j_31 = date_depart - timedelta(31)
+    colonne = getusage_get_colonne(type)
+    print(date_j_31)
+    group['$group']['_id'] = "$day"
+    for r in range(len(colonne)):
+        group['$group'][colonne[r]] = {'$sum' : "$"+colonne[r]}
+    print(group)'''
+    
     resultats = collection.find({'usage_type' : usage_type,'type_aggregation' : 'day'}).sort('day',-1).limit(8).sort('day',1)
     return {'usage_type' : usage_type,'data' : [Verification.insertion_data(r,liste_retraitement_en_cours) for r in resultats]}
 
@@ -133,9 +146,9 @@ def retraitement(date : str,type : int):
 
     a_lancer = cmd+directory+a_lancer+date+" "+date
     try:
-        
         commande_a_lancer = '(plink -ssh osadmin@192.168.61.199 -pw Adm3PI2 "'+a_lancer+' ") > C:\\Users\\aen_stg\\Documents\\log\\retraitement_'+getfichier_log(day,usage_type)+'_'+getfichier_log(day,usage_type)
-        subprocess.run(commande_a_lancer)
+        subprocess.run(commande_a_lancer,shell=True)
+        print(commande_a_lancer)
         a_lancer_verification = ""
         if(usage_type in usage_global):
             for i in usage_global:
@@ -232,13 +245,17 @@ def retraitement_manuel(date_debut : str,date_fin : str,type : int):
     #Remplacement des dates en datetime
     day_debut = Verification.remplacement_date(date_debut)
     day_fin = Verification.remplacement_date(date_fin)
+    if day_fin < day_debut:
+        day_inter = day_debut
+        day_debut = day_fin
+        day_fin = day_inter
     if ((day_debut.day == datetime.datetime.today().day and day_debut.month == datetime.datetime.today().month and day_debut.year== datetime.datetime.today().year ) 
         or (day_fin.day == datetime.datetime.today().day and day_fin.month == datetime.datetime.today().month and day_fin.year== datetime.datetime.today().year )):
         return {"error" : "Les données durant cette periode ne sont pas encore initialisés"}
     
     #Vérifie que le retraitement à certaine date sont en cours
     for i in range(len(liste_en_cours[0])):
-        if (date_debut == liste_en_cours[0][i]['date_debut'] or date_fin == liste_en_cours[0][i]['date_fin'] or date_fin == liste_en_cours[0][i]['date_debut'] or date_debut == liste_en_cours[0][i]['date_fin']) and type == liste_en_cours[0][i]['id_usage']:
+        if (day_debut == liste_en_cours[0][i]['date_debut'] or day_fin == liste_en_cours[0][i]['date_fin'] or day_fin == liste_en_cours[0][i]['date_debut'] or day_debut == liste_en_cours[0][i]['date_fin']) and type == liste_en_cours[0][i]['id_usage']:
             return {"error" : "Des données de cette période sont déjà retraités"}
     
     
