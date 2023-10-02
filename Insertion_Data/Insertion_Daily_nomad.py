@@ -4,11 +4,28 @@ from Utils import connexion_sql, getcollection_insertion,insertion_data
 
 
 def getnb_semaine(day):
-    debutsemaine = date - timedelta(days=date.weekday())
+    debutsemaine = day - timedelta(days=day.weekday())
     debut_semaine_string = debutsemaine.year.__str__() + "-"+debutsemaine.month.__str__()+"-"+debutsemaine.day.__str__()
-    sql = "SELECT COUNT(DISTINCT(nom.identifiant_vendeur)) nb_semaine FROM `kyc_nomad` nom  LEFT JOIN `DM_RF`.`rf_Nomad` nomad ON nom.Identifiant_vendeur = nomad.Identifiant_vendeur WHERE DATE(nom.creationDate)>=CAST('[:debut_semaine]' AS DATE) AND DATE(nom.creationDate)<=CAST('[:date]' AS DATE)"
+    sql = "SELECT COUNT(DISTINCT(nom.identifiant_vendeur)) nb_semaine FROM `WORK`.`kyc_nomad` nom  LEFT JOIN `DM_RF`.`rf_Nomad` nomad ON nom.Identifiant_vendeur = nomad.Identifiant_vendeur WHERE DATE(nom.creationDate)>=CAST('[:debut_semaine]' AS DATE) AND DATE(nom.creationDate)<=CAST('[:date]' AS DATE)"
     sql = sql.replace('[:debut_semaine]',debut_semaine_string)
-    sql = sql.replace('[:date]',day)
+    ajd = day.year.__str__() + "-"+day.month.__str__()+"-"+day.day.__str__()
+    sql = sql.replace('[:date]',ajd)
+    db = connexion_sql()
+    cursor = db.cursor()
+    cursor.execute(sql)
+    data = {}
+    for(nb_semaine) in cursor:
+        data[day] = nb_semaine[0]
+    return data
+
+
+def getnb_mois(day):
+    debutsemaine = day - timedelta(days=day.weekday())
+    debut_semaine_string = debutsemaine.year.__str__() + "-"+debutsemaine.month.__str__()+"-01"
+    sql = "SELECT COUNT(DISTINCT(nom.identifiant_vendeur)) nb_semaine FROM `WORK`.`kyc_nomad` nom  LEFT JOIN `DM_RF`.`rf_Nomad` nomad ON nom.Identifiant_vendeur = nomad.Identifiant_vendeur WHERE DATE(nom.creationDate)>=CAST('[:debut_semaine]' AS DATE) AND DATE(nom.creationDate)<=CAST('[:date]' AS DATE)"
+    sql = sql.replace('[:debut_semaine]',debut_semaine_string)
+    ajd = day.year.__str__() + "-"+day.month.__str__()+"-"+day.day.__str__()
+    sql = sql.replace('[:date]',ajd)
     db = connexion_sql()
     cursor = db.cursor()
     cursor.execute(sql)
@@ -20,7 +37,8 @@ def getnb_semaine(day):
 
 def insertion_day(day,day_normal):
     semaine = getnb_semaine(day)
-    sql = "SELECT COUNT(DISTINCT(nom.identifiant_vendeur)) nb FROM `kyc_nomad` nom LEFT JOIN `DM_RF`.`rf_Nomad` rf ON rf.Identifiant_vendeur = nom.Identifiant_vendeur WHERE DATE(creationDate)=CAST('[:date]' AS DATE)"
+    mois = getnb_mois(day)
+    sql = "SELECT COUNT(DISTINCT(nom.identifiant_vendeur)) nb FROM `WORK`.`kyc_nomad` nom LEFT JOIN `DM_RF`.`rf_Nomad` rf ON rf.Identifiant_vendeur = nom.Identifiant_vendeur WHERE DATE(creationDate)=CAST('[:date]' AS DATE)"
     sql = sql.replace('[:date]',day_normal)
     db = connexion_sql()
     cursor = db.cursor()
