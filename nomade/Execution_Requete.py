@@ -34,19 +34,19 @@ def  getglobal_usage(day,nom):
     {
         '$match': {
             'day': day, 
-            'usage_type': 'om'
+            'usage_type': 'nomad'
         }
     }, {
         '$group': {
             '_id': '$'+nom, 
-            'om_cnt': {
-                '$sum': '$om_cnt'
+            'nb': {
+                '$sum': '$nb'
             }, 
-            'om_amnt': {
-                '$sum': '$om_amnt'
+            'nb_semaine': {
+                '$sum': '$nb_semaine'
             }, 
-            'om_tr_amnt': {
-                '$sum': '$om_tr_amnt'
+            'nb_mois': {
+                '$sum': '$nb_mois'
             }
         }
     }

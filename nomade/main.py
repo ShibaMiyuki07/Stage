@@ -12,14 +12,8 @@ if __name__ == "__main__":
     donne = {}
 
     #Liste des types de transactions a voir 
-    liste_verification = ['day','site_name','market','billing_type','pp_name','segment']
+    liste_verification = ['day']
     donne['day'] = [day]
-    donne['site_name'] = getall_site()
-    #donne['transaction_type'] = getall_rec_type()
-    donne['market'] = ["B2B","B2C","null"]
-    donne['billing_type'] = getListe_Billing_type()
-    donne['pp_name'] = getliste_pp()
-    donne['segment'] = ["ZERO","SUPER LOW VALUE","LOW VALUE","MEDIUM","HIGH","SUPER HIGH VALUE","NEW","RETURN","CHURN","null"]
 
     for i in range(len(liste_verification)):
         daily_usage = getdata_daily(day,liste_verification[i])
